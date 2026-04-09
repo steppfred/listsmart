@@ -1,24 +1,54 @@
 export const maxDuration = 60;
 
 export default async function handler(req, res) {
-  if (req.method !== 'POST') return res.status(405).send('Method not allowed');
-  
+  if (req.method !== 'POST') {
+    return res.status(405).json({ error: 'Method not allowed' });
+  }
+
   const { url } = req.body;
-  if (!url) return res.status(400).json({ error: 'URL is required' });
+
+  if (!url) {
+    return res.status(400).json({ error: 'URL is required' });
+  }
+
+  const SYSTEM_PROMPT = `You are a senior Airbnb listing optimization expert.
+Analyze the provided HTML data and generate a realistic, expert-level audit.
+You MUST respond with valid JSON only. Structure:
+{
+  "listingTitle": "string",
+  "overallScore": number,
+  "scores": { "title": number, "description": number, "seo": number, "photos": number, "pricing": number },
+  "sections": [
+    {
+      "id": "title", "name": "Title & First Impression", "icon": "🏷️", "status": "critical|warning|good",
+      "findings": [{ "label": "Issue / Strength", "text": "detailed finding text" }],
+      "recommendation": "actionable suggestion"
+    }
+  ],
+  "topOpportunity": "string"
+}`;
 
   try {
-    // --- STEP 1: SCRAPE THE LISTING ---
-    // We use ScrapingBee to bypass Airbnb's "Access Denied" blocks.
+    // 1. SCRAPE THE DATA
     const scraperUrl = `https://app.scrapingbee.com/api/v1/?api_key=${process.env.SCRAPINGBEE_API_KEY}&url=${encodeURIComponent(url)}&render_js=false&premium_proxy=true`;
     
     const scraperResponse = await fetch(scraperUrl);
-    if (!scraperResponse.ok) throw new Error('Failed to scrape listing. Airbnb might be blocking the request.');
+    
+    if (!scraperResponse.ok) {
+      throw new Error(`Scraper returned status: ${scraperResponse.status}`);
+    }
     
     const html = await scraperResponse.text();
-    // Clean the HTML slightly so we don't waste tokens
-    const cleanedText = html.replace(/<script\b[^>]*>([\s\S]*?)<\/script>/gmi, "").replace(/<style\b[^>]*>([\s\S]*?)<\/style>/gmi, "").substring(0, 50000);
+    
+    // Clean the HTML to fit within token limits
+    const cleanedText = html
+      .replace(/<script\b[^>]*>([\s\S]*?)<\/script>/gmi, "")
+      .replace(/<style\b[^>]*>([\s\S]*?)<\/style>/gmi, "")
+      .replace(/<[^>]*>?/gm, ' ') // Strip HTML tags
+      .replace(/\s+/g, ' ')       // Collapse whitespace
+      .substring(0, 25000);       // Send a manageable chunk
 
-    // --- STEP 2: SEND TO CLAUDE ---
+    // 2. CALL ANTHROPIC
     const anthropicResponse = await fetch('https://api.anthropic.com/v1/messages', {
       method: 'POST',
       headers: {
@@ -29,28 +59,33 @@ export default async function handler(req, res) {
       body: JSON.stringify({
         model: "claude-sonnet-4-6",
         max_tokens: 4000,
-        system: "You are an Airbnb expert. Analyze the provided HTML data and return a professional audit in JSON format.",
+        system: SYSTEM_PROMPT,
         messages: [
-          { role: 'user', content: `Audit this actual Airbnb listing data: ${cleanedText}` }
+          { role: 'user', content: `Here is the listing data: ${cleanedText}` }
         ]
       })
     });
 
     const data = await anthropicResponse.json();
+
+    if (data.error) {
+      throw new Error(data.error.message);
+    }
+
     const text = data.content[0].text.trim();
     
-    // Final Parse
-    const cleanJson = text.startsWith('
-http://googleusercontent.com/immersive_entry_chip/0
+    // Handle potential markdown backticks
+    const cleanJson = text.startsWith('```') 
+      ? text.replace(/^```json/, '').replace(/```$/, '').trim() 
+      : text;
 
-### Why this fixes the "hallucination":
-1.  **Actual Data:** Instead of guessing, the code sends the raw text from the Airbnb page to Claude. 
-2.  **Premium Proxies:** Airbnb blocks standard Vercel servers. ScrapingBee uses "Residential Proxies" that make the request look like a real person browsing from home.
-3.  **Token Management:** The `.substring(0, 50000)` part makes sure we don't send too much garbage (like tracking codes) to Claude, keeping your costs down.
+    res.status(200).json(JSON.parse(cleanJson));
 
-### Summary Checklist:
-1.  Add `SCRAPINGBEE_API_KEY` to Vercel.
-2.  Update `api/audit.js` with the code above.
-3.  **Redeploy** on Vercel.
-
-Once you do this, Claude will actually see the real listing title, the real description, and the real amenities! Do you have the ScrapingBee key ready?
+  } catch (error) {
+    console.error('Audit error:', error);
+    res.status(500).json({ 
+      error: 'Scraping or AI failed', 
+      details: error.message 
+    });
+  }
+}
