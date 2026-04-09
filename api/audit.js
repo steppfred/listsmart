@@ -42,7 +42,7 @@ You MUST respond with valid JSON only. No markdown, no preamble. Structure:
         'anthropic-version': '2023-06-01'
       },
       body: JSON.stringify({
-        model: 'claude-3-7-sonnet-latest',
+        'model: "claude-haiku-4-5"',
         max_tokens: 1000,
         system: SYSTEM_PROMPT,
         messages: [{ role: 'user', content: `Please audit this Airbnb listing: ${url}` }]
