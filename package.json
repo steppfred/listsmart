@@ -1,0 +1,8 @@
+{
+  "name": "listsmart",
+  "version": "1.0.0",
+  "type": "module",
+  "dependencies": {
+    "@anthropic-ai/sdk": "latest"
+  }
+}
