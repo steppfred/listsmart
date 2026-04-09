@@ -1,5 +1,6 @@
+export const maxDuration = 60; 
+
 export default async function handler(req, res) {
-  // Only allow POST requests
   if (req.method !== 'POST') {
     return res.status(405).json({ error: 'Method not allowed' });
   }
@@ -16,57 +17,18 @@ A user has submitted an Airbnb listing URL. Analyze the URL structure to infer w
 You MUST respond with valid JSON only. No markdown, no preamble. Structure:
 {
   "listingTitle": "string",
-  "overallScore": number (1-100),
-  "scores": {
-    "title": number,
-    "description": number,
-    "seo": number,
-    "photos": number,
-    "pricing": number
-  },
+  "overallScore": number,
+  "scores": { "title": number, "description": number, "seo": number, "photos": number, "pricing": number },
   "sections": [
     {
-      "id": "title",
-      "name": "Title & First Impression",
-      "icon": "🏷️",
-      "status": "critical|warning|good",
-      "findings": [
-        { "label": "Issue / Strength", "text": "detailed finding text" }
-      ],
+      "id": "title", "name": "Title & First Impression", "icon": "🏷️", "status": "critical|warning|good",
+      "findings": [{ "label": "Issue / Strength", "text": "detailed finding text" }],
       "recommendation": "specific, actionable rewrite suggestion or improvement"
     },
-    {
-      "id": "description",
-      "name": "Description & Copywriting",
-      "icon": "✍️",
-      "status": "critical|warning|good",
-      "findings": [{"label":"", "text":""}],
-      "recommendation": "..."
-    },
-    {
-      "id": "seo",
-      "name": "SEO & Search Visibility",
-      "icon": "🔍",
-      "status": "critical|warning|good",
-      "findings": [{"label":"", "text":""}],
-      "recommendation": "..."
-    },
-    {
-      "id": "photos",
-      "name": "Photo Strategy",
-      "icon": "📸",
-      "status": "critical|warning|good",
-      "findings": [{"label":"", "text":""}],
-      "recommendation": "..."
-    },
-    {
-      "id": "pricing",
-      "name": "Pricing Signals",
-      "icon": "💰",
-      "status": "critical|warning|good",
-      "findings": [{"label":"", "text":""}],
-      "recommendation": "..."
-    }
+    { "id": "description", "name": "Description & Copywriting", "icon": "✍️", "status": "critical|warning|good", "findings": [{"label":"", "text":""}], "recommendation": "..." },
+    { "id": "seo", "name": "SEO & Search Visibility", "icon": "🔍", "status": "critical|warning|good", "findings": [{"label":"", "text":""}], "recommendation": "..." },
+    { "id": "photos", "name": "Photo Strategy", "icon": "📸", "status": "critical|warning|good", "findings": [{"label":"", "text":""}], "recommendation": "..." },
+    { "id": "pricing", "name": "Pricing Signals", "icon": "💰", "status": "critical|warning|good", "findings": [{"label":"", "text":""}], "recommendation": "..." }
   ],
   "topOpportunity": "string"
 }`;
@@ -89,6 +51,13 @@ You MUST respond with valid JSON only. No markdown, no preamble. Structure:
 
     const data = await response.json();
     
+    // SAFETY CHECK: Did Anthropic return an error?
+    if (!data.content) {
+      console.error('ANTHROPIC API REJECTED REQUEST:', JSON.stringify(data, null, 2));
+      return res.status(500).json({ error: 'AI provider error. Check Vercel logs for details.' });
+    }
+    
+    // If successful, process the data
     const text = data.content.map(b => b.text || '').join('');
     const cleanJsonString = text.replace(/```json|```/g, '').trim();
     const auditData = JSON.parse(cleanJsonString);
