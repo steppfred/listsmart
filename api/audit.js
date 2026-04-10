@@ -47,7 +47,7 @@ export default async function handler(req, res) {
     // 3. EMAIL LOGIC
     const type = (serviceType || "").toLowerCase();
     
-    // This logic covers all 3 paid options by looking for price symbols or keywords
+    // Check for paid request keywords or prices
     const isPaidRequest = type.includes('€') || type.includes('97') || type.includes('147') || type.includes('audit') || type.includes('pro');
     
     console.log("Service detected:", serviceType);
@@ -55,9 +55,9 @@ export default async function handler(req, res) {
 
     if (isPaidRequest) {
       if (!process.env.RESEND_API_KEY) {
-        console.error("CRITICAL: RESEND_API_KEY IS NOT SET IN VERCEL");
+        console.error("CRITICAL ERROR: RESEND_API_KEY IS MISSING IN VERCEL SETTINGS");
       } else {
-        console.log("Attempting Resend to: steppfred@zohomail.eu");
+        console.log("Attempting to send email via Resend API...");
         const resendResponse = await fetch('https://api.resend.com/emails', {
           method: 'POST',
           headers: {
@@ -69,17 +69,20 @@ export default async function handler(req, res) {
             to: 'steppfred@zohomail.eu', 
             subject: `🚨 PAID ORDER: ${name || 'New Customer'}`,
             html: `
-              <div style="font-family: sans-serif; padding: 20px; color: #333;">
-                <h2 style="color: #10b981;">💰 NEW PAID ORDER RECEIVED</h2>
-                <p><strong>Service:</strong> ${serviceType}</p>
-                <p><strong>Name:</strong> ${name}</p>
-                <p><strong>Email:</strong> ${email}</p>
-                <p><strong>URL:</strong> <a href="${url}">${url}</a></p>
-                <p><strong>Message:</strong> ${message || 'No message'}</p>
-                <hr />
-                <h3 style="color: #666;">Initial AI Assessment:</h3>
+              <div style="font-family: sans-serif; padding: 20px; color: #333; border: 1px solid #eee; border-radius: 8px;">
+                <h2 style="color: #10b981; border-bottom: 2px solid #10b981; padding-bottom: 10px;">💰 NEW PAID ORDER RECEIVED</h2>
+                <p style="font-size: 16px;">A user has requested a professional service on ListSmart.</p>
+                <table style="width: 100%; border-collapse: collapse;">
+                  <tr><td style="padding: 8px 0; font-weight: bold; width: 150px;">Service:</td><td>${serviceType}</td></tr>
+                  <tr><td style="padding: 8px 0; font-weight: bold;">Name:</td><td>${name}</td></tr>
+                  <tr><td style="padding: 8px 0; font-weight: bold;">Email:</td><td>${email}</td></tr>
+                  <tr><td style="padding: 8px 0; font-weight: bold;">URL:</td><td><a href="${url}">${url}</a></td></tr>
+                  <tr><td style="padding: 8px 0; font-weight: bold;">Message:</td><td>${message || 'No message'}</td></tr>
+                </table>
+                <hr style="margin: 20px 0; border: 0; border-top: 1px solid #eee;" />
+                <h3 style="color: #666;">AI Preliminary Assessment:</h3>
                 <p><strong>Listing:</strong> ${auditData.listingTitle}</p>
-                <p><strong>Score:</strong> ${auditData.overallScore}/100</p>
+                <p><strong>Initial Score:</strong> ${auditData.overallScore}/100</p>
                 <p><strong>Top Opportunity:</strong> ${auditData.topOpportunity}</p>
               </div>
             `
@@ -87,8 +90,11 @@ export default async function handler(req, res) {
         });
 
         const resendResult = await resendResponse.json();
-        console.log("Resend API Status:", resendResponse.status);
-        console.log("Resend API Body:", JSON.stringify(resendResult));
+        if (resendResponse.ok) {
+          console.log("SUCCESS: Email sent successfully!", resendResult.id);
+        } else {
+          console.error("RESEND ERROR:", JSON.stringify(resendResult));
+        }
       }
     }
 
