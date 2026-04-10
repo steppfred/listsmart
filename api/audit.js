@@ -66,7 +66,6 @@ export default async function handler(req, res) {
           },
           body: JSON.stringify({
             from: 'ListSmart <onboarding@resend.dev>',
-            // Fixed: Now matches your Resend sign-up email
             to: 'steppfred@zohomail.eu', 
             subject: `🚨 PAID ORDER: ${name || 'New Customer'}`,
             html: `
