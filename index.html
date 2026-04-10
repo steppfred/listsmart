@@ -20,13 +20,7 @@
         body{font-family:'DM Sans',sans-serif;background:var(--cream);color:var(--ink);font-size:16px;line-height:1.7;overflow-x:hidden}
         h1,h2,h3{font-family:'Playfair Display',serif}
 
-        /* ── PAGE ROUTER ── */
-        #page-home{display:block}
-        #page-audit{display:none}
-
-        /* ══════════════════════════════════════
-           NAV
-        ══════════════════════════════════════ */
+        /* ── NAVIGATION ── */
         nav{
             position:fixed;top:0;width:100%;z-index:100;
             background:rgba(250,249,245,0.93);
@@ -36,347 +30,191 @@
             display:flex;align-items:center;justify-content:space-between;
             height:64px;
         }
-        .logo{font-family:'Playfair Display',serif;font-size:1.5rem;font-weight:900;color:var(--teal-d);letter-spacing:-0.02em;cursor:pointer;text-decoration:none;display:inline-block}
+        .logo{font-family:'Playfair Display',serif;font-size:1.5rem;font-weight:900;color:var(--teal-d);letter-spacing:-0.02em;cursor:pointer;text-decoration:none}
         .logo span{color:var(--gold)}
         nav ul{list-style:none;display:flex;gap:2rem}
-        nav ul a{text-decoration:none;color:var(--ink-m);font-size:0.9rem;font-weight:500;transition:color 0.2s}
-        nav ul a:hover{color:var(--teal)}
-        .nav-cta{background:var(--teal);color:white;padding:0.5rem 1.25rem;border-radius:100px;text-decoration:none;font-size:0.875rem;font-weight:500;transition:background 0.2s,transform 0.15s;cursor:pointer;border:none;font-family:'DM Sans',sans-serif}
-        .nav-cta:hover{background:var(--teal-d);transform:translateY(-1px)}
-        @media(max-width:900px){nav ul{display:none}}
+        nav ul a{text-decoration:none;color:var(--ink-m);font-size:0.9rem;font-weight:500}
+        .nav-cta{background:var(--teal);color:white;padding:0.5rem 1.25rem;border-radius:100px;border:none;font-weight:500;cursor:pointer}
 
-        /* ══════════════════════════════════════
-           HOME PAGE
-        ══════════════════════════════════════ */
-        #hero{min-height:100vh;display:flex;align-items:center;padding:7rem 2rem 4rem;position:relative;overflow:hidden}
-        .hero-bg{position:absolute;inset:0;z-index:0;background:radial-gradient(ellipse 80% 60% at 70% 40%,#E1F5EE 0%,transparent 70%),radial-gradient(ellipse 50% 50% at 20% 80%,#FAEEDA 0%,transparent 60%)}
-        .hero-grid{position:absolute;inset:0;z-index:0;opacity:0.04;background-image:linear-gradient(var(--ink) 1px,transparent 1px),linear-gradient(90deg,var(--ink) 1px,transparent 1px);background-size:80px 80px}
-        .hero-content{position:relative;z-index:1;max-width:1100px;margin:0 auto;width:100%}
-        .hero-eyebrow{display:inline-block;background:var(--teal-l);color:var(--teal-d);font-size:0.8rem;font-weight:500;letter-spacing:0.1em;text-transform:uppercase;padding:0.4rem 1rem;border-radius:100px;margin-bottom:1.5rem}
-        .hero-title{font-size:clamp(3rem,7vw,6rem);font-weight:900;line-height:1.05;letter-spacing:-0.03em;color:var(--ink);max-width:14ch}
-        .hero-title em{font-style:italic;color:var(--teal)}
-        .hero-sub{font-size:1.2rem;font-weight:300;color:var(--ink-m);max-width:50ch;margin:1.5rem 0 2.5rem}
-        .hero-actions{display:flex;gap:1rem;flex-wrap:wrap}
-        .btn-primary{background:var(--teal);color:white;padding:0.875rem 2rem;border-radius:100px;text-decoration:none;font-weight:500;font-size:1rem;transition:all 0.2s;border:none;cursor:pointer;display:inline-block;font-family:'DM Sans',sans-serif}
-        .btn-primary:hover{background:var(--teal-d);transform:translateY(-2px);box-shadow:0 8px 24px rgba(29,158,117,0.3)}
-        .btn-ghost{background:transparent;color:var(--ink);padding:0.875rem 2rem;border-radius:100px;text-decoration:none;font-weight:500;font-size:1rem;border:1.5px solid var(--border);transition:all 0.2s;display:inline-block}
+        /* ── PAGES ── */
+        #page-home{display:block}
+        #page-audit{display:none}
 
-        .hero-visual{position:absolute;right:0;top:50%;transform:translateY(-50%);width:min(480px,40%);z-index:1;display:flex;flex-direction:column;gap:1rem}
-        .listing-card{background:white;border-radius:var(--r-lg);padding:1.25rem 1.5rem;border:1px solid var(--border);box-shadow:0 4px 32px rgba(0,0,0,0.06)}
-        .listing-card .badge{font-size:0.7rem;font-weight:500;text-transform:uppercase;letter-spacing:0.08em;color:var(--ink-l);margin-bottom:0.5rem}
-        .bar-row{display:flex;align-items:center;gap:0.75rem;margin-bottom:0.5rem}
-        .bar-label{font-size:0.75rem;color:var(--ink-l);width:80px;flex-shrink:0}
-        .bar-track{flex:1;height:6px;background:#f0efe9;border-radius:3px;overflow:hidden}
-        .bar-fill{height:100%;border-radius:3px;background:var(--teal)}
-        .bar-val{font-size:0.75rem;font-weight:500;width:32px;text-align:right}
+        /* ── HERO ── */
+        #hero{min-height:90vh;display:flex;align-items:center;padding:7rem 2rem 4rem;position:relative}
+        .hero-content{max-width:1100px;margin:0 auto;position:relative;z-index:2}
+        .hero-title{font-size:clamp(3rem,7vw,5.5rem);line-height:1.1;margin-bottom:1.5rem}
+        .hero-title em{color:var(--teal);font-style:italic}
+        .btn-primary{background:var(--teal);color:white;padding:1rem 2rem;border-radius:100px;border:none;font-size:1.1rem;font-weight:700;cursor:pointer;display:inline-block;text-decoration:none}
 
-        /* ── SECTIONS ── */
-        section{padding:6rem 2rem}
-        .container{max-width:1100px;margin:0 auto}
-        .section-label{font-size:0.75rem;font-weight:500;letter-spacing:0.12em;text-transform:uppercase;color:var(--teal);margin-bottom:1rem}
-        .section-title{font-size:clamp(2rem,4vw,3rem);font-weight:700;line-height:1.15}
+        /* ── AUDIT UI ── */
+        .audit-page{padding:6rem 2rem}
+        .audit-container{max-width:800px;margin:0 auto;background:white;padding:3rem;border-radius:var(--r-lg);border:1px solid var(--border)}
+        .audit-input-group{display:flex;gap:1rem;margin:2rem 0}
+        .audit-input{flex:1;padding:1rem;border-radius:100px;border:1.5px solid var(--border);outline:none}
+        
+        .results-area{display:none;margin-top:2rem;border-top:1px solid var(--border);padding-top:2rem}
+        .score-box{text-align:center;margin-bottom:2rem}
+        .score-number{font-size:4rem;font-weight:900;color:var(--teal);line-height:1}
+        
+        .metric-grid{display:grid;grid-template-columns:repeat(auto-fit,minmax(200px,1fr));gap:1rem;margin-bottom:2rem}
+        .metric-card{padding:1rem;background:var(--cream);border-radius:var(--r);border:1px solid var(--border)}
+        .metric-label{font-size:0.75rem;text-transform:uppercase;color:var(--ink-l);font-weight:700}
+        .metric-val{font-size:1.25rem;font-weight:700}
 
-        /* PROBLEM */
-        #problem{background:var(--ink);color:var(--cream)}
-        .problem-grid{display:grid;grid-template-columns:repeat(auto-fit,minmax(280px,1fr));gap:1.5rem;margin-top:3rem}
-        .problem-card{background:rgba(255,255,255,0.05);border:1px solid rgba(255,255,255,0.1);border-radius:var(--r-lg);padding:2rem}
+        .finding-tag{display:inline-block;padding:0.25rem 0.75rem;border-radius:4px;font-size:0.8rem;font-weight:700;margin-bottom:0.5rem}
+        .tag-critical{background:#fee2e2;color:#991b1b}
+        .tag-warning{background:#fef3c7;color:#92400e}
+        .tag-good{background:#dcfce7;color:#166534}
 
-        /* PRICING */
-        .pricing-grid{display:grid;grid-template-columns:repeat(auto-fit,minmax(300px,1fr));gap:2rem;margin-top:3rem}
-        .price-card{background:white;border-radius:var(--r-lg);padding:2.5rem;border:1px solid var(--border);position:relative}
-        .price-card.featured{background:var(--ink);color:white;transform:scale(1.05);box-shadow:0 30px 60px rgba(0,0,0,0.12)}
-        .feature-list{list-style:none;margin:2rem 0}
-        .feature-list li{margin-bottom:0.75rem;font-size:0.9rem;display:flex;gap:0.5rem;align-items:center}
-        .feature-list li::before{content:'✓';color:var(--teal)}
-
-        /* CONTACT */
-        #contact{background:var(--teal-d);color:white;text-align:center}
-        .contact-form{max-width:500px;margin:3rem auto 0;display:flex;flex-direction:column;gap:1rem}
-        .contact-form input, .contact-form textarea, .contact-form select{
-            width:100%;padding:1rem;border-radius:var(--r);border:1px solid rgba(255,255,255,0.2);
-            background:rgba(255,255,255,0.1);color:white;outline:none;font-family:inherit;
+        .loading{display:none;text-align:center;padding:3rem}
+        .spinner {
+            width: 40px; height: 40px; border: 4px solid var(--teal-l); border-top: 4px solid var(--teal);
+            border-radius: 50%; animation: spin 1s linear infinite; margin: 0 auto 1rem;
         }
-        .contact-form select option { color: black; }
-        .btn-submit{background:white;color:var(--teal-d);border:none;padding:1rem;border-radius:100px;font-weight:700;cursor:pointer}
-
-        /* ══════════════════════════════════════
-           AUDIT PAGE
-        ══════════════════════════════════════ */
-        .audit-page{padding:8rem 2rem 4rem;min-height:100vh}
-        .audit-container{max-width:800px;margin:0 auto}
-        .audit-card{background:white;padding:3rem;border-radius:var(--r-lg);border:1px solid var(--border);box-shadow:0 4px 20px rgba(0,0,0,0.05)}
-        .audit-input-group{display:flex;gap:1rem;margin-top:2rem}
-        @media(max-width:600px){.audit-input-group{flex-direction:column}}
-        .audit-input{flex:1;padding:1rem 1.5rem;border-radius:100px;border:1.5px solid var(--border);font-size:1rem;outline:none}
-        .audit-input:focus{border-color:var(--teal)}
-        
-        /* RESULTS */
-        .results-box{display:none;margin-top:3rem;animation:fadeIn 0.5s ease-out forwards}
-        .score-circle{width:150px;height:150px;border-radius:50%;border:8px solid var(--teal-l);display:flex;flex-direction:column;align-items:center;justify-content:center;margin:0 auto 2rem;position:relative}
-        .score-val{font-size:3rem;font-weight:900;color:var(--teal-d);line-height:1}
-        .score-label{font-size:0.7rem;text-transform:uppercase;letter-spacing:0.1em;color:var(--ink-l)}
-        
-        .audit-metrics{display:grid;grid-template-columns:1fr 1fr;gap:1.5rem;text-align:left;margin-top:2rem}
-        .metric-item{padding:1rem;background:var(--cream);border-radius:var(--r);border:1px solid var(--border)}
-        .metric-title{font-size:0.8rem;font-weight:700;margin-bottom:0.25rem}
-        .metric-status{font-size:0.85rem;color:var(--ink-m)}
-
-        .loading-state{display:none;text-align:center;padding:3rem 0}
-        .spinner{width:40px;height:40px;border:4px solid var(--teal-l);border-top-color:var(--teal);border-radius:50%;animation:spin 1s linear infinite;margin:0 auto 1.5rem}
-
-        @keyframes spin{to{transform:rotate(360deg)}}
-        @keyframes fadeIn{from{opacity:0;transform:translateY(10px)}to{opacity:1;transform:translateY(0)}}
-
+        @keyframes spin { to { transform: rotate(360deg); } }
     </style>
 </head>
 <body>
 
-    <nav>
-        <a class="logo" onclick="showPage('home')">List<span>Smart</span></a>
-        <ul>
-            <li><a href="#problem">The Problem</a></li>
-            <li><a href="#services">Services</a></li>
-            <li><a href="#pricing">Pricing</a></li>
-        </ul>
-        <button class="nav-cta" onclick="showPage('audit')">Free Audit ▶</button>
-    </nav>
+<nav>
+    <a class="logo" onclick="showPage('home')">List<span>Smart</span></a>
+    <ul>
+        <li><a href="#problem">The Problem</a></li>
+        <li><a href="#pricing">Pricing</a></li>
+    </ul>
+    <button class="nav-cta" onclick="showPage('audit')">Free Audit ▶</button>
+</nav>
 
-    <!-- HOME PAGE -->
-    <div id="page-home">
-        <section id="hero">
-            <div class="hero-bg"></div>
-            <div class="hero-grid"></div>
-            <div class="hero-content">
-                <div class="hero-eyebrow">Airbnb Listing Optimization</div>
-                <h1 class="hero-title">More Views.<br><em>More Bookings.</em></h1>
-                <p class="hero-sub">We turn underperforming Airbnb listings into high-revenue assets through SEO, psychological copywriting, and visual strategy.</p>
-                <div class="hero-actions">
-                    <button class="btn-primary" onclick="showPage('audit')">Get Your Free Audit ▶</button>
-                    <a href="#problem" class="btn-ghost">How it Works</a>
+<div id="page-home">
+    <section id="hero">
+        <div class="hero-content">
+            <h1 class="hero-title">More Views.<br><em>More Bookings.</em></h1>
+            <p style="font-size:1.2rem; max-width:600px; margin-bottom:2rem">We use AI and data science to optimize your Airbnb listing for the 2024 search algorithm.</p>
+            <button class="btn-primary" onclick="showPage('audit')">Get Your Free Audit ▶</button>
+        </div>
+    </section>
+</div>
+
+<div id="page-audit" class="audit-page">
+    <div class="audit-container">
+        <a onclick="showPage('home')" style="cursor:pointer; color:var(--teal); font-size:0.9rem">← Back</a>
+        <h2 style="margin-top:1rem">Airbnb Listing Audit</h2>
+        <p>Paste your listing URL below. Our AI will scrape your content and analyze it against high-performing competitors.</p>
+        
+        <div class="audit-input-group" id="inputSection">
+            <input type="text" id="listingUrl" class="audit-input" placeholder="https://www.airbnb.com/rooms/...">
+            <button class="btn-primary" onclick="runAudit()">Analyze</button>
+        </div>
+
+        <div id="auditLoading" class="loading">
+            <div class="spinner"></div>
+            <p><strong>Scraping & Analyzing...</strong></p>
+            <p style="font-size:0.8rem; color:var(--ink-l)">This takes about 20-40 seconds because we use real-time data.</p>
+        </div>
+
+        <div id="auditResults" class="results-area">
+            <div class="score-box">
+                <div class="score-number" id="resOverall">0</div>
+                <p style="text-transform:uppercase; font-size:0.7rem; letter-spacing:0.1em">Overall Optimization Score</p>
+                <h3 id="resListingTitle" style="margin-top:1rem"></h3>
+            </div>
+
+            <div class="metric-grid">
+                <div class="metric-card">
+                    <div class="metric-label">SEO & Search</div>
+                    <div class="metric-val" id="score-seo">0%</div>
+                </div>
+                <div class="metric-card">
+                    <div class="metric-label">Copywriting</div>
+                    <div class="metric-val" id="score-description">0%</div>
+                </div>
+                <div class="metric-card">
+                    <div class="metric-label">Photos</div>
+                    <div class="metric-val" id="score-photos">0%</div>
+                </div>
+                <div class="metric-card">
+                    <div class="metric-label">Title/CTR</div>
+                    <div class="metric-val" id="score-title">0%</div>
                 </div>
             </div>
-            <div class="hero-visual">
-                <div class="listing-card">
-                    <div class="badge">Live Audit Data</div>
-                    <div style="font-weight:700; margin-bottom:1rem">Downtown Luxe Suite</div>
-                    <div class="bar-row">
-                        <div class="bar-label">Search Vis.</div>
-                        <div class="bar-track"><div class="bar-fill" style="width: 88%;"></div></div>
-                        <div class="bar-val">88%</div>
-                    </div>
-                    <div class="bar-row">
-                        <div class="bar-label">Conversion</div>
-                        <div class="bar-track"><div class="bar-fill" style="width: 94%; background:var(--gold-m)"></div></div>
-                        <div class="bar-val">94%</div>
-                    </div>
-                </div>
-            </div>
-        </section>
 
-        <section id="problem">
-            <div class="container">
-                <span class="section-label">The Market</span>
-                <h2 class="section-title">The "Ghost Listing" Problem</h2>
-                <div class="problem-grid">
-                    <div class="problem-card">
-                        <h3>Hidden by Algorithm</h3>
-                        <p>If your keywords don't match traveler intent, you're on page 10. We fix your SEO to put you on page 1.</p>
-                    </div>
-                    <div class="problem-card">
-                        <h3>The 3-Second Rule</h3>
-                        <p>Guests decide to click based on your cover photo and title alone. Most hosts get this order wrong.</p>
-                    </div>
-                    <div class="problem-card">
-                        <h3>Vague Descriptions</h3>
-                        <p>"Nice 2BR flat" doesn't sell. We use sales psychology to describe the *experience*, not just the rooms.</p>
-                    </div>
-                </div>
-            </div>
-        </section>
+            <div id="sectionContainer"></div>
 
-        <section id="pricing">
-            <div class="container">
-                <span class="section-label">Pricing</span>
-                <h2 class="section-title">Investment Plans</h2>
-                <div class="pricing-grid">
-                    <div class="price-card">
-                        <div class="tier">Starter Audit</div>
-                        <div style="font-size:2.5rem; font-weight:900; margin:1rem 0">€97</div>
-                        <p>A comprehensive roadmap for the DIY host who wants professional data.</p>
-                        <ul class="feature-list">
-                            <li>12-Page PDF Audit</li>
-                            <li>SEO Keyword Analysis</li>
-                            <li>Photo Order Strategy</li>
-                            <li>Title Recommendations</li>
-                        </ul>
-                        <button class="btn-primary" style="width:100%" onclick="scrollToContact('Starter Audit')">Buy Audit</button>
-                    </div>
-                    <div class="price-card featured">
-                        <div class="tier">Full Optimization</div>
-                        <div style="font-size:2.5rem; font-weight:900; margin:1rem 0">€347</div>
-                        <p>We do it all for you. Hands-off revenue growth for serious hosts.</p>
-                        <ul class="feature-list">
-                            <li>Everything in Audit</li>
-                            <li>Full Description Rewrite</li>
-                            <li>Listing Management Tips</li>
-                            <li>Keyword Integration</li>
-                        </ul>
-                        <button class="btn-primary" style="width:100%" onclick="scrollToContact('Full Optimization')">Start Now</button>
-                    </div>
-                </div>
-            </div>
-        </section>
-
-        <section id="contact">
-            <div class="container">
-                <h2 class="section-title" style="color:white">Ready to Scale?</h2>
-                <p>Drop your listing link below and let's get to work.</p>
-                <form id="contactForm" class="contact-form">
-                    <input type="text" placeholder="Full Name" required>
-                    <input type="email" placeholder="Email Address" required>
-                    <select id="serviceSelect">
-                        <option>General Inquiry</option>
-                        <option>Starter Audit - €97</option>
-                        <option>Full Optimization - €347</option>
-                    </select>
-                    <textarea placeholder="Paste your Airbnb URL here..." rows="4"></textarea>
-                    <button type="submit" class="btn-submit">Send Message</button>
-                </form>
-            </div>
-        </section>
-    </div>
-
-    <!-- AUDIT PAGE -->
-    <div id="page-audit" class="audit-page">
-        <div class="audit-container">
-            <div class="audit-card">
-                <div style="text-align:center">
-                    <span class="section-label">Free Analysis</span>
-                    <h2 style="font-family:'Playfair Display'; font-size:2.5rem">Check your score.</h2>
-                    <p style="color:var(--ink-l); margin-top:0.5rem">Paste your Airbnb URL to see how your listing performs against the local average.</p>
-                </div>
-
-                <div class="audit-input-group">
-                    <input type="text" id="auditUrl" class="audit-input" placeholder="https://www.airbnb.com/rooms/...">
-                    <button class="btn-primary" onclick="handleAudit()">Analyze Now ▶</button>
-                </div>
-
-                <div id="auditLoading" class="loading-state">
-                    <div class="spinner"></div>
-                    <p>Scanning listing metadata...</p>
-                    <p style="font-size:0.8rem; color:var(--ink-l)">Checking photo entropy and keyword density</p>
-                </div>
-
-                <div id="auditResults" class="results-box">
-                    <div class="score-circle">
-                        <span class="score-label">Result</span>
-                        <div class="score-val" id="scoreVal">0</div>
-                        <span class="score-label">/ 100</span>
-                    </div>
-                    
-                    <div style="text-align:center; margin-bottom:2rem">
-                        <h3 id="scoreText" style="font-size:1.5rem; margin-bottom:0.5rem">Needs Optimization</h3>
-                        <p id="scoreSub" style="font-size:0.9rem; color:var(--ink-l)"></p>
-                    </div>
-
-                    <div class="audit-metrics">
-                        <div class="metric-item">
-                            <div class="metric-title">SEO Visibility</div>
-                            <div class="metric-status" id="m-seo">Checking...</div>
-                        </div>
-                        <div class="metric-item">
-                            <div class="metric-title">Photo Order</div>
-                            <div class="metric-status" id="m-photo">Checking...</div>
-                        </div>
-                        <div class="metric-item">
-                            <div class="metric-title">Title Conversion</div>
-                            <div class="metric-status" id="m-title">Checking...</div>
-                        </div>
-                        <div class="metric-item">
-                            <div class="metric-title">Price Competitiveness</div>
-                            <div class="metric-status" id="m-price">Checking...</div>
-                        </div>
-                    </div>
-
-                    <div style="margin-top:3rem; padding-top:2rem; border-top:1px solid var(--border); text-align:center">
-                        <p style="margin-bottom:1.5rem; font-weight:500">Want the full 12-page breakdown and keyword list?</p>
-                        <button class="btn-primary" onclick="scrollToContact('Starter Audit')">Download Full Audit (€97)</button>
-                    </div>
-                </div>
+            <div style="background:var(--ink); color:white; padding:2rem; border-radius:var(--r); margin-top:2rem; text-align:center">
+                <h4>Ready to fix these issues?</h4>
+                <p style="font-size:0.9rem; margin:0.5rem 0 1.5rem; opacity:0.8">Get our Full Optimization package to have a professional rewrite your listing.</p>
+                <button class="btn-primary" onclick="showPage('home')">View Pro Packages</button>
             </div>
         </div>
     </div>
+</div>
 
-    <script>
-        // ROUTING
-        function showPage(pageId) {
-            document.getElementById('page-home').style.display = pageId === 'home' ? 'block' : 'none';
-            document.getElementById('page-audit').style.display = pageId === 'audit' ? 'block' : 'none';
-            window.scrollTo(0,0);
-        }
+<script>
+    function showPage(p) {
+        document.getElementById('page-home').style.display = p === 'home' ? 'block' : 'none';
+        document.getElementById('page-audit').style.display = p === 'audit' ? 'block' : 'none';
+        window.scrollTo(0,0);
+    }
 
-        function scrollToContact(service) {
-            showPage('home');
-            document.getElementById('serviceSelect').value = service;
-            setTimeout(() => {
-                document.getElementById('contact').scrollIntoView({ behavior: 'smooth' });
-            }, 100);
-        }
+    async function runAudit() {
+        const url = document.getElementById('listingUrl').value;
+        if(!url) return alert("Please enter a URL");
 
-        // AUDIT LOGIC
-        function handleAudit() {
-            const url = document.getElementById('auditUrl').value;
-            if(!url || !url.includes('airbnb')) {
-                alert("Please enter a valid Airbnb room URL.");
-                return;
-            }
+        const loading = document.getElementById('auditLoading');
+        const results = document.getElementById('auditResults');
+        const input = document.getElementById('inputSection');
 
-            // UI Transitions
-            document.getElementById('auditLoading').style.display = 'block';
-            document.getElementById('auditResults').style.display = 'none';
+        input.style.display = 'none';
+        loading.style.display = 'block';
+        results.style.display = 'none';
+
+        try {
+            const response = await fetch('/api/audit', {
+                method: 'POST',
+                headers: {'Content-Type': 'application/json'},
+                body: JSON.stringify({ url: url })
+            });
+
+            if(!response.ok) throw new Error("Server error");
             
-            // Simulate AI Processing
-            setTimeout(() => {
-                document.getElementById('auditLoading').style.display = 'none';
-                document.getElementById('auditResults').style.display = 'block';
-                
-                // Randomized but realistic "Audit" results
-                const score = Math.floor(Math.random() * (75 - 45 + 1)) + 45;
-                document.getElementById('scoreVal').innerText = score;
-                
-                document.getElementById('scoreText').innerText = score < 60 ? "Critical Improvements Needed" : "Below Market Average";
-                document.getElementById('scoreSub').innerText = `Your listing is currently performing in the bottom ${100 - score}% of your local area.`;
-                
-                document.getElementById('m-seo').innerText = "❌ Missing high-intent keywords";
-                document.getElementById('m-photo').innerText = "⚠️ Cover photo doesn't show unique value";
-                document.getElementById('m-title').innerText = "❌ Generic title (Low CTR)";
-                document.getElementById('m-price').innerText = "✅ Fairly competitive";
+            const data = await response.json();
+            renderResults(data);
 
-                // Animate the score
-                let current = 0;
-                const timer = setInterval(() => {
-                    if(current >= score) clearInterval(timer);
-                    document.getElementById('scoreVal').innerText = current;
-                    current++;
-                }, 20);
-
-            }, 2500);
+        } catch (err) {
+            alert("Error: " + err.message);
+            input.style.display = 'flex';
+        } finally {
+            loading.style.display = 'none';
         }
+    }
 
-        // FORM SUBMISSION
-        document.getElementById('contactForm').addEventListener('submit', function(e) {
-            e.preventDefault();
-            const btn = e.target.querySelector('button');
-            btn.innerText = "Message Sent! ✓";
-            btn.style.background = "#1D9E75";
-            btn.style.color = "white";
-            setTimeout(() => {
-                btn.innerText = "Send Message";
-                btn.style.background = "white";
-                btn.style.color = "var(--teal-d)";
-                e.target.reset();
-            }, 3000);
+    function renderResults(data) {
+        document.getElementById('auditResults').style.display = 'block';
+        document.getElementById('resOverall').innerText = data.overallScore;
+        document.getElementById('resListingTitle').innerText = data.listingTitle;
+        
+        // Match your backend's "scores" object keys
+        document.getElementById('score-seo').innerText = (data.scores?.seo || 0) + "%";
+        document.getElementById('score-description').innerText = (data.scores?.description || 0) + "%";
+        document.getElementById('score-photos').innerText = (data.scores?.photos || 0) + "%";
+        document.getElementById('score-title').innerText = (data.scores?.title || 0) + "%";
+
+        const container = document.getElementById('sectionContainer');
+        container.innerHTML = '';
+
+        data.sections.forEach(s => {
+            const div = document.createElement('div');
+            div.style.marginBottom = '1.5rem';
+            div.innerHTML = `
+                <span class="finding-tag tag-${s.status}">${s.status.toUpperCase()}</span>
+                <h4 style="margin-bottom:0.5rem">${s.icon} ${s.name}</h4>
+                <p style="font-size:0.9rem; color:var(--ink-m)">${s.recommendation}</p>
+            `;
+            container.appendChild(div);
         });
-    </script>
+    }
+</script>
+
 </body>
 </html>
