@@ -6,7 +6,7 @@
     <title>ListSmart — More Views. More Bookings. More Revenue.</title>
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-    <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:ital,wght@0,700;0,900;1,700&family=DM+Sans:wght@300;400;500&display=swap" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:ital,wght@0,700;0,900;1,700&family=DM+Sans:wght@300;400;500;700&display=swap" rel="stylesheet">
     <style>
         *,*::before,*::after{box-sizing:border-box;margin:0;padding:0}
         :root{
@@ -18,7 +18,7 @@
         }
         html{scroll-behavior:smooth}
         body{font-family:'DM Sans',sans-serif;background:var(--cream);color:var(--ink);font-size:16px;line-height:1.7;overflow-x:hidden}
-        h1,h2,h3{font-family:'Playfair Display',serif}
+        h1,h2,h3,h4{font-family:'Playfair Display',serif}
 
         /* ── NAVIGATION ── */
         nav{
@@ -36,43 +36,70 @@
         nav ul a{text-decoration:none;color:var(--ink-m);font-size:0.9rem;font-weight:500}
         .nav-cta{background:var(--teal);color:white;padding:0.5rem 1.25rem;border-radius:100px;border:none;font-weight:500;cursor:pointer}
 
-        /* ── PAGES ── */
+        /* ── LAYOUT ── */
+        section{padding:5rem 2rem; max-width:1200px; margin:0 auto}
+        .container-sm{max-width:800px; margin:0 auto}
         #page-home{display:block}
         #page-audit{display:none}
 
         /* ── HERO ── */
-        #hero{min-height:90vh;display:flex;align-items:center;padding:7rem 2rem 4rem;position:relative}
-        .hero-content{max-width:1100px;margin:0 auto;position:relative;z-index:2}
+        #hero{min-height:85vh;display:flex;align-items:center;padding:7rem 2rem 4rem}
         .hero-title{font-size:clamp(3rem,7vw,5.5rem);line-height:1.1;margin-bottom:1.5rem}
         .hero-title em{color:var(--teal);font-style:italic}
-        .btn-primary{background:var(--teal);color:white;padding:1rem 2rem;border-radius:100px;border:none;font-size:1.1rem;font-weight:700;cursor:pointer;display:inline-block;text-decoration:none}
+        .btn-primary{background:var(--teal);color:white;padding:1rem 2rem;border-radius:100px;border:none;font-size:1.1rem;font-weight:700;cursor:pointer;display:inline-block;text-decoration:none;transition:transform 0.2s}
+        .btn-primary:hover{transform:translateY(-2px); background:var(--teal-d)}
+
+        /* ── PROBLEM / BENEFITS ── */
+        .grid-3{display:grid;grid-template-columns:repeat(auto-fit,minmax(300px,1fr));gap:2rem;margin-top:3rem}
+        .card{background:var(--white);padding:2.5rem;border-radius:var(--r);border:1px solid var(--border)}
+        .card h3{margin-bottom:1rem; font-size:1.5rem}
+
+        /* ── PRICING ── */
+        .price-card{border:2px solid var(--border); transition:border-color 0.3s}
+        .price-card.featured{border-color:var(--teal); position:relative}
+        .price-card.featured::after{content:'MOST POPULAR'; position:absolute; top:-15px; left:50%; transform:translateX(-50%); background:var(--teal); color:white; padding:4px 12px; border-radius:100px; font-size:0.7rem; font-weight:700}
+        .price-tag{font-size:3rem; font-weight:900; margin:1.5rem 0}
+        .price-tag span{font-size:1rem; color:var(--ink-l)}
 
         /* ── AUDIT UI ── */
         .audit-page{padding:6rem 2rem}
-        .audit-container{max-width:800px;margin:0 auto;background:white;padding:3rem;border-radius:var(--r-lg);border:1px solid var(--border)}
+        .audit-container{max-width:850px;margin:0 auto;background:white;padding:3rem;border-radius:var(--r-lg);border:1px solid var(--border);box-shadow:0 20px 40px rgba(0,0,0,0.03)}
         .audit-input-group{display:flex;gap:1rem;margin:2rem 0}
-        .audit-input{flex:1;padding:1rem;border-radius:100px;border:1.5px solid var(--border);outline:none}
+        .audit-input{flex:1;padding:1.2rem 1.5rem;border-radius:100px;border:1.5px solid var(--border);outline:none; font-size:1rem}
         
         .results-area{display:none;margin-top:2rem;border-top:1px solid var(--border);padding-top:2rem}
-        .score-box{text-align:center;margin-bottom:2rem}
-        .score-number{font-size:4rem;font-weight:900;color:var(--teal);line-height:1}
+        .score-box{text-align:center;margin-bottom:2.5rem}
+        .score-number{font-size:5rem;font-weight:900;color:var(--teal);line-height:1}
         
-        .metric-grid{display:grid;grid-template-columns:repeat(auto-fit,minmax(200px,1fr));gap:1rem;margin-bottom:2rem}
-        .metric-card{padding:1rem;background:var(--cream);border-radius:var(--r);border:1px solid var(--border)}
-        .metric-label{font-size:0.75rem;text-transform:uppercase;color:var(--ink-l);font-weight:700}
-        .metric-val{font-size:1.25rem;font-weight:700}
+        .metric-grid{display:grid;grid-template-columns:repeat(auto-fit,minmax(180px,1fr));gap:1rem;margin-bottom:2rem}
+        .metric-card{padding:1.5rem;background:var(--cream);border-radius:var(--r);border:1px solid var(--border); text-align:center}
+        .metric-label{font-size:0.7rem;text-transform:uppercase;color:var(--ink-l);font-weight:700; letter-spacing:0.05em}
+        .metric-val{font-size:1.5rem;font-weight:700; color:var(--ink)}
 
         .finding-tag{display:inline-block;padding:0.25rem 0.75rem;border-radius:4px;font-size:0.8rem;font-weight:700;margin-bottom:0.5rem}
         .tag-critical{background:#fee2e2;color:#991b1b}
         .tag-warning{background:#fef3c7;color:#92400e}
         .tag-good{background:#dcfce7;color:#166534}
 
+        /* ── FORMS ── */
+        .order-form{background:var(--white); padding:2rem; border-radius:var(--r); margin-top:2rem}
+        .form-group{margin-bottom:1.5rem}
+        .form-group label{display:block; font-size:0.9rem; font-weight:700; margin-bottom:0.5rem}
+        .form-control{width:100%; padding:0.8rem 1rem; border-radius:8px; border:1.5px solid var(--border); outline:none; font-family:inherit}
+        textarea.form-control{min-height:100px; resize:vertical}
+
         .loading{display:none;text-align:center;padding:3rem}
         .spinner {
-            width: 40px; height: 40px; border: 4px solid var(--teal-l); border-top: 4px solid var(--teal);
-            border-radius: 50%; animation: spin 1s linear infinite; margin: 0 auto 1rem;
+            width: 50px; height: 50px; border: 5px solid var(--teal-l); border-top: 5px solid var(--teal);
+            border-radius: 50%; animation: spin 1s linear infinite; margin: 0 auto 1.5rem;
         }
         @keyframes spin { to { transform: rotate(360deg); } }
+
+        @media (max-width: 768px) {
+            .audit-input-group { flex-direction: column; }
+            .hero-title { font-size: 3rem; }
+            nav ul { display: none; }
+        }
     </style>
 </head>
 <body>
@@ -87,79 +114,214 @@
 </nav>
 
 <div id="page-home">
+    <!-- Hero -->
     <section id="hero">
         <div class="hero-content">
             <h1 class="hero-title">More Views.<br><em>More Bookings.</em></h1>
-            <p style="font-size:1.2rem; max-width:600px; margin-bottom:2rem">We use AI and data science to optimize your Airbnb listing for the 2024 search algorithm.</p>
-            <button class="btn-primary" onclick="showPage('audit')">Get Your Free Audit ▶</button>
+            <p style="font-size:1.3rem; max-width:650px; margin-bottom:2.5rem; color:var(--ink-m)">We use AI and data science to optimize your Airbnb listing for the 2024 search algorithm.</p>
+            <div style="display:flex; gap:1rem; flex-wrap:wrap">
+                <button class="btn-primary" onclick="showPage('audit')">Get Your Free Audit ▶</button>
+                <a href="#pricing" class="btn-primary" style="background:transparent; border:2px solid var(--teal); color:var(--teal)">View Professional Packages</a>
+            </div>
+        </div>
+    </section>
+
+    <!-- Problem Section -->
+    <section id="problem" style="background:var(--white)">
+        <div class="container-sm" style="text-align:center">
+            <h2 style="font-size:2.5rem">Why most listings fail.</h2>
+            <p style="margin-top:1rem; color:var(--ink-l)">The Airbnb algorithm has changed. Simple descriptions no longer cut it.</p>
+        </div>
+        <div class="grid-3">
+            <div class="card">
+                <div style="font-size:2rem; margin-bottom:1rem">📉</div>
+                <h3>Low Visibility</h3>
+                <p>If you're not on the first page, you're invisible. We optimize your SEO tokens to boost search rank.</p>
+            </div>
+            <div class="card">
+                <div style="font-size:2rem; margin-bottom:1rem">🖱️</div>
+                <h3>Poor CTR</h3>
+                <p>A boring title means fewer clicks. We create high-converting headlines that stop the scroll.</p>
+            </div>
+            <div class="card">
+                <div style="font-size:2rem; margin-bottom:1rem">❌</div>
+                <h3>Missed Bookings</h3>
+                <p>Guests leave when they don't find answers. We rewrite your copy to build trust and close the deal.</p>
+            </div>
+        </div>
+    </section>
+
+    <!-- Pricing Section -->
+    <section id="pricing">
+        <div style="text-align:center; margin-bottom:4rem">
+            <h2 style="font-size:3rem">Professional Packages</h2>
+            <p style="color:var(--ink-l)">Don't leave your revenue to chance. Let experts fix it.</p>
+        </div>
+        <div class="grid-3">
+            <div class="card price-card">
+                <h3>Standard Refresh</h3>
+                <p>Perfect for new hosts.</p>
+                <div class="price-tag">$149 <span>/listing</span></div>
+                <ul style="list-style:none; margin-bottom:2rem; font-size:0.9rem">
+                    <li>✓ High-CTR Title Creation</li>
+                    <li>✓ SEO Keyword Integration</li>
+                    <li>✓ Compelling Description Update</li>
+                </ul>
+                <button class="btn-primary" style="width:100%" onclick="openOrder('Standard Refresh')">Get Started</button>
+            </div>
+            <div class="card price-card featured">
+                <h3>The Pro Growth</h3>
+                <p>Our most popular choice.</p>
+                <div class="price-tag">$249 <span>/listing</span></div>
+                <ul style="list-style:none; margin-bottom:2rem; font-size:0.9rem">
+                    <li>✓ <strong>Everything in Standard</strong></li>
+                    <li>✓ Photo Order Strategy</li>
+                    <li>✓ Image Caption Optimization</li>
+                    <li>✓ Profile Bio Review</li>
+                </ul>
+                <button class="btn-primary" style="width:100%" onclick="openOrder('Pro Growth')">Get Started</button>
+            </div>
+            <div class="card price-card">
+                <h3>Full Launch</h3>
+                <p>The ultimate transformation.</p>
+                <div class="price-tag">$499 <span>/listing</span></div>
+                <ul style="list-style:none; margin-bottom:2rem; font-size:0.9rem">
+                    <li>✓ <strong>Everything in Pro</strong></li>
+                    <li>✓ Competitor Pricing Analysis</li>
+                    <li>✓ Custom Guest Guidebook PDF</li>
+                    <li>✓ 1-on-1 Performance Call</li>
+                </ul>
+                <button class="btn-primary" style="width:100%" onclick="openOrder('Full Launch')">Get Started</button>
+            </div>
         </div>
     </section>
 </div>
 
 <div id="page-audit" class="audit-page">
     <div class="audit-container">
-        <a onclick="showPage('home')" style="cursor:pointer; color:var(--teal); font-size:0.9rem">← Back</a>
-        <h2 style="margin-top:1rem">Airbnb Listing Audit</h2>
-        <p>Paste your listing URL below. Our AI will scrape your content and analyze it against high-performing competitors.</p>
+        <a onclick="showPage('home')" style="cursor:pointer; color:var(--teal); font-size:0.9rem; font-weight:700">← Back to Home</a>
         
-        <div class="audit-input-group" id="inputSection">
-            <input type="text" id="listingUrl" class="audit-input" placeholder="https://www.airbnb.com/rooms/...">
-            <button class="btn-primary" onclick="runAudit()">Analyze</button>
-        </div>
-
-        <div id="auditLoading" class="loading">
-            <div class="spinner"></div>
-            <p><strong>Scraping & Analyzing...</strong></p>
-            <p style="font-size:0.8rem; color:var(--ink-l)">This takes about 20-40 seconds because we use real-time data.</p>
-        </div>
-
-        <div id="auditResults" class="results-area">
-            <div class="score-box">
-                <div class="score-number" id="resOverall">0</div>
-                <p style="text-transform:uppercase; font-size:0.7rem; letter-spacing:0.1em">Overall Optimization Score</p>
-                <h3 id="resListingTitle" style="margin-top:1rem"></h3>
+        <!-- AUDIT INTERFACE -->
+        <div id="auditInterface">
+            <h2 style="margin-top:1.5rem; font-size:2.5rem">Airbnb Listing Audit</h2>
+            <p style="color:var(--ink-m)">Paste your listing URL below. Our AI will analyze your content against high-performing standards.</p>
+            
+            <div class="audit-input-group" id="inputSection">
+                <input type="text" id="listingUrl" class="audit-input" placeholder="https://www.airbnb.com/rooms/...">
+                <button class="btn-primary" onclick="runAudit()">Analyze Now</button>
             </div>
 
-            <div class="metric-grid">
-                <div class="metric-card">
-                    <div class="metric-label">SEO & Search</div>
-                    <div class="metric-val" id="score-seo">0%</div>
-                </div>
-                <div class="metric-card">
-                    <div class="metric-label">Copywriting</div>
-                    <div class="metric-val" id="score-description">0%</div>
-                </div>
-                <div class="metric-card">
-                    <div class="metric-label">Photos</div>
-                    <div class="metric-val" id="score-photos">0%</div>
-                </div>
-                <div class="metric-card">
-                    <div class="metric-label">Title/CTR</div>
-                    <div class="metric-val" id="score-title">0%</div>
-                </div>
+            <div id="auditLoading" class="loading">
+                <div class="spinner"></div>
+                <p><strong>Scraping & Analyzing...</strong></p>
+                <p style="font-size:0.85rem; color:var(--ink-l); margin-top:0.5rem">We are simulating a guest's browser to read your listing. This takes 20-40 seconds.</p>
             </div>
 
-            <div id="sectionContainer"></div>
+            <div id="auditResults" class="results-area">
+                <div class="score-box">
+                    <div class="score-number" id="resOverall">0</div>
+                    <p style="text-transform:uppercase; font-size:0.75rem; letter-spacing:0.15em; font-weight:700">Optimization Score</p>
+                    <h3 id="resListingTitle" style="margin-top:1.5rem; font-size:1.8rem"></h3>
+                </div>
 
-            <div style="background:var(--ink); color:white; padding:2rem; border-radius:var(--r); margin-top:2rem; text-align:center">
-                <h4>Ready to fix these issues?</h4>
-                <p style="font-size:0.9rem; margin:0.5rem 0 1.5rem; opacity:0.8">Get our Full Optimization package to have a professional rewrite your listing.</p>
-                <button class="btn-primary" onclick="showPage('home')">View Pro Packages</button>
+                <div class="metric-grid">
+                    <div class="metric-card">
+                        <div class="metric-label">SEO</div>
+                        <div class="metric-val" id="score-seo">0%</div>
+                    </div>
+                    <div class="metric-card">
+                        <div class="metric-label">Copy</div>
+                        <div class="metric-val" id="score-description">0%</div>
+                    </div>
+                    <div class="metric-card">
+                        <div class="metric-label">Photos</div>
+                        <div class="metric-val" id="score-photos">0%</div>
+                    </div>
+                    <div class="metric-card">
+                        <div class="metric-label">CTR</div>
+                        <div class="metric-val" id="score-title">0%</div>
+                    </div>
+                </div>
+
+                <div id="sectionContainer"></div>
+
+                <div style="background:var(--teal-l); border:1px solid var(--teal-m); padding:2rem; border-radius:var(--r); margin-top:3rem; text-align:center">
+                    <h3 style="color:var(--teal-d)">Ready for the 100% Score?</h3>
+                    <p style="margin:0.5rem 0 1.5rem">Get your listing fixed by professionals. Mention your audit score for a 10% discount.</p>
+                    <button class="btn-primary" onclick="openOrder('Post-Audit Request')">Inquire About Professional Optimization</button>
+                </div>
+            </div>
+        </div>
+
+        <!-- REQUEST / CONTACT FORM -->
+        <div id="requestForm" style="display:none">
+            <h2 style="margin-top:1.5rem">Request Optimization</h2>
+            <p id="serviceSubtitle" style="color:var(--ink-m); margin-bottom:2rem"></p>
+            
+            <div class="order-form">
+                <div class="form-group">
+                    <label>Full Name</label>
+                    <input type="text" id="orderName" class="form-control" placeholder="John Doe">
+                </div>
+                <div class="form-group">
+                    <label>Email Address</label>
+                    <input type="email" id="orderEmail" class="form-control" placeholder="john@example.com">
+                </div>
+                <div class="form-group">
+                    <label>Listing URL (Optional if audited)</label>
+                    <input type="text" id="orderUrl" class="form-control" placeholder="https://...">
+                </div>
+                <div class="form-group">
+                    <label>Message / Specific Goals</label>
+                    <textarea id="orderMessage" class="form-control" placeholder="Tell us about your property and goals..."></textarea>
+                </div>
+                <button class="btn-primary" style="width:100%" id="submitOrderBtn" onclick="submitRequest()">Send Request & View Availability</button>
+            </div>
+            
+            <div id="formSuccess" style="display:none; text-align:center; padding:3rem">
+                <div style="font-size:3rem">✅</div>
+                <h3>Request Sent!</h3>
+                <p>Our team will review your listing and get back to you with next steps within 12 hours.</p>
+                <button class="btn-primary" style="margin-top:2rem" onclick="showPage('home')">Return Home</button>
             </div>
         </div>
     </div>
 </div>
 
+<footer style="background:var(--white); padding:4rem 2rem; border-top:1px solid var(--border); text-align:center">
+    <p class="logo" style="margin-bottom:1rem">List<span>Smart</span></p>
+    <p style="font-size:0.8rem; color:var(--ink-l)">© 2024 ListSmart Optimization Studio. All rights reserved.</p>
+</footer>
+
 <script>
+    let currentService = "";
+
     function showPage(p) {
         document.getElementById('page-home').style.display = p === 'home' ? 'block' : 'none';
         document.getElementById('page-audit').style.display = p === 'audit' ? 'block' : 'none';
+        document.getElementById('auditInterface').style.display = 'block';
+        document.getElementById('requestForm').style.display = 'none';
         window.scrollTo(0,0);
+    }
+
+    function openOrder(serviceName) {
+        showPage('audit');
+        document.getElementById('auditInterface').style.display = 'none';
+        document.getElementById('requestForm').style.display = 'block';
+        document.getElementById('formSuccess').style.display = 'none';
+        document.getElementById('submitOrderBtn').style.display = 'block';
+        document.getElementById('serviceSubtitle').innerText = "Selected Service: " + serviceName;
+        
+        // Auto-fill URL if they were just auditing one
+        const auditUrl = document.getElementById('listingUrl').value;
+        if(auditUrl) document.getElementById('orderUrl').value = auditUrl;
+        
+        currentService = serviceName;
     }
 
     async function runAudit() {
         const url = document.getElementById('listingUrl').value;
-        if(!url) return alert("Please enter a URL");
+        if(!url) return alert("Please enter a valid Airbnb URL");
 
         const loading = document.getElementById('auditLoading');
         const results = document.getElementById('auditResults');
@@ -176,7 +338,7 @@
                 body: JSON.stringify({ url: url })
             });
 
-            if(!response.ok) throw new Error("Server error");
+            if(!response.ok) throw new Error("Failed to process listing.");
             
             const data = await response.json();
             renderResults(data);
@@ -194,7 +356,6 @@
         document.getElementById('resOverall').innerText = data.overallScore;
         document.getElementById('resListingTitle').innerText = data.listingTitle;
         
-        // Match your backend's "scores" object keys
         document.getElementById('score-seo').innerText = (data.scores?.seo || 0) + "%";
         document.getElementById('score-description').innerText = (data.scores?.description || 0) + "%";
         document.getElementById('score-photos').innerText = (data.scores?.photos || 0) + "%";
@@ -205,14 +366,51 @@
 
         data.sections.forEach(s => {
             const div = document.createElement('div');
-            div.style.marginBottom = '1.5rem';
+            div.style.marginBottom = '2rem';
             div.innerHTML = `
                 <span class="finding-tag tag-${s.status}">${s.status.toUpperCase()}</span>
-                <h4 style="margin-bottom:0.5rem">${s.icon} ${s.name}</h4>
-                <p style="font-size:0.9rem; color:var(--ink-m)">${s.recommendation}</p>
+                <h4 style="margin-bottom:0.5rem; font-size:1.3rem">${s.icon} ${s.name}</h4>
+                <p style="font-size:0.95rem; color:var(--ink-m); line-height:1.6">${s.recommendation}</p>
             `;
             container.appendChild(div);
         });
+    }
+
+    async function submitRequest() {
+        const name = document.getElementById('orderName').value;
+        const email = document.getElementById('orderEmail').value;
+        const url = document.getElementById('orderUrl').value;
+        const message = document.getElementById('orderMessage').value;
+
+        if(!name || !email) return alert("Name and Email are required to reach out.");
+
+        const btn = document.getElementById('submitOrderBtn');
+        btn.innerText = "Sending...";
+        btn.disabled = true;
+
+        try {
+            // We use the same endpoint as audit, but pass lead info
+            // The backend handles the email logic if name/email exists
+            const response = await fetch('/api/audit', {
+                method: 'POST',
+                headers: {'Content-Type': 'application/json'},
+                body: JSON.stringify({ 
+                    name, 
+                    email, 
+                    url: url || 'No URL Provided', 
+                    serviceType: currentService, 
+                    message 
+                })
+            });
+
+            document.querySelector('.order-form').style.display = 'none';
+            document.getElementById('formSuccess').style.display = 'block';
+
+        } catch (err) {
+            alert("Submission error. Please try again.");
+            btn.innerText = "Send Request";
+            btn.disabled = false;
+        }
     }
 </script>
 
