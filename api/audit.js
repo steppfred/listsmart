@@ -58,7 +58,7 @@ export default async function handler(req, res) {
     // 4. EMAIL LOGIC (BROADENED TO ENSURE DELIVERY)
     // We send an email if a name OR email was provided (indicating a lead)
     if ((name || email) && process.env.RESEND_API_KEY) {
-      console.log("Lead detected. Attempting email to steppfred@zohomail.eu...");
+      console.log("Lead detected. Attempting email to listsmart@zohomail.eu...");
       
       const resendResponse = await fetch('https://api.resend.com/emails', {
         method: 'POST',
@@ -68,7 +68,7 @@ export default async function handler(req, res) {
         },
         body: JSON.stringify({
           from: 'ListSmart <onboarding@resend.dev>',
-          to: 'steppfred@zohomail.eu', 
+          to: 'listsmart@zohomail.eu', 
           subject: `🚨 NEW SERVICE REQUEST: ${name || 'New Customer'}`,
           html: `
             <div style="font-family: sans-serif; padding: 20px; color: #333;">
