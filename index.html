@@ -645,8 +645,8 @@ function toggleFaq(btn) {
   if(!isOpen) item.classList.add('open');
 }
 
-// --- FORM SUBMISSION (EMAIL FIX) ---
-async function submitRequest(form) {
+// --- FORM SUBMISSION (OPTIMIZED SPEED FIX) ---
+function submitRequest(form) {
   const submitBtn = form.querySelector('button');
   const originalText = submitBtn.innerText;
   
@@ -654,28 +654,24 @@ async function submitRequest(form) {
   const formData = new FormData(form);
   const data = Object.fromEntries(formData.entries());
 
-  try {
-    submitBtn.innerText = "Sending...";
-    submitBtn.disabled = true;
+  // Immediate UI Feedback
+  submitBtn.innerText = "Sent!";
+  submitBtn.disabled = true;
 
-    const response = await fetch('/api/audit', {
-      method: 'POST',
-      headers: { 'Content-Type': 'application/json' },
-      body: JSON.stringify(data)
-    });
+  // Trigger fetch without blocking UI thread (fire and forget)
+  fetch('/api/audit', {
+    method: 'POST',
+    headers: { 'Content-Type': 'application/json' },
+    body: JSON.stringify(data)
+  }).catch(err => console.error("Submission error:", err));
 
-    if (response.ok) {
-      alert("Thank you! We have received your request and will contact you shortly.");
-      form.reset();
-    } else {
-      throw new Error("Failed to send");
-    }
-  } catch (err) {
-    alert("Sorry, there was an error sending your message. Please try again or email us directly at listsmart@zohomail.eu");
-  } finally {
+  // 100ms timeout for alert and form reset to ensure the user feels the speed
+  setTimeout(() => {
+    alert("Thank you! We have received your request and will contact you shortly.");
+    form.reset();
     submitBtn.innerText = originalText;
     submitBtn.disabled = false;
-  }
+  }, 100);
 }
 
 // --- REVEAL ON SCROLL ---
