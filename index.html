@@ -161,7 +161,7 @@
             <div class="card price-card">
                 <h3>Standard Refresh</h3>
                 <p>Perfect for new hosts.</p>
-                <div class="price-tag">$149 <span>/listing</span></div>
+                <div class="price-tag">97€ <span>/listing</span></div>
                 <ul style="list-style:none; margin-bottom:2rem; font-size:0.9rem">
                     <li>✓ High-CTR Title Creation</li>
                     <li>✓ SEO Keyword Integration</li>
@@ -172,7 +172,7 @@
             <div class="card price-card featured">
                 <h3>The Pro Growth</h3>
                 <p>Our most popular choice.</p>
-                <div class="price-tag">$249 <span>/listing</span></div>
+                <div class="price-tag">197€ <span>/listing</span></div>
                 <ul style="list-style:none; margin-bottom:2rem; font-size:0.9rem">
                     <li>✓ <strong>Everything in Standard</strong></li>
                     <li>✓ Photo Order Strategy</li>
@@ -184,7 +184,7 @@
             <div class="card price-card">
                 <h3>Full Launch</h3>
                 <p>The ultimate transformation.</p>
-                <div class="price-tag">$499 <span>/listing</span></div>
+                <div class="price-tag">397€ <span>/listing</span></div>
                 <ul style="list-style:none; margin-bottom:2rem; font-size:0.9rem">
                     <li>✓ <strong>Everything in Pro</strong></li>
                     <li>✓ Competitor Pricing Analysis</li>
@@ -389,8 +389,6 @@
         btn.disabled = true;
 
         try {
-            // We use the same endpoint as audit, but pass lead info
-            // The backend handles the email logic if name/email exists
             const response = await fetch('/api/audit', {
                 method: 'POST',
                 headers: {'Content-Type': 'application/json'},
