@@ -469,14 +469,14 @@ section{padding:6rem 2rem}
           <input type="text" name="name" placeholder="Your Name" required>
           <input type="email" name="email" placeholder="Your Email" required>
         </div>
-        <select name="service" required>
+        <select name="serviceType" required>
           <option value="" disabled selected>Select a Service</option>
           <option value="audit">Listing Audit (€97)</option>
           <option value="full">Full Optimization (€347)</option>
           <option value="growth">Growth Plan (€149/mo)</option>
           <option value="other">Other Inquiry</option>
         </select>
-        <input type="text" name="listing_url" placeholder="Your Airbnb Listing URL (Optional)">
+        <input type="text" name="url" placeholder="Your Airbnb Listing URL (Required)" required>
         <textarea name="message" placeholder="Tell us about your property and goals..." required></textarea>
         <button type="submit" class="btn-submit">Send Message</button>
       </form>
@@ -484,7 +484,7 @@ section{padding:6rem 2rem}
   </section>
 
   <footer class="home-footer">
-    <p>&copy; 2024 ListSmart. All rights reserved. <a href="#">Privacy Policy</a> | <a href="#">Terms of Service</a></p>
+    <p>&copy; 2024 ListSmart. Need help? <a href="mailto:steppfred@zohomail.eu" style="color:var(--teal-m)">steppfred@zohomail.eu</a></p>
   </footer>
 </div>
 
@@ -623,7 +623,7 @@ section{padding:6rem 2rem}
     </div>
 
     <div class="audit-footer">
-      <p>&copy; 2024 ListSmart. Need help? <a href="mailto:hello@listsmart.io">hello@listsmart.io</a></p>
+      <p>&copy; 2024 ListSmart. Need help? <a href="mailto:steppfred@zohomail.eu">steppfred@zohomail.eu</a></p>
     </div>
   </div>
 </div>
@@ -658,7 +658,6 @@ async function submitRequest(form) {
     submitBtn.innerText = "Sending...";
     submitBtn.disabled = true;
 
-    // We use /api/audit because that's where the backend listens for submissions
     const response = await fetch('/api/audit', {
       method: 'POST',
       headers: { 'Content-Type': 'application/json' },
@@ -672,7 +671,7 @@ async function submitRequest(form) {
       throw new Error("Failed to send");
     }
   } catch (err) {
-    alert("Sorry, there was an error sending your message. Please try again or email us directly at hello@listsmart.io");
+    alert("Sorry, there was an error sending your message. Please try again or email us directly at steppfred@zohomail.eu");
   } finally {
     submitBtn.innerText = originalText;
     submitBtn.disabled = false;
