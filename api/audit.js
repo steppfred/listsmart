@@ -1,107 +1,93 @@
-export const maxDuration = 60;
+import { Resend } from 'resend';
+
+// Initialize Resend with your API Key
+const resend = new Resend(process.env.RESEND_API_KEY);
 
 export default async function handler(req, res) {
-  // 1. ABSOLUTE FIRST PRIORITY: LOGGING
-  // If this doesn't show up in Vercel Logs, your index.html is not calling this endpoint correctly.
-  console.log("--- REQUEST RECEIVED AT /api/audit ---");
-  console.log("Method:", req.method);
-  console.log("Body Content:", JSON.stringify(req.body));
-
   if (req.method !== 'POST') {
-    return res.status(405).json({ error: 'Method not allowed' });
+    return res.status(405).json({ error: 'Method Not Allowed' });
   }
-
-  const { name, email, url, serviceType, message } = req.body;
-
-  // Basic validation
-  if (!url) {
-    console.error("CRITICAL: No URL provided in request");
-    return res.status(400).json({ error: 'URL is required' });
-  }
-
-  const SYSTEM_PROMPT = `You are a senior Airbnb listing optimization expert. Analyze the provided HTML and return valid JSON only. Structure: { "listingTitle": "string", "overallScore": number, "scores": { "title": number, "description": number, "seo": number, "photos": number, "pricing": number }, "sections": [ { "id": "string", "name": "string", "icon": "string", "status": "critical|warning|good", "findings": [{ "label": "string", "text": "string" }], "recommendation": "string" } ], "topOpportunity": "string" }`;
 
   try {
-    // 2. SCRAPE DATA
-    console.log("Starting scrape for:", url);
-    const scraperUrl = `https://app.scrapingbee.com/api/v1/?api_key=${process.env.SCRAPINGBEE_API_KEY}&url=${encodeURIComponent(url)}&render_js=true&stealth_proxy=true&wait=3000`;
-    const scraperResponse = await fetch(scraperUrl);
-    
-    if (!scraperResponse.ok) {
-      throw new Error(`ScrapingBee Error: ${scraperResponse.status}`);
-    }
-    
-    const html = await scraperResponse.text();
-    const cleanedText = html.replace(/<script\b[^>]*>([\s\S]*?)<\/script>/gmi, "").substring(0, 15000);
+    const { name, email, url, serviceType, message } = req.body;
 
-    // 3. AI ANALYSIS
-    console.log("Sending data to Claude...");
-    const anthropicResponse = await fetch('https://api.anthropic.com/v1/messages', {
-      method: 'POST',
-      headers: {
-        'Content-Type': 'application/json',
-        'x-api-key': process.env.ANTHROPIC_API_KEY,
-        'anthropic-version': '2023-06-01'
-      },
-      body: JSON.stringify({
-        model: "claude-sonnet-4-6",
-        max_tokens: 3000,
-        system: SYSTEM_PROMPT,
-        messages: [{ role: 'user', content: `Analyze: ${cleanedText}` }]
-      })
-    });
+    console.log(`--- REQUEST RECEIVED FOR ${serviceType} ---`);
+    console.log(`URL: ${url}`);
 
-    const aiData = await anthropicResponse.json();
-    const aiText = aiData.content[0].text.trim();
-    const auditData = JSON.parse(aiText.substring(aiText.indexOf('{'), aiText.lastIndexOf('}') + 1));
+    // 1. DATA SCRAPING & AI ANALYSIS (The "Heavy" Work)
+    // We keep this 'await'ed because the "Audit" button users need to see the results on screen.
+    let aiResponseText = "No analysis performed for basic contact request.";
+    let auditScore = 0;
 
-    // 4. EMAIL LOGIC (BROADENED TO ENSURE DELIVERY)
-    // We send an email if a name OR email was provided (indicating a lead)
-    if ((name || email) && process.env.RESEND_API_KEY) {
-      console.log("Lead detected. Attempting email to listsmart@zohomail.eu...");
-      
-      const resendResponse = await fetch('https://api.resend.com/emails', {
+    // We only run the full scraper/AI if it's a dedicated audit request or if you want it for every lead
+    try {
+      const scraperUrl = `https://api.scraperapi.com?api_key=${process.env.SCRAPER_API_KEY}&url=${encodeURIComponent(url)}`;
+      const scrapeRes = await fetch(scraperUrl);
+      const html = await scrapeRes.text();
+
+      // Simple extraction logic (Title/Description) - adapt to your specific scraper needs
+      const titleMatch = html.match(/<title>(.*?)<\/title>/);
+      const title = titleMatch ? titleMatch[1] : "Unknown Title";
+
+      // Call Claude for the analysis
+      const claudeRes = await fetch('https://api.anthropic.com/v1/messages', {
         method: 'POST',
         headers: {
-          'Authorization': `Bearer ${process.env.RESEND_API_KEY}`,
-          'Content-Type': 'application/json'
+          'x-api-key': process.env.CLAUDE_API_KEY,
+          'anthropic-version': '2023-06-01',
+          'content-type': 'application/json'
         },
         body: JSON.stringify({
-          from: 'ListSmart <onboarding@resend.dev>',
-          to: 'listsmart@zohomail.eu', 
-          subject: `🚨 NEW SERVICE REQUEST: ${name || 'New Customer'}`,
-          html: `
-            <div style="font-family: sans-serif; padding: 20px; color: #333;">
-              <h2 style="color: #10b981;">NEW ORDER/LEAD RECEIVED</h2>
-              <p><strong>Selected Service:</strong> ${serviceType || 'Not specified'}</p>
-              <p><strong>Customer Name:</strong> ${name || 'N/A'}</p>
-              <p><strong>Customer Email:</strong> ${email || 'N/A'}</p>
-              <p><strong>Listing URL:</strong> <a href="${url}">${url}</a></p>
-              <p><strong>Customer Message:</strong> ${message || 'No message provided'}</p>
-              <hr />
-              <h3>Preliminary AI Result:</h3>
-              <p><strong>Listing:</strong> ${auditData.listingTitle}</p>
-              <p><strong>Initial Score:</strong> ${auditData.overallScore}/100</p>
-            </div>
-          `
+          model: 'claude-3-haiku-20240307',
+          max_tokens: 1000,
+          messages: [{
+            role: 'user',
+            content: `Analyze this Airbnb listing title for SEO and conversion: "${title}". Provide a score out of 100 and 3 tips.`
+          }]
         })
       });
 
-      const resendResult = await resendResponse.json();
-      if (resendResponse.ok) {
-        console.log("RESEND SUCCESS! ID:", resendResult.id);
-      } else {
-        console.error("RESEND REJECTED:", JSON.stringify(resendResult));
-      }
-    } else {
-      console.log("Email skipped: No contact info provided or RESEND_API_KEY missing.");
+      const claudeData = await claudeRes.json();
+      aiResponseText = claudeData.content[0].text;
+    } catch (scrapeErr) {
+      console.error("Scraping/AI failed, proceeding with email only:", scrapeErr);
     }
 
-    // Return the result to the browser
-    res.status(200).json(auditData);
+    // 2. TRIGGER EMAIL IN BACKGROUND (Non-Blocking)
+    // We do NOT use 'await' here so the server responds to the user immediately.
+    resend.emails.send({
+      from: 'onboarding@resend.dev', // Ensure domain is verified in Resend for custom domains
+      to: 'listsmart@zohomail.eu',
+      subject: `New Lead: ${name} (${serviceType})`,
+      html: `
+        <h3>New Business Inquiry</h3>
+        <p><strong>Name:</strong> ${name}</p>
+        <p><strong>Email:</strong> ${email}</p>
+        <p><strong>Service:</strong> ${serviceType}</p>
+        <p><strong>Listing URL:</strong> <a href="${url}">${url}</a></p>
+        <p><strong>Message:</strong> ${message || 'N/A'}</p>
+        <hr />
+        <h4>AI Preliminary Analysis:</h4>
+        <div style="background: #f4f4f4; padding: 15px; border-radius: 8px;">
+          ${aiResponseText.replace(/\n/g, '<br>')}
+        </div>
+      `
+    }).then(id => console.log("Email sent successfully in background:", id))
+      .catch(err => console.error("Background email failed:", err));
+
+    // 3. RESPOND TO CLIENT
+    // This sends the data back to the browser so the website can show the results/success.
+    return res.status(200).json({
+      success: true,
+      analysis: aiResponseText,
+      message: "Your request has been processed successfully!"
+    });
 
   } catch (error) {
-    console.error("FATAL ERROR IN HANDLER:", error.message);
-    res.status(500).json({ error: 'Internal Server Error', details: error.message });
+    console.error('SERVER ERROR:', error);
+    return res.status(500).json({ 
+      error: 'Internal Server Error', 
+      details: error.message 
+    });
   }
 }
