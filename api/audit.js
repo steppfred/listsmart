@@ -1,93 +1,116 @@
 import { Resend } from 'resend';
 
-// Initialize Resend with your API Key
+export const maxDuration = 60; 
+
+// Initialize Resend
 const resend = new Resend(process.env.RESEND_API_KEY);
 
 export default async function handler(req, res) {
   if (req.method !== 'POST') {
-    return res.status(405).json({ error: 'Method Not Allowed' });
+    return res.status(405).json({ error: 'Method not allowed' });
   }
 
-  try {
-    const { name, email, url, serviceType, message } = req.body;
+  const body = req.body;
 
-    console.log(`--- REQUEST RECEIVED FOR ${serviceType} ---`);
-    console.log(`URL: ${url}`);
-
-    // 1. DATA SCRAPING & AI ANALYSIS (The "Heavy" Work)
-    // We keep this 'await'ed because the "Audit" button users need to see the results on screen.
-    let aiResponseText = "No analysis performed for basic contact request.";
-    let auditScore = 0;
-
-    // We only run the full scraper/AI if it's a dedicated audit request or if you want it for every lead
+  // ==========================================
+  // SCENARIO 1: CONTACT FORM SUBMITTED
+  // ==========================================
+  // If the request includes an email address, it came from the contact form.
+  if (body.email) {
     try {
-      const scraperUrl = `https://api.scraperapi.com?api_key=${process.env.SCRAPER_API_KEY}&url=${encodeURIComponent(url)}`;
-      const scrapeRes = await fetch(scraperUrl);
-      const html = await scrapeRes.text();
+      console.log("Contact form submitted by:", body.email);
 
-      // Simple extraction logic (Title/Description) - adapt to your specific scraper needs
-      const titleMatch = html.match(/<title>(.*?)<\/title>/);
-      const title = titleMatch ? titleMatch[1] : "Unknown Title";
+      // 1. Send the automated welcome email to the HOST
+      await resend.emails.send({
+        from: 'ListSmart <onboarding@resend.dev>', // See note below about this email!
+        to: body.email,
+        subject: 'We got your request! (Let’s get you more bookings 🚀)',
+        html: `
+          <p>Hi ${body.name || 'there'},</p>
+          <p>Just sending a quick note to say thank you for reaching out to ListSmart! This is an automated email to confirm that we successfully received your request and your Airbnb link.</p>
+          <p>Our team is going to take a look at your listing to see exactly where you are leaving money on the table, and how we can help you boost your visibility and bookings.</p>
+          <p>We are reviewing your details now and will follow up with you personally as soon as possible (usually within 24 hours).</p>
+          <p>If there is anything else you forgot to mention about your property or your goals, feel free to just reply directly to this email!</p>
+          <br>
+          <p>Talk to you soon,</p>
+          <p><strong>The ListSmart Team</strong></p>
+        `
+      });
 
-      // Call Claude for the analysis
-      const claudeRes = await fetch('https://api.anthropic.com/v1/messages', {
+      // 2. Send an alert email to YOURSELF so you know you have a new lead
+      await resend.emails.send({
+        from: 'ListSmart Alert <onboarding@resend.dev>',
+        to: 'listsmart@zohomail.eu', // Your actual email
+        subject: '🎉 NEW LISTSMART LEAD: ' + (body.name || 'Unknown'),
+        text: `You have a new client request!\n\nName: ${body.name}\nEmail: ${body.email}\nService: ${body.serviceType}\nURL: ${body.url}\nMessage: ${body.message}`
+      });
+
+      return res.status(200).json({ success: true, message: 'Emails sent successfully' });
+
+    } catch (error) {
+      console.error("Email sending failed:", error);
+      return res.status(500).json({ error: 'Failed to send email' });
+    }
+  }
+
+
+  // ==========================================
+  // SCENARIO 2: LIVE AI AUDIT REQUEST
+  // ==========================================
+  // If there is a URL but NO email, it came from the "Analyze Listing" button
+  if (body.url && !body.email) {
+    const SYSTEM_PROMPT = `You are a senior Airbnb listing optimization expert working for ListSmart.
+    A user has submitted an Airbnb listing URL. Analyze the URL structure to infer what you can (location, property type), then generate a realistic, expert-level audit preview.
+    You MUST respond with valid JSON only. No markdown. Structure:
+    {
+      "listingTitle": "string",
+      "overallScore": number,
+      "scores": { "title": number, "description": number, "seo": number, "photos": number, "pricing": number },
+      "sections": [
+        { "id": "title", "name": "Title & First Impression", "icon": "🏷️", "status": "critical|warning|good", "findings": [{ "label": "Issue", "text": "text" }], "recommendation": "text" },
+        { "id": "description", "name": "Description & Copywriting", "icon": "✍️", "status": "critical|warning|good", "findings": [{"label":"", "text":""}], "recommendation": "text" },
+        { "id": "seo", "name": "SEO & Search Visibility", "icon": "🔍", "status": "critical|warning|good", "findings": [{"label":"", "text":""}], "recommendation": "text" },
+        { "id": "photos", "name": "Photo Strategy", "icon": "📸", "status": "critical|warning|good", "findings": [{"label":"", "text":""}], "recommendation": "text" },
+        { "id": "pricing", "name": "Pricing Signals", "icon": "💰", "status": "critical|warning|good", "findings": [{"label":"", "text":""}], "recommendation": "text" }
+      ],
+      "topOpportunity": "string"
+    }`;
+
+    try {
+      const response = await fetch('https://api.anthropic.com/v1/messages', {
         method: 'POST',
         headers: {
-          'x-api-key': process.env.CLAUDE_API_KEY,
-          'anthropic-version': '2023-06-01',
-          'content-type': 'application/json'
+          'Content-Type': 'application/json',
+          'x-api-key': process.env.ANTHROPIC_API_KEY, 
+          'anthropic-version': '2023-06-01'
         },
         body: JSON.stringify({
-          model: 'claude-3-haiku-20240307',
+          model: 'claude-3-5-sonnet-20240620',
           max_tokens: 1000,
-          messages: [{
-            role: 'user',
-            content: `Analyze this Airbnb listing title for SEO and conversion: "${title}". Provide a score out of 100 and 3 tips.`
-          }]
+          system: SYSTEM_PROMPT,
+          messages: [{ role: 'user', content: `Please audit this Airbnb listing: ${body.url}` }]
         })
       });
 
-      const claudeData = await claudeRes.json();
-      aiResponseText = claudeData.content[0].text;
-    } catch (scrapeErr) {
-      console.error("Scraping/AI failed, proceeding with email only:", scrapeErr);
+      const data = await response.json();
+      
+      // Safety check so the code never crashes on [0] again!
+      if (!data.content || data.content.length === 0) {
+        console.error('ANTHROPIC API ERROR:', JSON.stringify(data));
+        return res.status(500).json({ error: 'AI failed to generate response.' });
+      }
+      
+      const text = data.content.map(b => b.text || '').join('');
+      const cleanJsonString = text.replace(/```json|```/g, '').trim();
+      const auditData = JSON.parse(cleanJsonString);
+
+      return res.status(200).json(auditData);
+    } catch (error) {
+      console.error('Audit generation error:', error);
+      return res.status(500).json({ error: 'Failed to generate audit' });
     }
-
-    // 2. TRIGGER EMAIL IN BACKGROUND (Non-Blocking)
-    // We do NOT use 'await' here so the server responds to the user immediately.
-    resend.emails.send({
-      from: 'onboarding@resend.dev', // Ensure domain is verified in Resend for custom domains
-      to: 'listsmart@zohomail.eu',
-      subject: `New Lead: ${name} (${serviceType})`,
-      html: `
-        <h3>New Business Inquiry</h3>
-        <p><strong>Name:</strong> ${name}</p>
-        <p><strong>Email:</strong> ${email}</p>
-        <p><strong>Service:</strong> ${serviceType}</p>
-        <p><strong>Listing URL:</strong> <a href="${url}">${url}</a></p>
-        <p><strong>Message:</strong> ${message || 'N/A'}</p>
-        <hr />
-        <h4>AI Preliminary Analysis:</h4>
-        <div style="background: #f4f4f4; padding: 15px; border-radius: 8px;">
-          ${aiResponseText.replace(/\n/g, '<br>')}
-        </div>
-      `
-    }).then(id => console.log("Email sent successfully in background:", id))
-      .catch(err => console.error("Background email failed:", err));
-
-    // 3. RESPOND TO CLIENT
-    // This sends the data back to the browser so the website can show the results/success.
-    return res.status(200).json({
-      success: true,
-      analysis: aiResponseText,
-      message: "Your request has been processed successfully!"
-    });
-
-  } catch (error) {
-    console.error('SERVER ERROR:', error);
-    return res.status(500).json({ 
-      error: 'Internal Server Error', 
-      details: error.message 
-    });
   }
+
+  // Fallback if neither matches
+  return res.status(400).json({ error: 'Invalid request data' });
 }
