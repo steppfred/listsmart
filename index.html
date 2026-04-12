@@ -72,7 +72,6 @@ nav ul a:hover{color:var(--teal)}
 .bar-label{font-size:0.75rem;color:var(--ink-l);width:80px;flex-shrink:0}
 .bar-track{flex:1;height:6px;background:#f0efe9;border-radius:3px;overflow:hidden}
 .bar-fill{height:100%;border-radius:3px;background:var(--teal)}
-.bar-fill.gold{background:var(--gold-m)}
 .bar-val{font-size:0.75rem;font-weight:500;width:32px;text-align:right}
 .before-after{display:flex;gap:0.75rem}
 .ba-card{flex:1;background:white;border-radius:var(--r);padding:1rem;border:1px solid var(--border);text-align:center}
@@ -98,7 +97,7 @@ section{padding:6rem 2rem}
 #problem .section-sub{color:rgba(255,255,255,0.6)}
 .problem-grid{display:grid;grid-template-columns:repeat(auto-fit,minmax(260px,1fr));gap:1.5rem;margin-top:3rem}
 .problem-card{background:rgba(255,255,255,0.05);border:1px solid rgba(255,255,255,0.1);border-radius:var(--r-lg);padding:1.75rem}
-.problem-icon{font-size:2rem;margin-bottom:1rem}
+.problem-icon{margin-bottom:1.2rem; color:var(--teal-m); display: flex; align-items: center;}
 .problem-card h3{font-family:'DM Sans',sans-serif;font-size:1rem;font-weight:500;margin-bottom:0.5rem;color:white}
 .problem-card p{font-size:0.9rem;color:rgba(255,255,255,0.55);line-height:1.65}
 
@@ -257,11 +256,11 @@ section{padding:6rem 2rem}
 .rec-box{background:var(--teal-l);border-radius:var(--r);padding:0.9rem 1rem;margin-top:0.75rem}
 .rec-label{font-size:0.7rem;text-transform:uppercase;letter-spacing:0.08em;font-weight:500;color:var(--teal-d);margin-bottom:0.3rem}
 .rec-text{font-size:0.85rem;color:var(--teal-d);line-height:1.6}
-.icon-title{background:#E6F1FB}
-.icon-description{background:var(--teal-l)}
-.icon-seo{background:#EAF3DE}
-.icon-photos{background:#FAEEDA}
-.icon-pricing{background:#FCEBEB}
+.icon-title{background:#E6F1FB; color:#2B71B8;}
+.icon-description{background:var(--teal-l); color:var(--teal-d);}
+.icon-seo{background:#EAF3DE; color:#4B7322;}
+.icon-photos{background:#FAEEDA; color:#BA7517;}
+.icon-pricing{background:#FCEBEB; color:#A32D2D;}
 
 .top-opp{background:var(--ink);color:white;border-radius:var(--r-lg);padding:1.25rem 1.5rem;margin-top:1rem}
 .top-opp-label{font-size:0.7rem;text-transform:uppercase;letter-spacing:0.1em;color:var(--teal-m);margin-bottom:0.4rem}
@@ -318,7 +317,7 @@ section{padding:6rem 2rem}
     <div class="hero-content">
       <div class="hero-eyebrow">The Algorithm Copywriting Agency</div>
       <h1 class="hero-title">Tools give you data.<br><em>We give you words</em><br>that convert.</h1>
-      <p class="hero-sub">Pricing software can't write your listing. The 2025 Airbnb algorithm rewards click-through rates. We provide the human copywriting layer that turns generic listings into Page 1 booking machines.</p>
+      <p class="hero-sub">Pricing software can't write your listing. The 2025 Airbnb algorithm rewards click-through rates. We provide the human copywriting layer that turns generic listings into listings that rank and convert.</p>
       <div class="hero-actions">
         <button class="btn-primary" onclick="showPage('audit')">Get a Free Audit Preview ▶</button>
         <a class="btn-ghost" href="#services">See Our Services</a>
@@ -335,7 +334,7 @@ section{padding:6rem 2rem}
         <div class="ltitle">Charming Studio in Historic Centre</div>
         <div class="bar-row"><span class="bar-label">Title SEO</span><div class="bar-track"><div class="bar-fill" style="width:92%"></div></div><span class="bar-val">92</span></div>
         <div class="bar-row"><span class="bar-label">Description</span><div class="bar-track"><div class="bar-fill" style="width:88%"></div></div><span class="bar-val">88</span></div>
-        <div class="bar-row"><span class="bar-label">Visibility</span><div class="bar-track"><div class="bar-fill gold" style="width:95%"></div></div><span class="bar-val">95</span></div>
+        <div class="bar-row"><span class="bar-label">Visibility</span><div class="bar-track"><div class="bar-fill" style="width:95%"></div></div><span class="bar-val">95</span></div>
         <div class="bar-row"><span class="bar-label">Completeness</span><div class="bar-track"><div class="bar-fill" style="width:100%"></div></div><span class="bar-val">100</span></div>
       </div>
       <div class="before-after">
@@ -351,9 +350,24 @@ section{padding:6rem 2rem}
       <h2 class="section-title reveal">Why most hosts fail (even with dynamic pricing).</h2>
       <p class="section-sub reveal">You can have the best pricing strategy in the world, but if your title doesn't earn the click, your calendar stays empty.</p>
       <div class="problem-grid">
-        <div class="problem-card reveal"><div class="problem-icon">🤖</div><h3>Software Isn't Enough</h3><p>Tools like PriceLabs give you perfect data, but they don't write copy. If your cover photo and title don't convert the click, perfect pricing means nothing.</p></div>
-        <div class="problem-card reveal"><div class="problem-icon">🧠</div><h3>The 2025 Algorithm</h3><p>Airbnb now heavily weights Click-Through Rate (CTR) and recent guest satisfaction. Without the exact [Type] | [Feature] | [Location] title formula, you lose visibility fast.</p></div>
-        <div class="problem-card reveal"><div class="problem-icon">✍️</div><h3>Generic Descriptions</h3><p>Most hosts describe their space ("1 bed, 1 bath"). We write to sell the *experience*. Guests book emotions, not square meters.</p></div>
+        <div class="problem-card reveal">
+          <div class="problem-icon">
+            <svg stroke="currentColor" fill="none" stroke-width="2" viewBox="0 0 24 24" stroke-linecap="round" stroke-linejoin="round" height="32" width="32"><rect x="4" y="4" width="16" height="16" rx="2" ry="2"></rect><rect x="9" y="9" width="6" height="6"></rect><line x1="9" y1="1" x2="9" y2="4"></line><line x1="15" y1="1" x2="15" y2="4"></line><line x1="9" y1="20" x2="9" y2="23"></line><line x1="15" y1="20" x2="15" y2="23"></line><line x1="20" y1="9" x2="23" y2="9"></line><line x1="20" y1="14" x2="23" y2="14"></line><line x1="1" y1="9" x2="4" y2="9"></line><line x1="1" y1="14" x2="4" y2="14"></line></svg>
+          </div>
+          <h3>Software Isn't Enough</h3><p>Tools like PriceLabs give you perfect data, but they don't write copy. If your cover photo and title don't convert the click, perfect pricing means nothing.</p>
+        </div>
+        <div class="problem-card reveal">
+          <div class="problem-icon">
+            <svg stroke="currentColor" fill="none" stroke-width="2" viewBox="0 0 24 24" stroke-linecap="round" stroke-linejoin="round" height="32" width="32"><circle cx="18" cy="5" r="3"></circle><circle cx="6" cy="12" r="3"></circle><circle cx="18" cy="19" r="3"></circle><line x1="8.59" y1="13.51" x2="15.42" y2="17.49"></line><line x1="15.41" y1="6.51" x2="8.59" y2="10.49"></line></svg>
+          </div>
+          <h3>The 2025 Algorithm</h3><p>Airbnb now heavily weights Click-Through Rate (CTR) and recent guest satisfaction. Without the exact [Type] | [Feature] | [Location] title formula, you lose visibility fast.</p>
+        </div>
+        <div class="problem-card reveal">
+          <div class="problem-icon">
+            <svg stroke="currentColor" fill="none" stroke-width="2" viewBox="0 0 24 24" stroke-linecap="round" stroke-linejoin="round" height="32" width="32"><path d="M12 20h9"></path><path d="M16.5 3.5a2.121 2.121 0 0 1 3 3L7 19l-4 1 1-4L16.5 3.5z"></path></svg>
+          </div>
+          <h3>Generic Descriptions</h3><p>Most hosts describe their space ("1 bed, 1 bath"). We write to sell the *experience*. Guests book emotions, not square meters.</p>
+        </div>
       </div>
     </div>
   </section>
@@ -432,6 +446,10 @@ section{padding:6rem 2rem}
       <div class="section-label reveal">FAQ</div>
       <h2 class="section-title reveal">Common questions</h2>
       <div class="faq-list">
+        <div class="faq-item reveal">
+          <button class="faq-q" onclick="toggleFaq(this)">What if I don't see results? <span class="faq-icon">+</span></button>
+          <div class="faq-a"><p>We stand by our work. If your listing doesn't see an increase in search impressions or views within 30 days of publishing our full optimization, we will run a secondary market analysis and revise your keywords and title completely free of charge.</p></div>
+        </div>
         <div class="faq-item reveal">
           <button class="faq-q" onclick="toggleFaq(this)">How long does it take to see results? <span class="faq-icon">+</span></button>
           <div class="faq-a"><p>Most hosts see an increase in views within the first 7-10 days of publishing the optimized listing. Booking increases typically follow in the first 2-4 weeks as the algorithm updates your position.</p></div>
@@ -567,27 +585,23 @@ function toggleFaq(btn) {
   if(!isOpen) item.classList.add('open');
 }
 
-// --- FORM SUBMISSION (FIRE AND FORGET UI SPEED FIX) ---
+// --- FORM SUBMISSION ---
 function submitRequest(form) {
   const submitBtn = form.querySelector('button');
   const originalText = submitBtn.innerText;
   
-  // Data extraction
   const formData = new FormData(form);
   const data = Object.fromEntries(formData.entries());
 
-  // Immediate UI Feedback
   submitBtn.innerText = "Sent!";
   submitBtn.disabled = true;
 
-  // Trigger fetch without blocking UI thread (fire and forget)
   fetch('/api/audit', {
     method: 'POST',
     headers: { 'Content-Type': 'application/json' },
     body: JSON.stringify(data)
   }).catch(err => console.error("Submission error:", err));
 
-  // 100ms timeout for alert and form reset to ensure the user feels the speed
   setTimeout(() => {
     alert("Thank you! We have received your request and will contact you shortly.");
     form.reset();
@@ -607,6 +621,15 @@ document.querySelectorAll('.reveal').forEach(el => observer.observe(el));
 // --- LIVE AI AUDIT LOGIC ---
 let lastAuditData = null;
 
+// Premium SVGs to replace AI Emojis for a professional UI
+const premiumIcons = {
+  'title': '<svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M20.59 13.41l-7.17 7.17a2 2 0 0 1-2.83 0L2 12V2h10l8.59 8.59a2 2 0 0 1 0 2.82z"></path><line x1="7" y1="7" x2="7.01" y2="7"></line></svg>',
+  'description': '<svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z"></path><polyline points="14 2 14 8 20 8"></polyline><line x1="16" y1="13" x2="8" y2="13"></line><line x1="16" y1="17" x2="8" y2="17"></line><polyline points="10 9 9 9 8 9"></polyline></svg>',
+  'seo': '<svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="11" cy="11" r="8"></circle><line x1="21" y1="21" x2="16.65" y2="16.65"></line></svg>',
+  'photos': '<svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M23 19a2 2 0 0 1-2 2H3a2 2 0 0 1-2-2V8a2 2 0 0 1 2-2h4l2-3h6l2 3h4a2 2 0 0 1 2 2z"></path><circle cx="12" cy="13" r="4"></circle></svg>',
+  'pricing': '<svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><line x1="12" y1="1" x2="12" y2="23"></line><path d="M17 5H9.5a3.5 3.5 0 0 0 0 7h5a3.5 3.5 0 0 1 0 7H6"></path></svg>'
+};
+
 async function runAudit() {
   const input = document.getElementById('audit-input').value.trim();
   const error = document.getElementById('audit-error');
@@ -624,7 +647,6 @@ async function runAudit() {
   document.getElementById('audit-result').style.display = 'none';
 
   try {
-    // Calling your Vercel Backend Function!
     const response = await fetch('/api/audit', {
       method: 'POST',
       headers: { 'Content-Type': 'application/json' },
@@ -636,9 +658,9 @@ async function runAudit() {
     const data = await response.json();
     if (data.error) throw new Error(data.error);
 
-    lastAuditData = data; // store for copying
+    lastAuditData = data; 
 
-    // Populate DOM with real AI data
+    // Populate DOM
     document.getElementById('res-title').innerText = data.listingTitle || 'Listing Audit';
     document.getElementById('res-url').innerText = input;
     
@@ -650,7 +672,7 @@ async function runAudit() {
     `;
 
     const sectionsContainer = document.getElementById('dynamic-audit-sections');
-    sectionsContainer.innerHTML = ''; // Clear previous
+    sectionsContainer.innerHTML = ''; 
     
     const iconColors = {title:'icon-title',description:'icon-description',seo:'icon-seo',photos:'icon-photos',pricing:'icon-pricing'};
 
@@ -660,6 +682,7 @@ async function runAudit() {
       const iconColor = iconColors[sec.id] || 'icon-title';
       const isOpen = idx === 0 ? 'open' : '';
       const rotation = idx === 0 ? '0deg' : '180deg';
+      const renderIcon = premiumIcons[sec.id] || sec.icon;
       
       let findingsHtml = '';
       sec.findings.forEach(f => {
@@ -670,7 +693,7 @@ async function runAudit() {
         <div class="audit-section">
           <div class="section-head" onclick="toggleSection(this)">
             <div class="section-head-left">
-              <div class="section-icon ${iconColor}">${sec.icon}</div>
+              <div class="section-icon ${iconColor}">${renderIcon}</div>
               <div class="section-name">${sec.name}</div>
             </div>
             <div class="section-badge ${badgeClass}">${badgeText}</div>
@@ -728,7 +751,7 @@ function copyResults() {
     s.findings.forEach(f => text += `• ${f.label}: ${f.text}\n`);
     text += `Recommendation: ${s.recommendation}\n\n`;
   });
-  text += `TOP OPPORTUNITY\n${'-'.repeat(30)}\n${a.topOpportunity}\n\n— Generated by ListSmart AI`;
+  text += `TOP OPPORTUNITY\n${'-'.repeat(30)}\n${a.topOpportunity}\n\n— Generated by ListSmart`;
   
   const temp = document.createElement('textarea');
   temp.value = text;
