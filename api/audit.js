@@ -64,7 +64,7 @@ export default async function handler(req, res) {
 
     Your audit must reflect the rules of the 2025 Airbnb algorithm:
     - Click-Through Rate (CTR) is king.
-    - Titles MUST follow this exact formula to maximize clicks: [Property Type] | [Key Feature] | [Location Highlight] | [Unique Amenity].
+    - Titles MUST follow this exact formula to maximize clicks: [Property Type] | [Key Feature] | [Location Highlight] |[Unique Amenity].
     - Software pricing tools give hosts data, but human copywriting is what converts guests.
 
     You MUST respond with valid JSON only. No markdown. Structure:
@@ -91,7 +91,7 @@ export default async function handler(req, res) {
           'anthropic-version': '2023-06-01'
         },
         body: JSON.stringify({
-          model: 'claude-3-5-sonnet-20240620', // <-- THE EXACT WORKING MODEL
+          model: 'claude-sonnet-4-20250514', 
           max_tokens: 4000, 
           system: SYSTEM_PROMPT,
           messages:[{ role: 'user', content: `Please audit this Airbnb listing: ${body.url}` }]
