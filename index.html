@@ -46,6 +46,38 @@ nav ul a:hover{color:var(--teal)}
 @media(max-width:900px){nav ul{display:none}}
 
 /* ══════════════════════════════════════
+   FLOATING CTA BUTTON
+══════════════════════════════════════ */
+#floating-cta{
+  position:fixed;
+  bottom:2rem;
+  right:2rem;
+  z-index:200;
+  background:var(--teal);
+  color:white;
+  border:none;
+  border-radius:100px;
+  padding:0.875rem 1.5rem;
+  font-size:0.95rem;
+  font-weight:500;
+  font-family:'DM Sans',sans-serif;
+  cursor:pointer;
+  box-shadow:0 8px 32px rgba(29,158,117,0.35);
+  display:flex;
+  align-items:center;
+  gap:0.5rem;
+  transition:background 0.2s,transform 0.2s,opacity 0.4s,visibility 0.4s;
+  opacity:0;
+  visibility:hidden;
+  white-space:nowrap;
+}
+#floating-cta.visible{opacity:1;visibility:visible}
+#floating-cta:hover{background:var(--teal-d);transform:translateY(-3px);box-shadow:0 12px 40px rgba(29,158,117,0.45)}
+@media(max-width:560px){
+  #floating-cta{bottom:1.25rem;right:1.25rem;padding:0.75rem 1.1rem;font-size:0.85rem}
+}
+
+/* ══════════════════════════════════════
    HOME PAGE
 ══════════════════════════════════════ */
 #hero{min-height:100vh;display:flex;align-items:center;padding:7rem 2rem 4rem;position:relative;overflow:hidden}
@@ -100,6 +132,21 @@ section{padding:6rem 2rem}
 .problem-icon{margin-bottom:1.2rem; color:var(--teal-m); display: flex; align-items: center;}
 .problem-card h3{font-family:'DM Sans',sans-serif;font-size:1rem;font-weight:500;margin-bottom:0.5rem;color:white}
 .problem-card p{font-size:0.9rem;color:rgba(255,255,255,0.55);line-height:1.65}
+/* Emotional pain line under the problem cards */
+.problem-pain-line{
+  margin-top:2.5rem;
+  padding:1.25rem 1.5rem;
+  border-left:3px solid var(--teal-m);
+  background:rgba(255,255,255,0.04);
+  border-radius:0 var(--r) var(--r) 0;
+}
+.problem-pain-line p{
+  font-size:1rem;
+  color:rgba(255,255,255,0.7);
+  line-height:1.7;
+  font-style:italic;
+}
+.problem-pain-line p strong{color:white;font-style:normal;}
 
 /* SERVICES */
 #services{background:var(--cream)}
@@ -111,6 +158,18 @@ section{padding:6rem 2rem}
 .service-num{font-family:'Playfair Display',serif;font-size:2.5rem;font-weight:900;color:var(--teal-l);line-height:1;margin-bottom:1rem}
 .service-card h3{font-size:1.1rem;font-weight:500;margin-bottom:0.5rem}
 .service-card p{font-size:0.875rem;color:var(--ink-l);line-height:1.65}
+/* Template callout pill inside service card */
+.template-pill{
+  display:inline-block;
+  margin-top:0.75rem;
+  background:var(--teal-l);
+  color:var(--teal-d);
+  font-size:0.75rem;
+  font-weight:500;
+  padding:0.3rem 0.75rem;
+  border-radius:100px;
+  line-height:1.4;
+}
 
 /* HOW IT WORKS */
 #how{background:var(--teal-l)}
@@ -169,7 +228,7 @@ section{padding:6rem 2rem}
 .faq-a{max-height:0;overflow:hidden;transition:max-height 0.4s ease}
 .faq-a p{padding:0 0 1.25rem;font-size:0.9rem;color:var(--ink-m);line-height:1.75}
 .faq-item.open .faq-icon{transform:rotate(45deg)}
-.faq-item.open .faq-a{max-height:300px}
+.faq-item.open .faq-a{max-height:400px}
 
 /* CONTACT */
 #contact{background:var(--teal-d);color:white;text-align:center;padding:6rem 2rem}
@@ -212,9 +271,27 @@ section{padding:6rem 2rem}
 .url-input{flex:1;padding:0.875rem 1.1rem;border-radius:var(--r);border:1.5px solid var(--border);font-size:0.95rem;font-family:'DM Sans',sans-serif;color:var(--ink);background:var(--cream);outline:none;transition:border-color 0.2s}
 .url-input:focus{border-color:var(--teal)}
 .url-input::placeholder{color:var(--ink-l)}
-.btn-audit{background:var(--teal);color:white;border:none;padding:0 1.5rem;border-radius:var(--r);font-size:0.95rem;font-weight:500;cursor:pointer;font-family:'DM Sans',sans-serif;white-space:nowrap;transition:all 0.2s;display:flex;align-items:center;gap:0.5rem}
-.btn-audit:hover{background:var(--teal-d);transform:translateY(-1px)}
+
+/* ── Audit button: match the "Smart" gold colour ── */
+.btn-audit{
+  background:var(--gold);
+  color:white;
+  border:none;
+  padding:0 1.5rem;
+  border-radius:var(--r);
+  font-size:0.95rem;
+  font-weight:500;
+  cursor:pointer;
+  font-family:'DM Sans',sans-serif;
+  white-space:nowrap;
+  transition:all 0.2s;
+  display:flex;
+  align-items:center;
+  gap:0.5rem;
+}
+.btn-audit:hover{background:var(--gold-m);transform:translateY(-1px)}
 .btn-audit:disabled{background:#ccc;cursor:not-allowed;transform:none}
+
 .hint{font-size:0.78rem;color:var(--ink-l);margin-top:0.75rem}
 .error-box{display:none;background:#FCEBEB;border:1px solid #F09595;border-radius:var(--r);padding:1rem 1.25rem;color:#A32D2D;font-size:0.875rem;margin-top:1rem}
 
@@ -307,6 +384,11 @@ section{padding:6rem 2rem}
   <button class="nav-cta" onclick="showPage('audit')">Free Audit ▶</button>
 </nav>
 
+<!-- ── FLOATING CTA ── -->
+<button id="floating-cta" onclick="showPage('audit')" aria-label="Get a Free Audit">
+  ▶ Get Your Free Audit
+</button>
+
 <!-- ════════════════════════════════════
      HOME PAGE
 ════════════════════════════════════ -->
@@ -344,6 +426,7 @@ section{padding:6rem 2rem}
     </div>
   </section>
 
+  <!-- ── PROBLEM SECTION ── -->
   <section id="problem">
     <div class="container">
       <div class="section-label reveal">The Problem</div>
@@ -354,34 +437,60 @@ section{padding:6rem 2rem}
           <div class="problem-icon">
             <svg stroke="currentColor" fill="none" stroke-width="2" viewBox="0 0 24 24" stroke-linecap="round" stroke-linejoin="round" height="32" width="32"><rect x="4" y="4" width="16" height="16" rx="2" ry="2"></rect><rect x="9" y="9" width="6" height="6"></rect><line x1="9" y1="1" x2="9" y2="4"></line><line x1="15" y1="1" x2="15" y2="4"></line><line x1="9" y1="20" x2="9" y2="23"></line><line x1="15" y1="20" x2="15" y2="23"></line><line x1="20" y1="9" x2="23" y2="9"></line><line x1="20" y1="14" x2="23" y2="14"></line><line x1="1" y1="9" x2="4" y2="9"></line><line x1="1" y1="14" x2="4" y2="14"></line></svg>
           </div>
-          <h3>Software Isn't Enough</h3><p>Tools like PriceLabs give you perfect data, but they don't write copy. If your cover photo and title don't convert the click, perfect pricing means nothing.</p>
+          <h3>Software Isn't Enough</h3>
+          <p>Tools like PriceLabs give you perfect data, but they don't write copy. If your cover photo and title don't convert the click, perfect pricing means nothing.</p>
         </div>
         <div class="problem-card reveal">
           <div class="problem-icon">
             <svg stroke="currentColor" fill="none" stroke-width="2" viewBox="0 0 24 24" stroke-linecap="round" stroke-linejoin="round" height="32" width="32"><circle cx="18" cy="5" r="3"></circle><circle cx="6" cy="12" r="3"></circle><circle cx="18" cy="19" r="3"></circle><line x1="8.59" y1="13.51" x2="15.42" y2="17.49"></line><line x1="15.41" y1="6.51" x2="8.59" y2="10.49"></line></svg>
           </div>
-          <h3>The 2025 Algorithm</h3><p>Airbnb now heavily weights Click-Through Rate (CTR) and recent guest satisfaction. Without the exact [Type] | [Feature] | [Location] title formula, you lose visibility fast.</p>
+          <h3>The 2025 Algorithm</h3>
+          <p>Airbnb now heavily weights Click-Through Rate (CTR) and recent guest satisfaction. Without the exact [Type] | [Feature] | [Location] title formula, you lose visibility fast.</p>
         </div>
         <div class="problem-card reveal">
           <div class="problem-icon">
             <svg stroke="currentColor" fill="none" stroke-width="2" viewBox="0 0 24 24" stroke-linecap="round" stroke-linejoin="round" height="32" width="32"><path d="M12 20h9"></path><path d="M16.5 3.5a2.121 2.121 0 0 1 3 3L7 19l-4 1 1-4L16.5 3.5z"></path></svg>
           </div>
-          <h3>Generic Descriptions</h3><p>Most hosts describe their space ("1 bed, 1 bath"). We write to sell the *experience*. Guests book emotions, not square meters.</p>
+          <h3>Generic Descriptions</h3>
+          <p>Most hosts describe their space ("1 bed, 1 bath"). We write to sell the <em>experience</em>. Guests book emotions, not square meters.</p>
         </div>
+      </div>
+      <!-- Emotional pain line — hits the TIME nerve -->
+      <div class="problem-pain-line reveal">
+        <p>And through all of it, <strong>your time keeps getting eaten up.</strong> You've already spent hours tweaking prices, replying to guests, managing check-ins — your listing copy was supposed to be the easy part. It shouldn't still be the reason you're losing to a worse property down the street.</p>
       </div>
     </div>
   </section>
 
+  <!-- ── SERVICES SECTION ── -->
   <section id="services">
     <div class="container">
       <div class="section-label reveal">What We Do</div>
       <h2 class="section-title reveal">End-to-end listing optimization</h2>
       <p class="section-sub reveal">From a quick title fix to a full transformation, we have a service for every stage.</p>
       <div class="services-grid">
-        <div class="service-card reveal"><div class="service-num">01</div><h3>Title & Photo Audit</h3><p>We analyze the two things that actually drive clicks. Stop guessing what the algorithm wants.</p></div>
-        <div class="service-card reveal"><div class="service-num">02</div><h3>Full Optimization</h3><p>We rewrite everything — title, description, photo captions, amenity highlights. Done-for-you, delivered in 72 hours.</p></div>
-        <div class="service-card reveal"><div class="service-num">03</div><h3>Pricing Strategy</h3><p>Competitive benchmarking, seasonal pricing advice, and minimum night strategy to maximise occupancy and nightly rate.</p></div>
-        <div class="service-card reveal"><div class="service-num">04</div><h3>Monthly Retainer</h3><p>Ongoing monitoring, seasonal updates, keyword refreshes, and performance tracking. Set it and let your listing keep improving.</p></div>
+        <div class="service-card reveal">
+          <div class="service-num">01</div>
+          <h3>Title & Photo Audit</h3>
+          <p>We analyze the two things that actually drive clicks. Stop guessing what the algorithm wants.</p>
+        </div>
+        <div class="service-card reveal">
+          <div class="service-num">02</div>
+          <h3>Full Optimization</h3>
+          <p>We rewrite everything — title, description, photo captions, amenity highlights. Done-for-you, delivered in 72 hours.</p>
+          <!-- Clarified templates framing -->
+          <span class="template-pill">✦ Includes copy-paste ready templates &amp; a 10-minute implementation guide</span>
+        </div>
+        <div class="service-card reveal">
+          <div class="service-num">03</div>
+          <h3>Pricing Strategy</h3>
+          <p>Competitive benchmarking, seasonal pricing advice, and minimum night strategy to maximise occupancy and nightly rate.</p>
+        </div>
+        <div class="service-card reveal">
+          <div class="service-num">04</div>
+          <h3>Monthly Retainer</h3>
+          <p>Ongoing monitoring, seasonal updates, keyword refreshes, and performance tracking. Set it and let your listing keep improving.</p>
+        </div>
       </div>
     </div>
   </section>
@@ -428,7 +537,14 @@ section{padding:6rem 2rem}
           <div class="featured-badge">Most Popular</div>
           <div class="tier">Full Optimization</div><div class="price">€347</div><div class="price-note">one-time payment</div>
           <div class="desc">The complete makeover. We rewrite every word of your listing for maximum performance.</div>
-          <ul class="feature-list"><li>Everything in Quick Wins</li><li>Full professional rewrite</li><li>Optimized photo captions</li><li>Amenity highlight audit</li><li>Keyword-rich descriptions</li></ul>
+          <ul class="feature-list">
+            <li>Everything in Quick Wins</li>
+            <li>Full professional rewrite</li>
+            <li>Optimized photo captions</li>
+            <li>Amenity highlight audit</li>
+            <li>Keyword-rich descriptions</li>
+            <li>Copy-paste templates + 10-min guide</li>
+          </ul>
           <button class="btn-featured" onclick="document.getElementById('contact').scrollIntoView({behavior:'smooth'})">Get Optimized</button>
         </div>
         <div class="price-card reveal">
@@ -441,11 +557,19 @@ section{padding:6rem 2rem}
     </div>
   </section>
 
+  <!-- ── FAQ SECTION ── -->
   <section id="faq">
     <div class="container">
       <div class="section-label reveal">FAQ</div>
       <h2 class="section-title reveal">Common questions</h2>
       <div class="faq-list">
+
+        <!-- NEW: Airbnb TOS / account safety FAQ -->
+        <div class="faq-item reveal">
+          <button class="faq-q" onclick="toggleFaq(this)">Is this against Airbnb's Terms of Service? Will my account get banned? <span class="faq-icon">+</span></button>
+          <div class="faq-a"><p>Absolutely not. We use only white-hat SEO techniques — the same principles Airbnb themselves recommend to hosts to improve visibility. We never touch your account, use automation, or engage in any practice that violates Airbnb's TOS. Instead, we write the optimized copy and deliver it directly to you as copy-paste ready templates. <strong>You upload every change yourself</strong>, which means your account remains 100% in your control at all times. We simply give you better words.</p></div>
+        </div>
+
         <div class="faq-item reveal">
           <button class="faq-q" onclick="toggleFaq(this)">What if I don't see results? <span class="faq-icon">+</span></button>
           <div class="faq-a"><p>We stand by our work. If your listing doesn't see an increase in search impressions or views within 30 days of publishing our full optimization, we will run a secondary market analysis and revise your keywords and title completely free of charge.</p></div>
@@ -534,14 +658,10 @@ section{padding:6rem 2rem}
         <div class="result-eyebrow">Audit Results</div>
         <div class="result-title" id="res-title">Reviewing your listing performance</div>
         <div id="res-url" class="result-url"></div>
-        <div class="score-row" id="res-score-row">
-          <!-- Dynamically populated scores -->
-        </div>
+        <div class="score-row" id="res-score-row"></div>
       </div>
 
-      <div class="audit-sections" id="dynamic-audit-sections">
-         <!-- Sections are injected dynamically via JavaScript here -->
-      </div>
+      <div class="audit-sections" id="dynamic-audit-sections"></div>
 
       <div class="top-opp">
         <div class="top-opp-label">Biggest Opportunity</div>
@@ -574,8 +694,44 @@ function showPage(pageId) {
   document.getElementById('page-home').style.display = pageId === 'home' ? 'block' : 'none';
   document.getElementById('page-audit').style.display = pageId === 'audit' ? 'block' : 'none';
   document.getElementById('homeNav').style.display = pageId === 'home' ? 'flex' : 'none';
+  // Hide the floating CTA on the audit page; scroll logic handles home page
+  document.getElementById('floating-cta').classList.remove('visible');
   window.scrollTo(0,0);
 }
+
+// --- FLOATING CTA: show when user scrolls into #results or #testimonials ---
+(function(){
+  const floatingCta = document.getElementById('floating-cta');
+  // Trigger sections: results and the testimonials inside it, plus pricing
+  const triggerIds = ['results', 'pricing', 'faq'];
+
+  function updateFloatingCta(){
+    // Only show on home page
+    if(document.getElementById('page-home').style.display === 'none') return;
+
+    const scrollY = window.scrollY || window.pageYOffset;
+    const windowH = window.innerHeight;
+    let shouldShow = false;
+
+    triggerIds.forEach(function(id){
+      const el = document.getElementById(id);
+      if(!el) return;
+      const rect = el.getBoundingClientRect();
+      // Show once any trigger section enters the viewport
+      if(rect.top < windowH && rect.bottom > 0) shouldShow = true;
+    });
+
+    if(shouldShow){
+      floatingCta.classList.add('visible');
+    } else {
+      floatingCta.classList.remove('visible');
+    }
+  }
+
+  window.addEventListener('scroll', updateFloatingCta, {passive:true});
+  // Run once on load in case user lands mid-page
+  updateFloatingCta();
+})();
 
 // --- HOME PAGE LOGIC ---
 function toggleFaq(btn) {
@@ -589,19 +745,15 @@ function toggleFaq(btn) {
 function submitRequest(form) {
   const submitBtn = form.querySelector('button');
   const originalText = submitBtn.innerText;
-  
   const formData = new FormData(form);
   const data = Object.fromEntries(formData.entries());
-
   submitBtn.innerText = "Sent!";
   submitBtn.disabled = true;
-
   fetch('/api/audit', {
     method: 'POST',
     headers: { 'Content-Type': 'application/json' },
     body: JSON.stringify(data)
   }).catch(err => console.error("Submission error:", err));
-
   setTimeout(() => {
     alert("Thank you! We have received your request and will contact you shortly.");
     form.reset();
@@ -621,7 +773,6 @@ document.querySelectorAll('.reveal').forEach(el => observer.observe(el));
 // --- LIVE AI AUDIT LOGIC ---
 let lastAuditData = null;
 
-// Premium SVGs to replace AI Emojis for a professional UI
 const premiumIcons = {
   'title': '<svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M20.59 13.41l-7.17 7.17a2 2 0 0 1-2.83 0L2 12V2h10l8.59 8.59a2 2 0 0 1 0 2.82z"></path><line x1="7" y1="7" x2="7.01" y2="7"></line></svg>',
   'description': '<svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z"></path><polyline points="14 2 14 8 20 8"></polyline><line x1="16" y1="13" x2="8" y2="13"></line><line x1="16" y1="17" x2="8" y2="17"></line><polyline points="10 9 9 9 8 9"></polyline></svg>',
@@ -634,48 +785,36 @@ async function runAudit() {
   const input = document.getElementById('audit-input').value.trim();
   const error = document.getElementById('audit-error');
   const btn = document.getElementById('audit-btn');
-  
   if(!input) {
     error.innerText = "Please enter a valid URL.";
     error.style.display = 'block';
     return;
   }
-  
   error.style.display = 'none';
   btn.disabled = true;
   document.getElementById('audit-loading').style.display = 'block';
   document.getElementById('audit-result').style.display = 'none';
-
   try {
     const response = await fetch('/api/audit', {
       method: 'POST',
       headers: { 'Content-Type': 'application/json' },
       body: JSON.stringify({ url: input })
     });
-
     if (!response.ok) throw new Error("Failed to connect to API");
-    
     const data = await response.json();
     if (data.error) throw new Error(data.error);
-
-    lastAuditData = data; 
-
-    // Populate DOM
+    lastAuditData = data;
     document.getElementById('res-title').innerText = data.listingTitle || 'Listing Audit';
     document.getElementById('res-url').innerText = input;
-    
     document.getElementById('res-score-row').innerHTML = `
       <div class="score-pill">Overall Score: <strong>${data.overallScore}/100</strong></div>
       <div class="score-pill">Title: <strong>${data.scores.title}</strong></div>
       <div class="score-pill">SEO: <strong>${data.scores.seo}</strong></div>
       <div class="score-pill">Photos: <strong>${data.scores.photos}</strong></div>
     `;
-
     const sectionsContainer = document.getElementById('dynamic-audit-sections');
-    sectionsContainer.innerHTML = ''; 
-    
+    sectionsContainer.innerHTML = '';
     const iconColors = {title:'icon-title',description:'icon-description',seo:'icon-seo',photos:'icon-photos',pricing:'icon-pricing'};
-
     data.sections.forEach((sec, idx) => {
       const badgeClass = sec.status === 'critical' ? 'badge-critical' : (sec.status === 'warning' ? 'badge-warning' : 'badge-good');
       const badgeText = sec.status === 'critical' ? 'Needs Work' : (sec.status === 'warning' ? 'Could Improve' : 'Good');
@@ -683,12 +822,10 @@ async function runAudit() {
       const isOpen = idx === 0 ? 'open' : '';
       const rotation = idx === 0 ? '0deg' : '180deg';
       const renderIcon = premiumIcons[sec.id] || sec.icon;
-      
       let findingsHtml = '';
       sec.findings.forEach(f => {
         findingsHtml += `<div class="finding"><div class="finding-label">${f.label}</div><div class="finding-text">${f.text}</div></div>`;
       });
-
       sectionsContainer.innerHTML += `
         <div class="audit-section">
           <div class="section-head" onclick="toggleSection(this)">
@@ -711,12 +848,9 @@ async function runAudit() {
         </div>
       `;
     });
-    
     document.getElementById('res-opportunity').innerText = data.topOpportunity || "Optimize your title to boost CTR.";
-
     document.getElementById('audit-loading').style.display = 'none';
     document.getElementById('audit-result').style.display = 'block';
-
   } catch (err) {
     console.error(err);
     error.innerText = "Analysis failed. Ensure the URL is correct or try again later.";
@@ -731,7 +865,6 @@ function toggleSection(head) {
   const body = head.nextElementSibling;
   const chevron = head.querySelector('.section-chevron');
   const isOpen = body.classList.contains('open');
-  
   body.classList.toggle('open');
   chevron.style.transform = isOpen ? 'rotate(0deg)' : 'rotate(180deg)';
 }
@@ -745,27 +878,23 @@ function copyResults() {
   if (!lastAuditData) return;
   const a = lastAuditData;
   let text = `LISTSMART AUDIT SUMMARY\nURL: ${document.getElementById('res-url').innerText}\nOverall Score: ${a.overallScore}/100\n\n`;
-  
   a.sections.forEach(s => {
     text += `${s.name.toUpperCase()}[${s.status.toUpperCase()}]\n${'-'.repeat(30)}\n`;
     s.findings.forEach(f => text += `• ${f.label}: ${f.text}\n`);
     text += `Recommendation: ${s.recommendation}\n\n`;
   });
   text += `TOP OPPORTUNITY\n${'-'.repeat(30)}\n${a.topOpportunity}\n\n— Generated by ListSmart`;
-  
   const temp = document.createElement('textarea');
   temp.value = text;
   document.body.appendChild(temp);
   temp.select();
   document.execCommand('copy');
   document.body.removeChild(temp);
-  
   const btn = document.querySelector('.btn-copy');
   const oldText = btn.innerText;
   btn.innerText = "Copied!";
   setTimeout(() => btn.innerText = oldText, 2000);
 }
 </script>
-
 </body>
 </html>
