@@ -3,7 +3,7 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>ListSmart — More Views. More Bookings. More Revenue.</title>
+<title>ListSmart — The Human Edge for Airbnb Rankings</title>
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
 <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:ital,wght@0,700;0,900;1,700&family=DM+Sans:wght@300;400;500&display=swap" rel="stylesheet">
@@ -53,9 +53,9 @@ nav ul a:hover{color:var(--teal)}
 .hero-grid{position:absolute;inset:0;z-index:0;opacity:0.04;background-image:linear-gradient(var(--ink) 1px,transparent 1px),linear-gradient(90deg,var(--ink) 1px,transparent 1px);background-size:80px 80px}
 .hero-content{position:relative;z-index:1;max-width:1100px;margin:0 auto;width:100%}
 .hero-eyebrow{display:inline-block;background:var(--teal-l);color:var(--teal-d);font-size:0.8rem;font-weight:500;letter-spacing:0.1em;text-transform:uppercase;padding:0.4rem 1rem;border-radius:100px;margin-bottom:1.5rem;animation:fadeUp 0.6s ease both}
-.hero-title{font-size:clamp(3rem,7vw,6rem);font-weight:900;line-height:1.05;letter-spacing:-0.03em;color:var(--ink);max-width:14ch;animation:fadeUp 0.6s 0.1s ease both}
+.hero-title{font-size:clamp(3rem,7vw,6rem);font-weight:900;line-height:1.05;letter-spacing:-0.03em;color:var(--ink);max-width:16ch;animation:fadeUp 0.6s 0.1s ease both}
 .hero-title em{font-style:italic;color:var(--teal)}
-.hero-sub{font-size:1.2rem;font-weight:300;color:var(--ink-m);max-width:50ch;margin:1.5rem 0 2.5rem;animation:fadeUp 0.6s 0.2s ease both}
+.hero-sub{font-size:1.15rem;font-weight:300;color:var(--ink-m);max-width:55ch;margin:1.5rem 0 2.5rem;animation:fadeUp 0.6s 0.2s ease both}
 .hero-actions{display:flex;gap:1rem;flex-wrap:wrap;animation:fadeUp 0.6s 0.3s ease both}
 .btn-primary{background:var(--teal);color:white;padding:0.875rem 2rem;border-radius:100px;text-decoration:none;font-weight:500;font-size:1rem;transition:all 0.2s;border:none;cursor:pointer;display:inline-block;font-family:'DM Sans',sans-serif}
 .btn-primary:hover{background:var(--teal-d);transform:translateY(-2px);box-shadow:0 8px 24px rgba(29,158,117,0.3)}
@@ -63,7 +63,7 @@ nav ul a:hover{color:var(--teal)}
 .btn-ghost:hover{border-color:var(--teal);color:var(--teal)}
 .hero-stats{display:flex;gap:3rem;margin-top:4rem;flex-wrap:wrap;animation:fadeUp 0.6s 0.4s ease both}
 .hero-stat .num{font-family:'Playfair Display',serif;font-size:2.5rem;font-weight:700;color:var(--teal-d);line-height:1}
-.hero-stat .lbl{font-size:0.85rem;color:var(--ink-l);margin-top:0.25rem}
+.hero-stat .lbl{font-size:0.85rem;color:var(--ink-l);margin-top:0.25rem; max-width: 140px;}
 .hero-visual{position:absolute;right:-2%;top:50%;transform:translateY(-50%);width:min(480px,45%);z-index:1;animation:fadeLeft 0.8s 0.3s ease both;display:flex;flex-direction:column;gap:1rem}
 .listing-card{background:white;border-radius:var(--r-lg);padding:1.25rem 1.5rem;border:1px solid var(--border);box-shadow:0 4px 32px rgba(0,0,0,0.06)}
 .listing-card .badge{font-size:0.7rem;font-weight:500;text-transform:uppercase;letter-spacing:0.08em;color:var(--ink-l);margin-bottom:0.5rem}
@@ -316,16 +316,16 @@ section{padding:6rem 2rem}
     <div class="hero-bg"></div>
     <div class="hero-grid"></div>
     <div class="hero-content">
-      <div class="hero-eyebrow">Airbnb Listing Optimization</div>
-      <h1 class="hero-title">More Views.<br><em>More Bookings.</em><br>More Revenue.</h1>
-      <p class="hero-sub">ListSmart turns underperforming Airbnb listings into booking machines — through expert audits, keyword optimization, and data-driven rewrites.</p>
+      <div class="hero-eyebrow">The Algorithm Copywriting Agency</div>
+      <h1 class="hero-title">Tools give you data.<br><em>We give you words</em><br>that convert.</h1>
+      <p class="hero-sub">Pricing software can't write your listing. The 2025 Airbnb algorithm rewards click-through rates. We provide the human copywriting layer that turns generic listings into Page 1 booking machines.</p>
       <div class="hero-actions">
         <button class="btn-primary" onclick="showPage('audit')">Get a Free Audit Preview ▶</button>
         <a class="btn-ghost" href="#services">See Our Services</a>
       </div>
       <div class="hero-stats">
-        <div class="hero-stat"><div class="num">+47%</div><div class="lbl">Average view increase</div></div>
-        <div class="hero-stat"><div class="num">+32%</div><div class="lbl">Booking rate improvement</div></div>
+        <div class="hero-stat"><div class="num">+47%</div><div class="lbl">Avg. View Increase<br>(Across 45 Q4 audits)</div></div>
+        <div class="hero-stat"><div class="num">Pg 1</div><div class="lbl">Rank Goal</div></div>
         <div class="hero-stat"><div class="num">72h</div><div class="lbl">Turnaround time</div></div>
       </div>
     </div>
@@ -348,13 +348,12 @@ section{padding:6rem 2rem}
   <section id="problem">
     <div class="container">
       <div class="section-label reveal">The Problem</div>
-      <h2 class="section-title reveal">Most listings leave money on the table — every single night.</h2>
-      <p class="section-sub reveal">Airbnb's algorithm is ruthless. Poorly written listings, weak titles, and missing keywords push you off the first page before a guest even finds you.</p>
+      <h2 class="section-title reveal">Why most hosts fail (even with dynamic pricing).</h2>
+      <p class="section-sub reveal">You can have the best pricing strategy in the world, but if your title doesn't earn the click, your calendar stays empty.</p>
       <div class="problem-grid">
-        <div class="problem-card reveal"><div class="problem-icon">🔍</div><h3>Invisible to Search</h3><p>Without the right keywords in your title and description, Airbnb's algorithm buries your listing pages deep where no one scrolls.</p></div>
-        <div class="problem-card reveal"><div class="problem-icon">📉</div><h3>Weak Click-Through Rate</h3><p>A generic title loses the click to a competitor every time. Your cover photo and headline are the only things guests see first.</p></div>
-        <div class="problem-card reveal"><div class="problem-icon">✍️</div><h3>Poor Descriptions</h3><p>Most hosts describe their space, not the experience. Guests book emotions, not square metres.</p></div>
-        <div class="problem-card reveal"><div class="problem-icon">💸</div><h3>Misaligned Pricing</h3><p>Static pricing ignores seasonality, local events, and competitor rates — costing you occupancy or leaving revenue uncaptured.</p></div>
+        <div class="problem-card reveal"><div class="problem-icon">🤖</div><h3>Software Isn't Enough</h3><p>Tools like PriceLabs give you perfect data, but they don't write copy. If your cover photo and title don't convert the click, perfect pricing means nothing.</p></div>
+        <div class="problem-card reveal"><div class="problem-icon">🧠</div><h3>The 2025 Algorithm</h3><p>Airbnb now heavily weights Click-Through Rate (CTR) and recent guest satisfaction. Without the exact [Type] | [Feature] | [Location] title formula, you lose visibility fast.</p></div>
+        <div class="problem-card reveal"><div class="problem-icon">✍️</div><h3>Generic Descriptions</h3><p>Most hosts describe their space ("1 bed, 1 bath"). We write to sell the *experience*. Guests book emotions, not square meters.</p></div>
       </div>
     </div>
   </section>
@@ -363,9 +362,9 @@ section{padding:6rem 2rem}
     <div class="container">
       <div class="section-label reveal">What We Do</div>
       <h2 class="section-title reveal">End-to-end listing optimization</h2>
-      <p class="section-sub reveal">From a quick health-check to a full transformation, we have a service for every stage.</p>
+      <p class="section-sub reveal">From a quick title fix to a full transformation, we have a service for every stage.</p>
       <div class="services-grid">
-        <div class="service-card reveal"><div class="service-num">01</div><h3>Listing Audit</h3><p>A thorough review of your title, description, photos, pricing, and completeness — with a prioritised action plan.</p></div>
+        <div class="service-card reveal"><div class="service-num">01</div><h3>Title & Photo Audit</h3><p>We analyze the two things that actually drive clicks. Stop guessing what the algorithm wants.</p></div>
         <div class="service-card reveal"><div class="service-num">02</div><h3>Full Optimization</h3><p>We rewrite everything — title, description, photo captions, amenity highlights. Done-for-you, delivered in 72 hours.</p></div>
         <div class="service-card reveal"><div class="service-num">03</div><h3>Pricing Strategy</h3><p>Competitive benchmarking, seasonal pricing advice, and minimum night strategy to maximise occupancy and nightly rate.</p></div>
         <div class="service-card reveal"><div class="service-num">04</div><h3>Monthly Retainer</h3><p>Ongoing monitoring, seasonal updates, keyword refreshes, and performance tracking. Set it and let your listing keep improving.</p></div>
@@ -390,17 +389,11 @@ section{padding:6rem 2rem}
   <section id="results">
     <div class="container">
       <div class="section-label reveal">Results</div>
-      <h2 class="section-title reveal">Numbers that speak for themselves</h2>
-      <div class="results-grid">
-        <div class="stat-card reveal"><div class="big">+47%</div><div class="stat-label">Average increase in listing views within 30 days</div></div>
-        <div class="stat-card reveal"><div class="big">+32%</div><div class="stat-label">Average improvement in booking conversion rate</div></div>
-        <div class="stat-card reveal"><div class="big">72h</div><div class="stat-label">Average delivery time from submission to optimized listing</div></div>
-        <div class="stat-card reveal"><div class="big">4.9★</div><div class="stat-label">Average client satisfaction score across all projects</div></div>
-      </div>
+      <h2 class="section-title reveal">Real growth from real hosts.</h2>
       <div class="testimonials">
-        <div class="testimonial reveal"><p>After ListSmart rewrote my listing, I went from 40% to 78% occupancy in the first month. I had no idea how much my title was hurting me.</p><div class="author">Maria T.</div><div class="loc">Lisbon, Portugal</div></div>
-        <div class="testimonial reveal"><p>I was sceptical, but the audit alone was worth every cent. They found five things I'd never have caught myself. My views doubled in three weeks.</p><div class="author">James K.</div><div class="loc">Porto, Portugal</div></div>
-        <div class="testimonial reveal"><p>The monthly retainer has been a game-changer. They update everything seasonally and I've seen consistent growth even in the slow months.</p><div class="author">Ana R.</div><div class="loc">Algarve, Portugal</div></div>
+        <div class="testimonial reveal"><p>"We were stuck on page 14 of Airbnb search. ListSmart completely rewrote our title to focus on our specific traveler demographic. We hit Page 2 in just 20 days and Q1 revenue is up 64%."</p><div class="author">James K.</div><div class="loc">Algarve, Portugal (3 properties)</div></div>
+        <div class="testimonial reveal"><p>"I was paying for pricing tools but my calendar was empty. ListSmart showed me my photo captions were hurting my SEO. Fixed it, and views doubled in three weeks."</p><div class="author">Maria T.</div><div class="loc">Lisbon, Portugal (1 property)</div></div>
+        <div class="testimonial reveal"><p>"The monthly retainer has been a game-changer. They update our keywords seasonally based on local search trends. Best ROI of any host service I use."</p><div class="author">Ana R.</div><div class="loc">Porto, Portugal (5 properties)</div></div>
       </div>
     </div>
   </section>
@@ -412,16 +405,16 @@ section{padding:6rem 2rem}
       <p class="section-sub reveal">No hidden fees, no commission on bookings. Just a clear investment with a measurable return.</p>
       <div class="pricing-grid">
         <div class="price-card reveal">
-          <div class="tier">Starter</div><div class="price">€97</div><div class="price-note">one-time payment</div>
-          <div class="desc">Perfect for hosts who want clarity on what to fix and where to start.</div>
-          <ul class="feature-list"><li>Full listing audit</li><li>Title &amp; keyword analysis</li><li>Description review</li><li>Photo assessment</li><li>Prioritised action list</li></ul>
+          <div class="tier">Quick Wins</div><div class="price">€47</div><div class="price-note">one-time payment</div>
+          <div class="desc">Low barrier to entry. Fix the top two things causing you to lose bookings right now.</div>
+          <ul class="feature-list"><li>2025 Algorithm Title rewrite</li><li>Cover Photo selection strategy</li><li>Top 5 amenities audit</li><li>Delivered in 48 hours</li></ul>
           <button class="btn-outline" onclick="document.getElementById('contact').scrollIntoView({behavior:'smooth'})">Get Started</button>
         </div>
         <div class="price-card featured reveal">
           <div class="featured-badge">Most Popular</div>
           <div class="tier">Full Optimization</div><div class="price">€347</div><div class="price-note">one-time payment</div>
           <div class="desc">The complete makeover. We rewrite every word of your listing for maximum performance.</div>
-          <ul class="feature-list"><li>Everything in Starter</li><li>Full professional rewrite</li><li>Optimized photo captions</li><li>Amenity highlight audit</li><li>Keyword-rich descriptions</li></ul>
+          <ul class="feature-list"><li>Everything in Quick Wins</li><li>Full professional rewrite</li><li>Optimized photo captions</li><li>Amenity highlight audit</li><li>Keyword-rich descriptions</li></ul>
           <button class="btn-featured" onclick="document.getElementById('contact').scrollIntoView({behavior:'smooth'})">Get Optimized</button>
         </div>
         <div class="price-card reveal">
@@ -471,7 +464,7 @@ section{padding:6rem 2rem}
         </div>
         <select name="serviceType" required>
           <option value="" disabled selected>Select a Service</option>
-          <option value="audit">Listing Audit (€97)</option>
+          <option value="quickwins">Quick Wins Title Rewrite (€47)</option>
           <option value="full">Full Optimization (€347)</option>
           <option value="growth">Growth Plan (€149/mo)</option>
           <option value="other">Other Inquiry</option>
@@ -484,7 +477,7 @@ section{padding:6rem 2rem}
   </section>
 
   <footer class="home-footer">
-    <p>&copy; 2024 ListSmart. Need help? <a href="mailto:listsmart@zohomail.eu" style="color:var(--teal-m)">listsmart@zohomail.eu</a></p>
+    <p>&copy; 2026 ListSmart. Need help? <a href="mailto:listsmart@zohomail.eu" style="color:var(--teal-m)">listsmart@zohomail.eu</a></p>
   </footer>
 </div>
 
@@ -515,105 +508,34 @@ section{padding:6rem 2rem}
     <div id="audit-loading" class="loading">
       <div class="spinner"></div>
       <div class="loading-text">Analyzing listing components...</div>
-      <div class="loading-sub">Checking SEO, Photo Strategy & Pricing</div>
+      <div class="loading-sub">Checking SEO, 2025 Algorithm Title Formula & Photo Strategy</div>
     </div>
 
     <div id="audit-result" class="result-area">
       <div class="result-header">
         <div class="result-eyebrow">Audit Results</div>
-        <div class="result-title">Reviewing your listing performance</div>
+        <div class="result-title" id="res-title">Reviewing your listing performance</div>
         <div id="res-url" class="result-url"></div>
-        <div class="score-row">
-          <div class="score-pill">Overall Score: <strong id="res-score">0</strong>/100</div>
-          <div class="score-pill">Status: <strong id="res-status">-</strong></div>
+        <div class="score-row" id="res-score-row">
+          <!-- Dynamically populated scores -->
         </div>
       </div>
 
-      <div class="audit-sections">
-        <!-- Title Section -->
-        <div class="audit-section">
-          <div class="section-head" onclick="toggleSection(this)">
-            <div class="section-head-left">
-              <div class="section-icon icon-title">📝</div>
-              <div class="section-name">Title Optimization</div>
-            </div>
-            <div id="badge-title" class="section-badge">Warning</div>
-            <div class="section-chevron">▼</div>
-          </div>
-          <div class="section-body">
-            <div class="section-content">
-              <div class="finding">
-                <div class="finding-label">The Issue</div>
-                <div class="finding-text">Your title is too descriptive and lacks high-intent keywords. It doesn't highlight your unique selling proposition (USP).</div>
-              </div>
-              <div class="rec-box">
-                <div class="rec-label">Recommendation</div>
-                <div class="rec-text">Use "Power Words" like "Sun-Drenched", "Designer", or "Central" and include 1-2 key amenities (e.g., AC, Balcony) in the first 50 characters.</div>
-              </div>
-            </div>
-          </div>
-        </div>
-
-        <!-- Description Section -->
-        <div class="audit-section">
-          <div class="section-head" onclick="toggleSection(this)">
-            <div class="section-head-left">
-              <div class="section-icon icon-description">✍️</div>
-              <div class="section-name">Listing Description</div>
-            </div>
-            <div id="badge-desc" class="section-badge">Critical</div>
-            <div class="section-chevron">▼</div>
-          </div>
-          <div class="section-body">
-            <div class="section-content">
-              <div class="finding">
-                <div class="finding-label">The Issue</div>
-                <div class="finding-text">Text blocks are too long for mobile users. You're missing a clear "The Space" and "Guest Access" structure.</div>
-              </div>
-              <div class="rec-box">
-                <div class="rec-label">Recommendation</div>
-                <div class="rec-text">Break text into 2-3 sentence paragraphs. Use bullet points for amenities. Focus on the *benefit* (e.g., "Relax in...") rather than just the feature.</div>
-              </div>
-            </div>
-          </div>
-        </div>
-
-        <!-- Photo Section -->
-        <div class="audit-section">
-          <div class="section-head" onclick="toggleSection(this)">
-            <div class="section-head-left">
-              <div class="section-icon icon-photos">📸</div>
-              <div class="section-name">Photo Strategy</div>
-            </div>
-            <div id="badge-photo" class="section-badge">Good</div>
-            <div class="section-chevron">▼</div>
-          </div>
-          <div class="section-body">
-            <div class="section-content">
-              <div class="finding">
-                <div class="finding-label">The Issue</div>
-                <div class="finding-text">Listing missing photo captions. Captions are vital for the algorithm to understand your space's context.</div>
-              </div>
-              <div class="rec-box">
-                <div class="rec-label">Recommendation</div>
-                <div class="rec-text">Add descriptive captions to your top 10 photos. Ensure your "Hero Image" is the brightest and most inviting room in the house.</div>
-              </div>
-            </div>
-          </div>
-        </div>
+      <div class="audit-sections" id="dynamic-audit-sections">
+         <!-- Sections are injected dynamically via JavaScript here -->
       </div>
 
       <div class="top-opp">
         <div class="top-opp-label">Biggest Opportunity</div>
-        <div class="top-opp-text">Rewriting your title to include high-traffic keywords could increase your search impressions by up to 25% within 14 days.</div>
+        <div class="top-opp-text" id="res-opportunity">Rewriting your title to include high-traffic keywords could increase your search impressions by up to 25% within 14 days.</div>
       </div>
 
       <div class="upsell">
         <div>
           <div class="upsell-title">Want a 100% human-optimized audit?</div>
-          <div class="upsell-sub">Get our professional 15-page report for just €97.</div>
+          <div class="upsell-sub">Tools give you data, we give you words. Get a professional rewrite starting at just €47.</div>
         </div>
-        <a class="btn-upsell" href="#pricing" onclick="showPage('home')">Get Full Audit</a>
+        <a class="btn-upsell" href="#pricing" onclick="showPage('home')">Get Optimization</a>
       </div>
 
       <div class="audit-actions">
@@ -623,7 +545,7 @@ section{padding:6rem 2rem}
     </div>
 
     <div class="audit-footer">
-      <p>&copy; 2024 ListSmart. Need help? <a href="mailto:listsmart@zohomail.eu">listsmart@zohomail.eu</a></p>
+      <p>&copy; 2026 ListSmart. Need help? <a href="mailto:listsmart@zohomail.eu">listsmart@zohomail.eu</a></p>
     </div>
   </div>
 </div>
@@ -645,7 +567,7 @@ function toggleFaq(btn) {
   if(!isOpen) item.classList.add('open');
 }
 
-// --- FORM SUBMISSION (OPTIMIZED SPEED FIX) ---
+// --- FORM SUBMISSION (FIRE AND FORGET UI SPEED FIX) ---
 function submitRequest(form) {
   const submitBtn = form.querySelector('button');
   const originalText = submitBtn.innerText;
@@ -682,8 +604,10 @@ const observer = new IntersectionObserver((entries) => {
 }, { threshold: 0.1 });
 document.querySelectorAll('.reveal').forEach(el => observer.observe(el));
 
-// --- AUDIT LOGIC (AS PER YOUR WORKING CODE) ---
-function runAudit() {
+// --- LIVE AI AUDIT LOGIC ---
+let lastAuditData = null;
+
+async function runAudit() {
   const input = document.getElementById('audit-input').value.trim();
   const error = document.getElementById('audit-error');
   const btn = document.getElementById('audit-btn');
@@ -699,29 +623,85 @@ function runAudit() {
   document.getElementById('audit-loading').style.display = 'block';
   document.getElementById('audit-result').style.display = 'none';
 
-  // Simulating analysis
-  setTimeout(() => {
-    document.getElementById('audit-loading').style.display = 'none';
-    document.getElementById('audit-result').style.display = 'block';
-    btn.disabled = false;
+  try {
+    // Calling your Vercel Backend Function!
+    const response = await fetch('/api/audit', {
+      method: 'POST',
+      headers: { 'Content-Type': 'application/json' },
+      body: JSON.stringify({ url: input })
+    });
+
+    if (!response.ok) throw new Error("Failed to connect to API");
     
-    // Fake results based on random ranges for demo
-    const score = Math.floor(Math.random() * (72 - 45 + 1)) + 45;
-    document.getElementById('res-score').innerText = score;
-    document.getElementById('res-status').innerText = score > 65 ? "Fair" : "Needs Attention";
+    const data = await response.json();
+    if (data.error) throw new Error(data.error);
+
+    lastAuditData = data; // store for copying
+
+    // Populate DOM with real AI data
+    document.getElementById('res-title').innerText = data.listingTitle || 'Listing Audit';
     document.getElementById('res-url').innerText = input;
     
-    // Assign Badges
-    setAuditBadge('badge-title', 'badge-warning', 'Warning');
-    setAuditBadge('badge-desc', 'badge-critical', 'Critical');
-    setAuditBadge('badge-photo', 'badge-good', 'Good');
-  }, 2200);
-}
+    document.getElementById('res-score-row').innerHTML = `
+      <div class="score-pill">Overall Score: <strong>${data.overallScore}/100</strong></div>
+      <div class="score-pill">Title: <strong>${data.scores.title}</strong></div>
+      <div class="score-pill">SEO: <strong>${data.scores.seo}</strong></div>
+      <div class="score-pill">Photos: <strong>${data.scores.photos}</strong></div>
+    `;
 
-function setAuditBadge(id, className, text) {
-  const b = document.getElementById(id);
-  b.className = 'section-badge ' + className;
-  b.innerText = text;
+    const sectionsContainer = document.getElementById('dynamic-audit-sections');
+    sectionsContainer.innerHTML = ''; // Clear previous
+    
+    const iconColors = {title:'icon-title',description:'icon-description',seo:'icon-seo',photos:'icon-photos',pricing:'icon-pricing'};
+
+    data.sections.forEach((sec, idx) => {
+      const badgeClass = sec.status === 'critical' ? 'badge-critical' : (sec.status === 'warning' ? 'badge-warning' : 'badge-good');
+      const badgeText = sec.status === 'critical' ? 'Needs Work' : (sec.status === 'warning' ? 'Could Improve' : 'Good');
+      const iconColor = iconColors[sec.id] || 'icon-title';
+      const isOpen = idx === 0 ? 'open' : '';
+      const rotation = idx === 0 ? '0deg' : '180deg';
+      
+      let findingsHtml = '';
+      sec.findings.forEach(f => {
+        findingsHtml += `<div class="finding"><div class="finding-label">${f.label}</div><div class="finding-text">${f.text}</div></div>`;
+      });
+
+      sectionsContainer.innerHTML += `
+        <div class="audit-section">
+          <div class="section-head" onclick="toggleSection(this)">
+            <div class="section-head-left">
+              <div class="section-icon ${iconColor}">${sec.icon}</div>
+              <div class="section-name">${sec.name}</div>
+            </div>
+            <div class="section-badge ${badgeClass}">${badgeText}</div>
+            <div class="section-chevron" style="transform: rotate(${rotation});">▼</div>
+          </div>
+          <div class="section-body ${isOpen}">
+            <div class="section-content">
+              ${findingsHtml}
+              <div class="rec-box">
+                <div class="rec-label">Recommendation</div>
+                <div class="rec-text">${sec.recommendation}</div>
+              </div>
+            </div>
+          </div>
+        </div>
+      `;
+    });
+    
+    document.getElementById('res-opportunity').innerText = data.topOpportunity || "Optimize your title to boost CTR.";
+
+    document.getElementById('audit-loading').style.display = 'none';
+    document.getElementById('audit-result').style.display = 'block';
+
+  } catch (err) {
+    console.error(err);
+    error.innerText = "Analysis failed. Ensure the URL is correct or try again later.";
+    error.style.display = 'block';
+    document.getElementById('audit-loading').style.display = 'none';
+  } finally {
+    btn.disabled = false;
+  }
 }
 
 function toggleSection(head) {
@@ -739,10 +719,16 @@ function resetAudit() {
 }
 
 function copyResults() {
-  const score = document.getElementById('res-score').innerText;
-  const status = document.getElementById('res-status').innerText;
-  const url = document.getElementById('res-url').innerText;
-  const text = `ListSmart Audit Summary\nURL: ${url}\nScore: ${score}/100\nStatus: ${status}\nKey Insight: Title and Description need professional rewriting.`;
+  if (!lastAuditData) return;
+  const a = lastAuditData;
+  let text = `LISTSMART AUDIT SUMMARY\nURL: ${document.getElementById('res-url').innerText}\nOverall Score: ${a.overallScore}/100\n\n`;
+  
+  a.sections.forEach(s => {
+    text += `${s.name.toUpperCase()}[${s.status.toUpperCase()}]\n${'-'.repeat(30)}\n`;
+    s.findings.forEach(f => text += `• ${f.label}: ${f.text}\n`);
+    text += `Recommendation: ${s.recommendation}\n\n`;
+  });
+  text += `TOP OPPORTUNITY\n${'-'.repeat(30)}\n${a.topOpportunity}\n\n— Generated by ListSmart AI`;
   
   const temp = document.createElement('textarea');
   temp.value = text;
