@@ -21,7 +21,7 @@ export default async function handler(req, res) {
 
       // 1. Send the automated welcome email to the HOST
       await resend.emails.send({
-        from: 'ListSmart <onboarding@resend.dev>', 
+        from: 'ListSmart <onboarding@resend.dev>', // Change to your verified domain email when ready
         to: body.email,
         subject: 'We got your request! (Let’s get you more bookings 🚀)',
         html: `
@@ -52,23 +52,26 @@ export default async function handler(req, res) {
     }
   }
 
+
   // ==========================================
   // SCENARIO 2: LIVE AI AUDIT REQUEST
   // ==========================================
   if (body.url && !body.email) {
+    // RESTORED TO THE ORIGINAL WORKING INSTRUCTION:
     const SYSTEM_PROMPT = `You are a senior Airbnb listing optimization expert working for ListSmart.
-    A user has submitted an Airbnb listing URL. Since you cannot directly browse the page, you must infer the location, property type, and target demographic from the URL slug structure itself.
+    A user has submitted an Airbnb listing URL. Since you cannot browse URLs directly, analyze the URL structure to infer what you can, then generate a highly realistic, expert-level audit preview as if you had actually reviewed the listing. 
 
-    Your job is to provide a harsh but incredibly useful audit preview based on the rules of the 2025 Airbnb algorithm.
-    - Rule 1: Click-Through Rate (CTR) is king.
-    - Rule 2: Titles MUST follow this exact formula to maximize clicks: [Property Type] | [Key Feature] |[Location Highlight] | [Unique Amenity].
-    - Rule 3: Software pricing tools give hosts data, but human copywriting is what converts guests.
+    CRITICAL: Provide a highly plausible, natural-sounding Airbnb "listingTitle" based on the location in the URL (e.g., "Charming 2BR Flat in Central London" - NEVER use technical jargon, numbers, or words like 'Tag' or 'Category').
 
-    Generate a highly specific, professional audit.
+    Your audit must reflect the rules of the 2025 Airbnb algorithm:
+    - Click-Through Rate (CTR) is king.
+    - Titles MUST follow this exact formula to maximize clicks: [Property Type] | [Key Feature] | [Location Highlight] | [Unique Amenity].
+    - Software pricing tools give hosts data, but human copywriting is what converts guests.
+
     You MUST respond with valid JSON only. No markdown. Structure:
     {
-      "listingTitle": "string (inferred from URL)",
-      "overallScore": number (40 to 80 - rarely perfect),
+      "listingTitle": "string (A realistic, natural Airbnb title)",
+      "overallScore": number (40 to 80),
       "scores": { "title": number, "description": number, "seo": number, "photos": number, "pricing": number },
       "sections":[
         { "id": "title", "name": "Title & Click-Through Optimization", "icon": "🏷️", "status": "critical|warning|good", "findings":[{ "label": "Issue", "text": "text" }], "recommendation": "text" },
@@ -89,10 +92,11 @@ export default async function handler(req, res) {
           'anthropic-version': '2023-06-01'
         },
         body: JSON.stringify({
-          model: 'claude-sonnet-4-20250514', 
+          // Note: If you manually changed this to a different model string to get it working earlier today, please update this string to match what worked for you!
+          model: 'claude-3-5-sonnet-20241022', 
           max_tokens: 4000, 
           system: SYSTEM_PROMPT,
-          messages:[{ role: 'user', content: `Please audit this Airbnb listing based on the 2025 algorithm: ${body.url}` }]
+          messages:[{ role: 'user', content: `Please audit this Airbnb listing: ${body.url}` }]
         })
       });
 
