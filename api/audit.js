@@ -19,9 +19,8 @@ export default async function handler(req, res) {
     try {
       console.log("Contact form submitted by:", body.email);
 
-      // 1. Send the automated welcome email to the HOST
       await resend.emails.send({
-        from: 'ListSmart <onboarding@resend.dev>', // Change to your verified domain email when ready
+        from: 'ListSmart <onboarding@resend.dev>', 
         to: body.email,
         subject: 'We got your request! (Let’s get you more bookings 🚀)',
         html: `
@@ -36,7 +35,6 @@ export default async function handler(req, res) {
         `
       });
 
-      // 2. Send an alert email to YOURSELF
       await resend.emails.send({
         from: 'ListSmart Alert <onboarding@resend.dev>',
         to: 'listsmart@zohomail.eu',
@@ -57,24 +55,47 @@ export default async function handler(req, res) {
   // SCENARIO 2: LIVE AI AUDIT REQUEST
   // ==========================================
   if (body.url && !body.email) {
+    
+    // NEW: Quickly fetch the actual Airbnb webpage to grab the REAL title!
+    let actualTitle = "";
+    try {
+      const siteRes = await fetch(body.url, {
+        headers: { 'User-Agent': 'Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36' }
+      });
+      if (siteRes.ok) {
+        const html = await siteRes.text();
+        const match = html.match(/<title>(.*?)<\/title>/i);
+        if (match && match[1]) {
+          // Clean up the Airbnb title tags
+          actualTitle = match[1].split(' - ')[0].replace('Airbnb | ', '').replace('&#39;', "'").trim();
+        }
+      }
+    } catch (err) {
+      console.log("Could not fetch live Airbnb title, proceeding with fallback.");
+    }
+
+    const titleContext = actualTitle 
+      ? `The actual current title of this Airbnb listing is: "${actualTitle}". You MUST use this real title in your JSON response and critique it in your findings.`
+      : `Analyze the URL structure to infer what you can about the property.`;
+
     const SYSTEM_PROMPT = `You are a senior Airbnb listing optimization expert working for ListSmart.
-    A user has submitted an Airbnb listing URL. Since you cannot browse URLs directly, analyze the URL structure to infer what you can, then generate a highly realistic, expert-level audit preview as if you had actually reviewed the listing. 
+    A user has submitted an Airbnb listing URL. ${titleContext}
 
-    CRITICAL: Provide a highly plausible, natural-sounding Airbnb "listingTitle" based on the location in the URL (e.g., "Charming 2BR Flat in Central London" - NEVER use technical jargon, numbers, or words like 'Tag' or 'Category').
-
+    Generate a highly realistic, expert-level audit preview. 
+    
     Your audit must reflect the rules of the 2025 Airbnb algorithm:
     - Click-Through Rate (CTR) is king.
-    - Titles MUST follow this exact formula to maximize clicks: [Property Type] | [Key Feature] | [Location Highlight] |[Unique Amenity].
+    - Titles MUST follow this exact formula to maximize clicks: [Property Type] | [Key Feature] | [Location Highlight] | [Unique Amenity].
     - Software pricing tools give hosts data, but human copywriting is what converts guests.
 
     You MUST respond with valid JSON only. No markdown. Structure:
     {
-      "listingTitle": "string (A realistic, natural Airbnb title)",
+      "listingTitle": "string (Use the actual title provided, or infer a realistic one)",
       "overallScore": number (40 to 80),
       "scores": { "title": number, "description": number, "seo": number, "photos": number, "pricing": number },
       "sections":[
         { "id": "title", "name": "Title & Click-Through Optimization", "icon": "🏷️", "status": "critical|warning|good", "findings":[{ "label": "Issue", "text": "text" }], "recommendation": "text" },
-        { "id": "description", "name": "Description & Copywriting", "icon": "✍️", "status": "critical|warning|good", "findings": [{"label":"", "text":""}], "recommendation": "text" },
+        { "id": "description", "name": "Description & Copywriting", "icon": "✍️", "status": "critical|warning|good", "findings":[{"label":"", "text":""}], "recommendation": "text" },
         { "id": "seo", "name": "Algorithm Visibility & SEO", "icon": "🔍", "status": "critical|warning|good", "findings":[{"label":"", "text":""}], "recommendation": "text" },
         { "id": "photos", "name": "Photo Strategy & Captions", "icon": "📸", "status": "critical|warning|good", "findings":[{"label":"", "text":""}], "recommendation": "text" },
         { "id": "pricing", "name": "Pricing Signals vs Human Strategy", "icon": "💰", "status": "critical|warning|good", "findings":[{"label":"", "text":""}], "recommendation": "text" }
@@ -94,7 +115,7 @@ export default async function handler(req, res) {
           model: 'claude-sonnet-4-20250514', 
           max_tokens: 4000, 
           system: SYSTEM_PROMPT,
-          messages:[{ role: 'user', content: `Please audit this Airbnb listing: ${body.url}` }]
+          messages:[{ role: 'user', content: `Please audit this Airbnb listing based on the 2025 algorithm: ${body.url}` }]
         })
       });
 
