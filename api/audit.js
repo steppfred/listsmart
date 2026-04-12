@@ -21,7 +21,7 @@ export default async function handler(req, res) {
 
       // 1. Send the automated welcome email to the HOST
       await resend.emails.send({
-        from: 'ListSmart <onboarding@resend.dev>', // Change to your verified domain email when ready
+        from: 'ListSmart <onboarding@resend.dev>', 
         to: body.email,
         subject: 'We got your request! (Let’s get you more bookings 🚀)',
         html: `
@@ -52,7 +52,6 @@ export default async function handler(req, res) {
     }
   }
 
-
   // ==========================================
   // SCENARIO 2: LIVE AI AUDIT REQUEST
   // ==========================================
@@ -62,7 +61,7 @@ export default async function handler(req, res) {
 
     Your job is to provide a harsh but incredibly useful audit preview based on the rules of the 2025 Airbnb algorithm.
     - Rule 1: Click-Through Rate (CTR) is king.
-    - Rule 2: Titles MUST follow this exact formula to maximize clicks: [Property Type] | [Key Feature] | [Location Highlight] |[Unique Amenity].
+    - Rule 2: Titles MUST follow this exact formula to maximize clicks: [Property Type] | [Key Feature] |[Location Highlight] | [Unique Amenity].
     - Rule 3: Software pricing tools give hosts data, but human copywriting is what converts guests.
 
     Generate a highly specific, professional audit.
@@ -73,9 +72,9 @@ export default async function handler(req, res) {
       "scores": { "title": number, "description": number, "seo": number, "photos": number, "pricing": number },
       "sections":[
         { "id": "title", "name": "Title & Click-Through Optimization", "icon": "🏷️", "status": "critical|warning|good", "findings":[{ "label": "Issue", "text": "text" }], "recommendation": "text" },
-        { "id": "description", "name": "Description & Copywriting", "icon": "✍️", "status": "critical|warning|good", "findings":[{"label":"", "text":""}], "recommendation": "text" },
+        { "id": "description", "name": "Description & Copywriting", "icon": "✍️", "status": "critical|warning|good", "findings": [{"label":"", "text":""}], "recommendation": "text" },
         { "id": "seo", "name": "Algorithm Visibility & SEO", "icon": "🔍", "status": "critical|warning|good", "findings":[{"label":"", "text":""}], "recommendation": "text" },
-        { "id": "photos", "name": "Photo Strategy & Captions", "icon": "📸", "status": "critical|warning|good", "findings": [{"label":"", "text":""}], "recommendation": "text" },
+        { "id": "photos", "name": "Photo Strategy & Captions", "icon": "📸", "status": "critical|warning|good", "findings":[{"label":"", "text":""}], "recommendation": "text" },
         { "id": "pricing", "name": "Pricing Signals vs Human Strategy", "icon": "💰", "status": "critical|warning|good", "findings":[{"label":"", "text":""}], "recommendation": "text" }
       ],
       "topOpportunity": "string (Focus on what humans do better than software to increase revenue)"
@@ -91,7 +90,7 @@ export default async function handler(req, res) {
         },
         body: JSON.stringify({
           model: 'claude-sonnet-4-20250514', 
-          max_tokens: 4000, // <--- INCREASED TO 4000 SO CLAUDE DOESN'T GET CUT OFF!
+          max_tokens: 4000, 
           system: SYSTEM_PROMPT,
           messages:[{ role: 'user', content: `Please audit this Airbnb listing based on the 2025 algorithm: ${body.url}` }]
         })
@@ -107,13 +106,20 @@ export default async function handler(req, res) {
       const text = data.content.map(b => b.text || '').join('');
       const cleanJsonString = text.replace(/```json|```/g, '').trim();
       
-      // Safety net to catch JSON formatting errors
       let auditData;
       try {
         auditData = JSON.parse(cleanJsonString);
       } catch (parseError) {
-        console.error('JSON Parse Error. The AI generated malformed JSON. Raw string:', cleanJsonString);
-        return res.status(500).json({ error: 'AI generated invalid data format. Please try again.' });
+        console.error('JSON Parse Error:', cleanJsonString);
+        return res.status(500).json({ error: 'AI generated invalid data format.' });
       }
 
-      return res.st
+      return res.status(200).json(auditData);
+    } catch (error) {
+      console.error('Audit generation error:', error);
+      return res.status(500).json({ error: 'Failed to generate audit' });
+    }
+  }
+
+  return res.status(400).json({ error: 'Invalid request data' });
+}
