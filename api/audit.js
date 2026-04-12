@@ -57,7 +57,6 @@ export default async function handler(req, res) {
   // SCENARIO 2: LIVE AI AUDIT REQUEST
   // ==========================================
   if (body.url && !body.email) {
-    // The prompt is updated to focus heavily on the 2025 Algorithm, CTR, and the Title Formula.
     const SYSTEM_PROMPT = `You are a senior Airbnb listing optimization expert working for ListSmart.
     A user has submitted an Airbnb listing URL. Since you cannot directly browse the page, you must infer the location, property type, and target demographic from the URL slug structure itself.
 
@@ -75,7 +74,7 @@ export default async function handler(req, res) {
       "sections":[
         { "id": "title", "name": "Title & Click-Through Optimization", "icon": "🏷️", "status": "critical|warning|good", "findings":[{ "label": "Issue", "text": "text" }], "recommendation": "text" },
         { "id": "description", "name": "Description & Copywriting", "icon": "✍️", "status": "critical|warning|good", "findings": [{"label":"", "text":""}], "recommendation": "text" },
-        { "id": "seo", "name": "Algorithm Visibility & SEO", "icon": "🔍", "status": "critical|warning|good", "findings": [{"label":"", "text":""}], "recommendation": "text" },
+        { "id": "seo", "name": "Algorithm Visibility & SEO", "icon": "🔍", "status": "critical|warning|good", "findings":[{"label":"", "text":""}], "recommendation": "text" },
         { "id": "photos", "name": "Photo Strategy & Captions", "icon": "📸", "status": "critical|warning|good", "findings": [{"label":"", "text":""}], "recommendation": "text" },
         { "id": "pricing", "name": "Pricing Signals vs Human Strategy", "icon": "💰", "status": "critical|warning|good", "findings": [{"label":"", "text":""}], "recommendation": "text" }
       ],
@@ -91,7 +90,7 @@ export default async function handler(req, res) {
           'anthropic-version': '2023-06-01'
         },
         body: JSON.stringify({
-          model: 'claude-3-5-sonnet-20240620',
+          model: 'claude-3-haiku-20240307', // Changed to Haiku!
           max_tokens: 1000,
           system: SYSTEM_PROMPT,
           messages:[{ role: 'user', content: `Please audit this Airbnb listing based on the 2025 algorithm: ${body.url}` }]
