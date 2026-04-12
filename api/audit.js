@@ -76,7 +76,7 @@ export default async function handler(req, res) {
         { "id": "description", "name": "Description & Copywriting", "icon": "✍️", "status": "critical|warning|good", "findings": [{"label":"", "text":""}], "recommendation": "text" },
         { "id": "seo", "name": "Algorithm Visibility & SEO", "icon": "🔍", "status": "critical|warning|good", "findings":[{"label":"", "text":""}], "recommendation": "text" },
         { "id": "photos", "name": "Photo Strategy & Captions", "icon": "📸", "status": "critical|warning|good", "findings": [{"label":"", "text":""}], "recommendation": "text" },
-        { "id": "pricing", "name": "Pricing Signals vs Human Strategy", "icon": "💰", "status": "critical|warning|good", "findings": [{"label":"", "text":""}], "recommendation": "text" }
+        { "id": "pricing", "name": "Pricing Signals vs Human Strategy", "icon": "💰", "status": "critical|warning|good", "findings":[{"label":"", "text":""}], "recommendation": "text" }
       ],
       "topOpportunity": "string (Focus on what humans do better than software to increase revenue)"
     }`;
@@ -90,7 +90,7 @@ export default async function handler(req, res) {
           'anthropic-version': '2023-06-01'
         },
         body: JSON.stringify({
-          model: 'claude-3-haiku-20240307', // Changed to Haiku!
+          model: 'claude-3-5-sonnet-latest', // <-- Changed to universal latest alias!
           max_tokens: 1000,
           system: SYSTEM_PROMPT,
           messages:[{ role: 'user', content: `Please audit this Airbnb listing based on the 2025 algorithm: ${body.url}` }]
