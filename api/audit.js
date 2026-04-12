@@ -90,7 +90,7 @@ export default async function handler(req, res) {
           'anthropic-version': '2023-06-01'
         },
         body: JSON.stringify({
-          model: 'claude-3-5-sonnet-latest', // <-- Changed to universal latest alias!
+          model: 'claude-sonnet-4-20250514', // <-- Your original working model!
           max_tokens: 1000,
           system: SYSTEM_PROMPT,
           messages:[{ role: 'user', content: `Please audit this Airbnb listing based on the 2025 algorithm: ${body.url}` }]
