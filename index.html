@@ -12,7 +12,7 @@
 :root{
   --teal:#1D9E75;--teal-d:#0F6E56;--teal-l:#E1F5EE;--teal-m:#9FE1CB;
   --gold:#BA7517;--gold-l:#FAEEDA;--gold-m:#EF9F27;
-  --orange:#E8650A;--orange-d:#C4520A;--orange-l:#FEF0E6;
+  --orange:#E8651A;--orange-d:#C4510F;--orange-h:#F0742B;
   --ink:#1a1a18;--ink-m:#3a3a36;--ink-l:#6b6b62;
   --cream:#faf9f5;--white:#fff;--border:rgba(0,0,0,0.08);
   --r:12px;--r-lg:20px;
@@ -46,38 +46,43 @@ nav ul a:hover{color:var(--teal)}
 .nav-cta:hover{background:var(--orange-d);transform:translateY(-1px)}
 @media(max-width:900px){nav ul{display:none}}
 
-/* ── FLOATING CTA BUTTON ── */
+/* ══════════════════════════════════════
+   FLOATING CTA
+══════════════════════════════════════ */
 #floating-cta{
   position:fixed;
   bottom:2rem;
   right:2rem;
-  z-index:200;
+  z-index:99;
+  display:none;
+  animation:floatIn 0.4s ease both;
+}
+#floating-cta a{
   background:var(--orange);
   color:white;
-  border:none;
+  padding:0.875rem 1.75rem;
   border-radius:100px;
-  padding:0.875rem 1.5rem;
   font-size:0.95rem;
   font-weight:500;
-  font-family:'DM Sans',sans-serif;
-  cursor:pointer;
-  box-shadow:0 8px 28px rgba(232,101,10,0.45);
+  text-decoration:none;
+  box-shadow:0 8px 28px rgba(232,101,26,0.45);
   display:flex;
   align-items:center;
   gap:0.5rem;
-  opacity:0;
-  transform:translateY(20px);
-  transition:opacity 0.35s ease,transform 0.35s ease,background 0.2s;
-  pointer-events:none;
+  transition:background 0.2s,transform 0.2s,box-shadow 0.2s;
+  cursor:pointer;
+  border:none;
+  font-family:'DM Sans',sans-serif;
 }
-#floating-cta.visible{
-  opacity:1;
-  transform:translateY(0);
-  pointer-events:auto;
+#floating-cta a:hover{
+  background:var(--orange-d);
+  transform:translateY(-3px);
+  box-shadow:0 12px 36px rgba(232,101,26,0.5);
 }
-#floating-cta:hover{background:var(--orange-d);transform:translateY(-2px);box-shadow:0 12px 32px rgba(232,101,10,0.5)}
-@media(max-width:560px){
-  #floating-cta{bottom:1.25rem;right:1.25rem;padding:0.75rem 1.15rem;font-size:0.85rem}
+@keyframes floatIn{from{opacity:0;transform:translateY(20px)}to{opacity:1;transform:translateY(0)}}
+@media(max-width:600px){
+  #floating-cta{bottom:1.25rem;right:1.25rem}
+  #floating-cta a{padding:0.75rem 1.25rem;font-size:0.875rem}
 }
 
 /* ══════════════════════════════════════
@@ -93,7 +98,7 @@ nav ul a:hover{color:var(--teal)}
 .hero-sub{font-size:1.15rem;font-weight:300;color:var(--ink-m);max-width:55ch;margin:1.5rem 0 2.5rem;animation:fadeUp 0.6s 0.2s ease both}
 .hero-actions{display:flex;gap:1rem;flex-wrap:wrap;animation:fadeUp 0.6s 0.3s ease both}
 .btn-primary{background:var(--orange);color:white;padding:0.875rem 2rem;border-radius:100px;text-decoration:none;font-weight:500;font-size:1rem;transition:all 0.2s;border:none;cursor:pointer;display:inline-block;font-family:'DM Sans',sans-serif}
-.btn-primary:hover{background:var(--orange-d);transform:translateY(-2px);box-shadow:0 8px 24px rgba(232,101,10,0.35)}
+.btn-primary:hover{background:var(--orange-d);transform:translateY(-2px);box-shadow:0 8px 24px rgba(232,101,26,0.35)}
 .btn-ghost{background:transparent;color:var(--ink);padding:0.875rem 2rem;border-radius:100px;text-decoration:none;font-weight:500;font-size:1rem;border:1.5px solid var(--border);transition:all 0.2s;display:inline-block}
 .btn-ghost:hover{border-color:var(--teal);color:var(--teal)}
 .hero-stats{display:flex;gap:3rem;margin-top:4rem;flex-wrap:wrap;animation:fadeUp 0.6s 0.4s ease both}
@@ -137,14 +142,15 @@ section{padding:6rem 2rem}
 .problem-card p{font-size:0.9rem;color:rgba(255,255,255,0.55);line-height:1.65}
 .problem-pain-line{
   margin-top:2.5rem;
-  padding:1.25rem 1.5rem;
-  background:rgba(232,101,10,0.12);
+  padding:1.25rem 1.75rem;
+  background:rgba(255,255,255,0.04);
   border-left:3px solid var(--orange);
   border-radius:0 var(--r) var(--r) 0;
+  font-size:1rem;
   color:rgba(255,255,255,0.75);
-  font-size:0.95rem;
-  line-height:1.7;
   font-style:italic;
+  line-height:1.7;
+  max-width:680px;
 }
 .problem-pain-line strong{color:white;font-style:normal}
 
@@ -158,17 +164,15 @@ section{padding:6rem 2rem}
 .service-num{font-family:'Playfair Display',serif;font-size:2.5rem;font-weight:900;color:var(--teal-l);line-height:1;margin-bottom:1rem}
 .service-card h3{font-size:1.1rem;font-weight:500;margin-bottom:0.5rem}
 .service-card p{font-size:0.875rem;color:var(--ink-l);line-height:1.65}
-.service-template-note{
-  margin-top:0.75rem;
-  padding:0.65rem 0.85rem;
-  background:var(--teal-l);
-  border-radius:var(--r);
+.template-note{
+  display:inline-block;
+  margin-top:0.6rem;
   font-size:0.8rem;
   color:var(--teal-d);
+  background:var(--teal-l);
+  border-radius:100px;
+  padding:0.2rem 0.75rem;
   font-weight:500;
-  display:flex;
-  align-items:flex-start;
-  gap:0.4rem;
 }
 
 /* HOW IT WORKS */
@@ -229,20 +233,6 @@ section{padding:6rem 2rem}
 .faq-a p{padding:0 0 1.25rem;font-size:0.9rem;color:var(--ink-m);line-height:1.75}
 .faq-item.open .faq-icon{transform:rotate(45deg)}
 .faq-item.open .faq-a{max-height:400px}
-.faq-tos-badge{
-  display:inline-flex;
-  align-items:center;
-  gap:0.4rem;
-  background:var(--teal-l);
-  color:var(--teal-d);
-  font-size:0.75rem;
-  font-weight:500;
-  padding:0.25rem 0.75rem;
-  border-radius:100px;
-  margin-bottom:0.75rem;
-  text-transform:uppercase;
-  letter-spacing:0.06em;
-}
 
 /* CONTACT */
 #contact{background:var(--teal-d);color:white;text-align:center;padding:6rem 2rem}
@@ -342,8 +332,8 @@ section{padding:6rem 2rem}
 .upsell{background:var(--gold-l);border:1px solid rgba(186,117,23,0.2);border-radius:var(--r-lg);padding:1.25rem 1.5rem;margin-top:1.25rem;display:flex;align-items:center;justify-content:space-between;gap:1rem;flex-wrap:wrap}
 .upsell-title{font-weight:500;font-size:0.95rem;color:var(--ink)}
 .upsell-sub{font-size:0.8rem;color:var(--ink-m);margin-top:0.2rem}
-.btn-upsell{background:var(--gold);color:white;border:none;padding:0.6rem 1.25rem;border-radius:100px;font-size:0.8rem;font-weight:500;cursor:pointer;font-family:'DM Sans',sans-serif;white-space:nowrap;text-decoration:none;display:inline-block;transition:all 0.2s}
-.btn-upsell:hover{background:var(--gold-m)}
+.btn-upsell{background:var(--orange);color:white;border:none;padding:0.6rem 1.25rem;border-radius:100px;font-size:0.8rem;font-weight:500;cursor:pointer;font-family:'DM Sans',sans-serif;white-space:nowrap;text-decoration:none;display:inline-block;transition:all 0.2s}
+.btn-upsell:hover{background:var(--orange-d)}
 
 .audit-actions{display:flex;gap:0.75rem;margin-top:1.5rem;flex-wrap:wrap}
 .btn-copy{background:var(--ink);color:white;border:none;padding:0.75rem 1.5rem;border-radius:var(--r);font-size:0.875rem;font-weight:500;cursor:pointer;font-family:'DM Sans',sans-serif;transition:all 0.2s}
@@ -368,12 +358,6 @@ section{padding:6rem 2rem}
 </head>
 <body>
 
-<!-- ── FLOATING CTA BUTTON ── -->
-<button id="floating-cta" onclick="showPage('audit')">
-  <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><circle cx="11" cy="11" r="8"></circle><line x1="21" y1="21" x2="16.65" y2="16.65"></line></svg>
-  Free Listing Audit ▶
-</button>
-
 <!-- ── SHARED NAV ── -->
 <nav>
   <a class="logo" onclick="showPage('home')" href="#">List<span>Smart</span></a>
@@ -385,6 +369,14 @@ section{padding:6rem 2rem}
   </ul>
   <button class="nav-cta" onclick="showPage('audit')">Free Audit ▶</button>
 </nav>
+
+<!-- ── FLOATING CTA ── -->
+<div id="floating-cta">
+  <a onclick="showPage('audit')" href="#">
+    <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><circle cx="11" cy="11" r="8"/><line x1="21" y1="21" x2="16.65" y2="16.65"/></svg>
+    Get Your Free Audit ▶
+  </a>
+</div>
 
 <!-- ════════════════════════════════════
      HOME PAGE
@@ -433,24 +425,27 @@ section{padding:6rem 2rem}
           <div class="problem-icon">
             <svg stroke="currentColor" fill="none" stroke-width="2" viewBox="0 0 24 24" stroke-linecap="round" stroke-linejoin="round" height="32" width="32"><rect x="4" y="4" width="16" height="16" rx="2" ry="2"></rect><rect x="9" y="9" width="6" height="6"></rect><line x1="9" y1="1" x2="9" y2="4"></line><line x1="15" y1="1" x2="15" y2="4"></line><line x1="9" y1="20" x2="9" y2="23"></line><line x1="15" y1="20" x2="15" y2="23"></line><line x1="20" y1="9" x2="23" y2="9"></line><line x1="20" y1="14" x2="23" y2="14"></line><line x1="1" y1="9" x2="4" y2="9"></line><line x1="1" y1="14" x2="4" y2="14"></line></svg>
           </div>
-          <h3>Software Isn't Enough</h3><p>Tools like PriceLabs give you perfect data, but they don't write copy. If your cover photo and title don't convert the click, perfect pricing means nothing.</p>
+          <h3>Software Isn't Enough</h3>
+          <p>Tools like PriceLabs give you perfect data, but they don't write copy. If your cover photo and title don't convert the click, perfect pricing means nothing.</p>
         </div>
         <div class="problem-card reveal">
           <div class="problem-icon">
             <svg stroke="currentColor" fill="none" stroke-width="2" viewBox="0 0 24 24" stroke-linecap="round" stroke-linejoin="round" height="32" width="32"><circle cx="18" cy="5" r="3"></circle><circle cx="6" cy="12" r="3"></circle><circle cx="18" cy="19" r="3"></circle><line x1="8.59" y1="13.51" x2="15.42" y2="17.49"></line><line x1="15.41" y1="6.51" x2="8.59" y2="10.49"></line></svg>
           </div>
-          <h3>The 2025 Algorithm</h3><p>Airbnb now heavily weights Click-Through Rate (CTR) and recent guest satisfaction. Without the exact [Type] | [Feature] | [Location] title formula, you lose visibility fast.</p>
+          <h3>The 2025 Algorithm</h3>
+          <p>Airbnb now heavily weights Click-Through Rate (CTR) and recent guest satisfaction. Without the exact [Type] | [Feature] | [Location] title formula, you lose visibility fast.</p>
         </div>
         <div class="problem-card reveal">
           <div class="problem-icon">
             <svg stroke="currentColor" fill="none" stroke-width="2" viewBox="0 0 24 24" stroke-linecap="round" stroke-linejoin="round" height="32" width="32"><path d="M12 20h9"></path><path d="M16.5 3.5a2.121 2.121 0 0 1 3 3L7 19l-4 1 1-4L16.5 3.5z"></path></svg>
           </div>
-          <h3>Generic Descriptions</h3><p>Most hosts describe their space ("1 bed, 1 bath"). We write to sell the <em>experience</em>. Guests book emotions, not square meters.</p>
+          <h3>Generic Descriptions</h3>
+          <p>Most hosts describe their space ("1 bed, 1 bath"). We write to sell the <em>experience</em>. Guests book emotions, not square meters.</p>
         </div>
       </div>
-      <!-- Emotional pain line about Time -->
+      <!-- Emotional time pain line -->
       <div class="problem-pain-line reveal">
-        <strong>And here's the part no one talks about:</strong> you've already spent hours managing your calendar, answering messages, and handling turnovers. The last thing you have time for is becoming a copywriter and an SEO expert too. That's exactly what we're here for.
+        And you already know you <strong>don't have hours to spend</strong> researching keywords, rewriting copy, and second-guessing your photos — you have a property to run.
       </div>
     </div>
   </section>
@@ -463,19 +458,25 @@ section{padding:6rem 2rem}
       <div class="services-grid">
         <div class="service-card reveal">
           <div class="service-num">01</div>
-          <h3>Title & Photo Audit</h3>
+          <h3>Title &amp; Photo Audit</h3>
           <p>We analyze the two things that actually drive clicks. Stop guessing what the algorithm wants.</p>
         </div>
         <div class="service-card reveal">
           <div class="service-num">02</div>
           <h3>Full Optimization</h3>
           <p>We rewrite everything — title, description, photo captions, amenity highlights. Done-for-you, delivered in 72 hours.</p>
-          <div class="service-template-note">
-            📋 Receive copy-paste ready templates + a 10-minute implementation guide. No reading required — just paste and publish.
-          </div>
+          <span class="template-note">📋 Includes copy-paste ready templates &amp; a 10-minute implementation guide</span>
         </div>
-        <div class="service-card reveal"><div class="service-num">03</div><h3>Pricing Strategy</h3><p>Competitive benchmarking, seasonal pricing advice, and minimum night strategy to maximise occupancy and nightly rate.</p></div>
-        <div class="service-card reveal"><div class="service-num">04</div><h3>Monthly Retainer</h3><p>Ongoing monitoring, seasonal updates, keyword refreshes, and performance tracking. Set it and let your listing keep improving.</p></div>
+        <div class="service-card reveal">
+          <div class="service-num">03</div>
+          <h3>Pricing Strategy</h3>
+          <p>Competitive benchmarking, seasonal pricing advice, and minimum night strategy to maximise occupancy and nightly rate.</p>
+        </div>
+        <div class="service-card reveal">
+          <div class="service-num">04</div>
+          <h3>Monthly Retainer</h3>
+          <p>Ongoing monitoring, seasonal updates, keyword refreshes, and performance tracking. Set it and let your listing keep improving.</p>
+        </div>
       </div>
     </div>
   </section>
@@ -485,15 +486,23 @@ section{padding:6rem 2rem}
       <div class="section-label reveal">The Process</div>
       <h2 class="section-title reveal">Simple. Fast. Measurable.</h2>
       <div class="steps">
-        <div class="step reveal"><div class="step-circle">1</div><h3>Submit Your Listing</h3><p>Share your Airbnb URL and fill out a short intake form about your property and goals.</p></div>
+        <div class="step reveal">
+          <div class="step-circle">1</div>
+          <h3>Submit Your Listing</h3>
+          <p>Share your Airbnb URL and fill out a short intake form about your property and goals.</p>
+        </div>
         <div class="step-connector"></div>
         <div class="step reveal">
           <div class="step-circle">2</div>
-          <h3>Receive Your Templates</h3>
-          <p>We deliver copy-paste ready templates and a 10-minute implementation guide within 72 hours. No lengthy PDFs to decipher — just paste and go.</p>
+          <h3>Receive Your Report</h3>
+          <p>We deliver copy-paste ready templates and a 10-minute implementation guide within 72 hours — with notes explaining every change.</p>
         </div>
         <div class="step-connector"></div>
-        <div class="step reveal"><div class="step-circle">3</div><h3>Watch Bookings Grow</h3><p>Publish your optimized listing and track the improvement in views, clicks, and reservations over the next 30 days.</p></div>
+        <div class="step reveal">
+          <div class="step-circle">3</div>
+          <h3>Watch Bookings Grow</h3>
+          <p>Publish your optimized listing and track the improvement in views, clicks, and reservations over the next 30 days.</p>
+        </div>
       </div>
     </div>
   </section>
@@ -503,9 +512,18 @@ section{padding:6rem 2rem}
       <div class="section-label reveal">Results</div>
       <h2 class="section-title reveal">Real growth from real hosts.</h2>
       <div class="testimonials">
-        <div class="testimonial reveal"><p>"We were stuck on page 14 of Airbnb search. ListSmart completely rewrote our title to focus on our specific traveler demographic. We hit Page 2 in just 20 days and Q1 revenue is up 64%."</p><div class="author">James K.</div><div class="loc">Algarve, Portugal (3 properties)</div></div>
-        <div class="testimonial reveal"><p>"I was paying for pricing tools but my calendar was empty. ListSmart showed me my photo captions were hurting my SEO. Fixed it, and views doubled in three weeks."</p><div class="author">Maria T.</div><div class="loc">Lisbon, Portugal (1 property)</div></div>
-        <div class="testimonial reveal"><p>"The monthly retainer has been a game-changer. They update our keywords seasonally based on local search trends. Best ROI of any host service I use."</p><div class="author">Ana R.</div><div class="loc">Porto, Portugal (5 properties)</div></div>
+        <div class="testimonial reveal">
+          <p>"We were stuck on page 14 of Airbnb search. ListSmart completely rewrote our title to focus on our specific traveler demographic. We hit Page 2 in just 20 days and Q1 revenue is up 64%."</p>
+          <div class="author">James K.</div><div class="loc">Algarve, Portugal (3 properties)</div>
+        </div>
+        <div class="testimonial reveal">
+          <p>"I was paying for pricing tools but my calendar was empty. ListSmart showed me my photo captions were hurting my SEO. Fixed it, and views doubled in three weeks."</p>
+          <div class="author">Maria T.</div><div class="loc">Lisbon, Portugal (1 property)</div>
+        </div>
+        <div class="testimonial reveal">
+          <p>"The monthly retainer has been a game-changer. They update our keywords seasonally based on local search trends. Best ROI of any host service I use."</p>
+          <div class="author">Ana R.</div><div class="loc">Porto, Portugal (5 properties)</div>
+        </div>
       </div>
     </div>
   </section>
@@ -517,22 +535,47 @@ section{padding:6rem 2rem}
       <p class="section-sub reveal">No hidden fees, no commission on bookings. Just a clear investment with a measurable return.</p>
       <div class="pricing-grid">
         <div class="price-card reveal">
-          <div class="tier">Quick Wins</div><div class="price">€47</div><div class="price-note">one-time payment</div>
+          <div class="tier">Quick Wins</div>
+          <div class="price">€47</div>
+          <div class="price-note">one-time payment</div>
           <div class="desc">Low barrier to entry. Fix the top two things causing you to lose bookings right now.</div>
-          <ul class="feature-list"><li>2025 Algorithm Title rewrite</li><li>Cover Photo selection strategy</li><li>Top 5 amenities audit</li><li>Delivered in 48 hours</li></ul>
+          <ul class="feature-list">
+            <li>2025 Algorithm Title rewrite</li>
+            <li>Cover Photo selection strategy</li>
+            <li>Top 5 amenities audit</li>
+            <li>Delivered in 48 hours</li>
+          </ul>
           <button class="btn-outline" onclick="document.getElementById('contact').scrollIntoView({behavior:'smooth'})">Get Started</button>
         </div>
         <div class="price-card featured reveal">
           <div class="featured-badge">Most Popular</div>
-          <div class="tier">Full Optimization</div><div class="price">€347</div><div class="price-note">one-time payment</div>
+          <div class="tier">Full Optimization</div>
+          <div class="price">€247</div>
+          <div class="price-note">one-time payment</div>
           <div class="desc">The complete makeover. We rewrite every word of your listing for maximum performance.</div>
-          <ul class="feature-list"><li>Everything in Quick Wins</li><li>Full professional rewrite</li><li>Optimized photo captions</li><li>Amenity highlight audit</li><li>Copy-paste ready templates + 10-min guide</li></ul>
+          <ul class="feature-list">
+            <li>Everything in Quick Wins</li>
+            <li>Full professional rewrite</li>
+            <li>Optimized photo captions</li>
+            <li>Amenity highlight audit</li>
+            <li>Keyword-rich descriptions</li>
+            <li>Copy-paste ready templates</li>
+            <li>10-minute implementation guide</li>
+          </ul>
           <button class="btn-featured" onclick="document.getElementById('contact').scrollIntoView({behavior:'smooth'})">Get Optimized</button>
         </div>
         <div class="price-card reveal">
-          <div class="tier">The Growth Plan</div><div class="price">€149</div><div class="price-note">per month</div>
+          <div class="tier">The Growth Plan</div>
+          <div class="price">€147</div>
+          <div class="price-note">per month</div>
           <div class="desc">Hands-off management. We keep your listing at peak performance all year round.</div>
-          <ul class="feature-list"><li>Monthly performance check</li><li>Seasonal keyword refreshes</li><li>Competitor benchmarking</li><li>Direct email support</li><li>Pricing strategy advice</li></ul>
+          <ul class="feature-list">
+            <li>Monthly performance check</li>
+            <li>Seasonal keyword refreshes</li>
+            <li>Competitor benchmarking</li>
+            <li>Direct email support</li>
+            <li>Pricing strategy advice</li>
+          </ul>
           <button class="btn-outline" onclick="document.getElementById('contact').scrollIntoView({behavior:'smooth'})">Join Growth Plan</button>
         </div>
       </div>
@@ -545,15 +588,10 @@ section{padding:6rem 2rem}
       <h2 class="section-title reveal">Common questions</h2>
       <div class="faq-list">
 
-        <!-- NEW: TOS / Safety FAQ — placed first as it's the #1 objection -->
+        <!-- NEW: TOS / Safety FAQ -->
         <div class="faq-item reveal">
-          <button class="faq-q" onclick="toggleFaq(this)">Is this against Airbnb's Terms of Service? Will my account be at risk? <span class="faq-icon">+</span></button>
-          <div class="faq-a">
-            <p>
-              <span class="faq-tos-badge">✔ 100% White-Hat &amp; Safe</span><br>
-              Absolutely not. We use only white-hat SEO techniques — the same principles Airbnb themselves recommend for hosts in their own help centre. We never access your account, use any bots, or manipulate the platform in any way. What we deliver are copy-paste ready templates that <em>you</em> upload directly into your own dashboard. Your account stays 100% in your control at all times. We are simply professional copywriters who understand the algorithm — nothing more.
-            </p>
-          </div>
+          <button class="faq-q" onclick="toggleFaq(this)">Is this against Airbnb's Terms of Service? Will my account get banned? <span class="faq-icon">+</span></button>
+          <div class="faq-a"><p>Absolutely not. We use 100% white-hat SEO techniques — the same principles Airbnb themselves recommend for hosts who want better visibility. We never touch your account, use bots, or manipulate reviews. We simply deliver copy-paste ready templates and an implementation guide, so <strong>you</strong> make every change inside your own dashboard. Your account stays 100% in your control and fully compliant with Airbnb's policies at all times.</p></div>
         </div>
 
         <div class="faq-item reveal">
@@ -562,11 +600,11 @@ section{padding:6rem 2rem}
         </div>
         <div class="faq-item reveal">
           <button class="faq-q" onclick="toggleFaq(this)">How long does it take to see results? <span class="faq-icon">+</span></button>
-          <div class="faq-a"><p>Most hosts see an increase in views within the first 7-10 days of publishing the optimized listing. Booking increases typically follow in the first 2-4 weeks as the algorithm updates your position.</p></div>
+          <div class="faq-a"><p>Most hosts see an increase in views within the first 7–10 days of publishing the optimized listing. Booking increases typically follow in the first 2–4 weeks as the algorithm updates your position.</p></div>
         </div>
         <div class="faq-item reveal">
           <button class="faq-q" onclick="toggleFaq(this)">Do you need my Airbnb login details? <span class="faq-icon">+</span></button>
-          <div class="faq-a"><p>No, we never ask for your password. We deliver the optimized content to you in a clear, copy-paste ready document, along with a short 10-minute guide showing you exactly where to paste each section in your Airbnb host dashboard.</p></div>
+          <div class="faq-a"><p>No, we never ask for your password. We deliver the optimized content to you as copy-paste ready templates, along with a 10-minute implementation guide showing you exactly where to paste each section in your Airbnb host dashboard. It takes less time than you think.</p></div>
         </div>
         <div class="faq-item reveal">
           <button class="faq-q" onclick="toggleFaq(this)">Does this work for any location? <span class="faq-icon">+</span></button>
@@ -593,8 +631,8 @@ section{padding:6rem 2rem}
         <select name="serviceType" required>
           <option value="" disabled selected>Select a Service</option>
           <option value="quickwins">Quick Wins Title Rewrite (€47)</option>
-          <option value="full">Full Optimization (€347)</option>
-          <option value="growth">Growth Plan (€149/mo)</option>
+          <option value="full">Full Optimization (€247)</option>
+          <option value="growth">Growth Plan (€147/mo)</option>
           <option value="other">Other Inquiry</option>
         </select>
         <input type="text" name="url" placeholder="Your Airbnb Listing URL (Required)" required>
@@ -636,7 +674,7 @@ section{padding:6rem 2rem}
     <div id="audit-loading" class="loading">
       <div class="spinner"></div>
       <div class="loading-text">Analyzing listing components...</div>
-      <div class="loading-sub">Checking SEO, 2025 Algorithm Title Formula & Photo Strategy</div>
+      <div class="loading-sub">Checking SEO, 2025 Algorithm Title Formula &amp; Photo Strategy</div>
     </div>
 
     <div id="audit-result" class="result-area">
@@ -657,7 +695,7 @@ section{padding:6rem 2rem}
       <div class="upsell">
         <div>
           <div class="upsell-title">Want a 100% human-optimized audit?</div>
-          <div class="upsell-sub">Tools give you data, we give you words. Get copy-paste ready templates starting at just €47.</div>
+          <div class="upsell-sub">Tools give you data, we give you words. Get a professional rewrite starting at just €47.</div>
         </div>
         <a class="btn-upsell" href="#pricing" onclick="showPage('home')">Get Optimization</a>
       </div>
@@ -681,43 +719,40 @@ function showPage(pageId) {
   document.getElementById('page-audit').style.display = pageId === 'audit' ? 'block' : 'none';
   document.getElementById('homeNav').style.display = pageId === 'home' ? 'flex' : 'none';
   // Hide floating CTA on audit page
-  const floatingCta = document.getElementById('floating-cta');
-  if(pageId === 'audit'){
-    floatingCta.classList.remove('visible');
-  }
+  document.getElementById('floating-cta').style.display = 'none';
   window.scrollTo(0,0);
 }
 
-// --- FLOATING CTA: show when user scrolls into #results or #testimonials ---
-(function(){
+// --- FLOATING CTA VISIBILITY ---
+(function() {
   const floatingCta = document.getElementById('floating-cta');
   const triggerSections = ['results', 'faq', 'pricing'];
 
-  function updateFloatingCta() {
-    // Only show on home page
-    if(document.getElementById('page-home').style.display === 'none') return;
+  // Show only when user scrolls into Results, Testimonials, or FAQ sections on home page
+  function checkFloatingCta() {
+    // Don't show on audit page
+    if (document.getElementById('page-audit').style.display === 'block') {
+      floatingCta.style.display = 'none';
+      return;
+    }
 
     let shouldShow = false;
-    triggerSections.forEach(id => {
-      const el = document.getElementById(id);
-      if(!el) return;
-      const rect = el.getBoundingClientRect();
-      // Show when section is within viewport range
-      if(rect.top < window.innerHeight && rect.bottom > 0) {
+    triggerSections.forEach(function(id) {
+      const section = document.getElementById(id);
+      if (!section) return;
+      const rect = section.getBoundingClientRect();
+      // Show when any trigger section is partially in view
+      if (rect.top < window.innerHeight && rect.bottom > 0) {
         shouldShow = true;
       }
     });
 
-    if(shouldShow){
-      floatingCta.classList.add('visible');
-    } else {
-      floatingCta.classList.remove('visible');
-    }
+    floatingCta.style.display = shouldShow ? 'block' : 'none';
   }
 
-  window.addEventListener('scroll', updateFloatingCta, { passive: true });
+  window.addEventListener('scroll', checkFloatingCta, { passive: true });
   // Run once on load in case user is already scrolled
-  updateFloatingCta();
+  checkFloatingCta();
 })();
 
 // --- HOME PAGE LOGIC ---
@@ -725,14 +760,14 @@ function toggleFaq(btn) {
   const item = btn.parentElement;
   const isOpen = item.classList.contains('open');
   document.querySelectorAll('.faq-item').forEach(i => i.classList.remove('open'));
-  if(!isOpen) item.classList.add('open');
+  if (!isOpen) item.classList.add('open');
 }
 
 // --- FORM SUBMISSION ---
 function submitRequest(form) {
   const submitBtn = form.querySelector('button');
   const originalText = submitBtn.innerText;
-  
+
   const formData = new FormData(form);
   const data = Object.fromEntries(formData.entries());
 
@@ -756,7 +791,7 @@ function submitRequest(form) {
 // --- REVEAL ON SCROLL ---
 const observer = new IntersectionObserver((entries) => {
   entries.forEach(entry => {
-    if(entry.isIntersecting) entry.target.classList.add('visible');
+    if (entry.isIntersecting) entry.target.classList.add('visible');
   });
 }, { threshold: 0.1 });
 document.querySelectorAll('.reveal').forEach(el => observer.observe(el));
@@ -776,13 +811,13 @@ async function runAudit() {
   const input = document.getElementById('audit-input').value.trim();
   const error = document.getElementById('audit-error');
   const btn = document.getElementById('audit-btn');
-  
-  if(!input) {
+
+  if (!input) {
     error.innerText = "Please enter a valid URL.";
     error.style.display = 'block';
     return;
   }
-  
+
   error.style.display = 'none';
   btn.disabled = true;
   document.getElementById('audit-loading').style.display = 'block';
@@ -796,15 +831,15 @@ async function runAudit() {
     });
 
     if (!response.ok) throw new Error("Failed to connect to API");
-    
+
     const data = await response.json();
     if (data.error) throw new Error(data.error);
 
-    lastAuditData = data; 
+    lastAuditData = data;
 
     document.getElementById('res-title').innerText = data.listingTitle || 'Listing Audit';
     document.getElementById('res-url').innerText = input;
-    
+
     document.getElementById('res-score-row').innerHTML = `
       <div class="score-pill">Overall Score: <strong>${data.overallScore}/100</strong></div>
       <div class="score-pill">Title: <strong>${data.scores.title}</strong></div>
@@ -813,9 +848,9 @@ async function runAudit() {
     `;
 
     const sectionsContainer = document.getElementById('dynamic-audit-sections');
-    sectionsContainer.innerHTML = ''; 
-    
-    const iconColors = {title:'icon-title',description:'icon-description',seo:'icon-seo',photos:'icon-photos',pricing:'icon-pricing'};
+    sectionsContainer.innerHTML = '';
+
+    const iconColors = { title: 'icon-title', description: 'icon-description', seo: 'icon-seo', photos: 'icon-photos', pricing: 'icon-pricing' };
 
     data.sections.forEach((sec, idx) => {
       const badgeClass = sec.status === 'critical' ? 'badge-critical' : (sec.status === 'warning' ? 'badge-warning' : 'badge-good');
@@ -824,7 +859,7 @@ async function runAudit() {
       const isOpen = idx === 0 ? 'open' : '';
       const rotation = idx === 0 ? '0deg' : '180deg';
       const renderIcon = premiumIcons[sec.id] || sec.icon;
-      
+
       let findingsHtml = '';
       sec.findings.forEach(f => {
         findingsHtml += `<div class="finding"><div class="finding-label">${f.label}</div><div class="finding-text">${f.text}</div></div>`;
@@ -852,7 +887,7 @@ async function runAudit() {
         </div>
       `;
     });
-    
+
     document.getElementById('res-opportunity').innerText = data.topOpportunity || "Optimize your title to boost CTR.";
 
     document.getElementById('audit-loading').style.display = 'none';
@@ -872,7 +907,6 @@ function toggleSection(head) {
   const body = head.nextElementSibling;
   const chevron = head.querySelector('.section-chevron');
   const isOpen = body.classList.contains('open');
-  
   body.classList.toggle('open');
   chevron.style.transform = isOpen ? 'rotate(0deg)' : 'rotate(180deg)';
 }
@@ -886,27 +920,26 @@ function copyResults() {
   if (!lastAuditData) return;
   const a = lastAuditData;
   let text = `LISTSMART AUDIT SUMMARY\nURL: ${document.getElementById('res-url').innerText}\nOverall Score: ${a.overallScore}/100\n\n`;
-  
+
   a.sections.forEach(s => {
-    text += `${s.name.toUpperCase()}[${s.status.toUpperCase()}]\n${'-'.repeat(30)}\n`;
+    text += `${s.name.toUpperCase()} [${s.status.toUpperCase()}]\n${'-'.repeat(30)}\n`;
     s.findings.forEach(f => text += `• ${f.label}: ${f.text}\n`);
     text += `Recommendation: ${s.recommendation}\n\n`;
   });
   text += `TOP OPPORTUNITY\n${'-'.repeat(30)}\n${a.topOpportunity}\n\n— Generated by ListSmart`;
-  
+
   const temp = document.createElement('textarea');
   temp.value = text;
   document.body.appendChild(temp);
   temp.select();
   document.execCommand('copy');
   document.body.removeChild(temp);
-  
+
   const btn = document.querySelector('.btn-copy');
   const oldText = btn.innerText;
   btn.innerText = "Copied!";
   setTimeout(() => btn.innerText = oldText, 2000);
 }
 </script>
-
 </body>
 </html>
