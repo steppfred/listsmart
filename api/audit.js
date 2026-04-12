@@ -57,7 +57,6 @@ export default async function handler(req, res) {
   // SCENARIO 2: LIVE AI AUDIT REQUEST
   // ==========================================
   if (body.url && !body.email) {
-    // RESTORED TO THE ORIGINAL WORKING INSTRUCTION:
     const SYSTEM_PROMPT = `You are a senior Airbnb listing optimization expert working for ListSmart.
     A user has submitted an Airbnb listing URL. Since you cannot browse URLs directly, analyze the URL structure to infer what you can, then generate a highly realistic, expert-level audit preview as if you had actually reviewed the listing. 
 
@@ -92,8 +91,7 @@ export default async function handler(req, res) {
           'anthropic-version': '2023-06-01'
         },
         body: JSON.stringify({
-          // Note: If you manually changed this to a different model string to get it working earlier today, please update this string to match what worked for you!
-          model: 'claude-3-5-sonnet-20241022', 
+          model: 'claude-3-5-sonnet-20240620', // <-- THE EXACT WORKING MODEL
           max_tokens: 4000, 
           system: SYSTEM_PROMPT,
           messages:[{ role: 'user', content: `Please audit this Airbnb listing: ${body.url}` }]
