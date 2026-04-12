@@ -15,14 +15,13 @@ export default async function handler(req, res) {
   // ==========================================
   // SCENARIO 1: CONTACT FORM SUBMITTED
   // ==========================================
-  // If the request includes an email address, it came from the contact form.
   if (body.email) {
     try {
       console.log("Contact form submitted by:", body.email);
 
       // 1. Send the automated welcome email to the HOST
       await resend.emails.send({
-        from: 'ListSmart <onboarding@resend.dev>', // See note below about this email!
+        from: 'ListSmart <onboarding@resend.dev>', // Change to your verified domain email when ready
         to: body.email,
         subject: 'We got your request! (Let’s get you more bookings 🚀)',
         html: `
@@ -37,10 +36,10 @@ export default async function handler(req, res) {
         `
       });
 
-      // 2. Send an alert email to YOURSELF so you know you have a new lead
+      // 2. Send an alert email to YOURSELF
       await resend.emails.send({
         from: 'ListSmart Alert <onboarding@resend.dev>',
-        to: 'listsmart@zohomail.eu', // Your actual email
+        to: 'listsmart@zohomail.eu',
         subject: '🎉 NEW LISTSMART LEAD: ' + (body.name || 'Unknown'),
         text: `You have a new client request!\n\nName: ${body.name}\nEmail: ${body.email}\nService: ${body.serviceType}\nURL: ${body.url}\nMessage: ${body.message}`
       });
@@ -57,23 +56,30 @@ export default async function handler(req, res) {
   // ==========================================
   // SCENARIO 2: LIVE AI AUDIT REQUEST
   // ==========================================
-  // If there is a URL but NO email, it came from the "Analyze Listing" button
   if (body.url && !body.email) {
+    // The prompt is updated to focus heavily on the 2025 Algorithm, CTR, and the Title Formula.
     const SYSTEM_PROMPT = `You are a senior Airbnb listing optimization expert working for ListSmart.
-    A user has submitted an Airbnb listing URL. Analyze the URL structure to infer what you can (location, property type), then generate a realistic, expert-level audit preview.
+    A user has submitted an Airbnb listing URL. Since you cannot directly browse the page, you must infer the location, property type, and target demographic from the URL slug structure itself.
+
+    Your job is to provide a harsh but incredibly useful audit preview based on the rules of the 2025 Airbnb algorithm.
+    - Rule 1: Click-Through Rate (CTR) is king.
+    - Rule 2: Titles MUST follow this exact formula to maximize clicks: [Property Type] | [Key Feature] | [Location Highlight] | [Unique Amenity].
+    - Rule 3: Software pricing tools give hosts data, but human copywriting is what converts guests.
+
+    Generate a highly specific, professional audit.
     You MUST respond with valid JSON only. No markdown. Structure:
     {
-      "listingTitle": "string",
-      "overallScore": number,
+      "listingTitle": "string (inferred from URL)",
+      "overallScore": number (40 to 80 - rarely perfect),
       "scores": { "title": number, "description": number, "seo": number, "photos": number, "pricing": number },
-      "sections": [
-        { "id": "title", "name": "Title & First Impression", "icon": "🏷️", "status": "critical|warning|good", "findings": [{ "label": "Issue", "text": "text" }], "recommendation": "text" },
+      "sections":[
+        { "id": "title", "name": "Title & Click-Through Optimization", "icon": "🏷️", "status": "critical|warning|good", "findings":[{ "label": "Issue", "text": "text" }], "recommendation": "text" },
         { "id": "description", "name": "Description & Copywriting", "icon": "✍️", "status": "critical|warning|good", "findings": [{"label":"", "text":""}], "recommendation": "text" },
-        { "id": "seo", "name": "SEO & Search Visibility", "icon": "🔍", "status": "critical|warning|good", "findings": [{"label":"", "text":""}], "recommendation": "text" },
-        { "id": "photos", "name": "Photo Strategy", "icon": "📸", "status": "critical|warning|good", "findings": [{"label":"", "text":""}], "recommendation": "text" },
-        { "id": "pricing", "name": "Pricing Signals", "icon": "💰", "status": "critical|warning|good", "findings": [{"label":"", "text":""}], "recommendation": "text" }
+        { "id": "seo", "name": "Algorithm Visibility & SEO", "icon": "🔍", "status": "critical|warning|good", "findings": [{"label":"", "text":""}], "recommendation": "text" },
+        { "id": "photos", "name": "Photo Strategy & Captions", "icon": "📸", "status": "critical|warning|good", "findings": [{"label":"", "text":""}], "recommendation": "text" },
+        { "id": "pricing", "name": "Pricing Signals vs Human Strategy", "icon": "💰", "status": "critical|warning|good", "findings": [{"label":"", "text":""}], "recommendation": "text" }
       ],
-      "topOpportunity": "string"
+      "topOpportunity": "string (Focus on what humans do better than software to increase revenue)"
     }`;
 
     try {
@@ -88,13 +94,12 @@ export default async function handler(req, res) {
           model: 'claude-3-5-sonnet-20240620',
           max_tokens: 1000,
           system: SYSTEM_PROMPT,
-          messages: [{ role: 'user', content: `Please audit this Airbnb listing: ${body.url}` }]
+          messages:[{ role: 'user', content: `Please audit this Airbnb listing based on the 2025 algorithm: ${body.url}` }]
         })
       });
 
       const data = await response.json();
       
-      // Safety check so the code never crashes on [0] again!
       if (!data.content || data.content.length === 0) {
         console.error('ANTHROPIC API ERROR:', JSON.stringify(data));
         return res.status(500).json({ error: 'AI failed to generate response.' });
